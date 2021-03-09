@@ -1,0 +1,13 @@
+{
+  "name": "citadels-server",
+  "version": "0.0.1",
+  "description": "Online Citadels board game (server)",
+  "main": "index.js",
+  "repository": "https://github.com/antbrl/citadels-server",
+  "author": "Antoine Brûlé",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.2"
+  }
+}

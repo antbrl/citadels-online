@@ -1,9 +1,11 @@
-const app = require('express')();
+const express = require('express');
+const app = express()
 const http = require('http').createServer(app);
 const port = 8081
 
+app.use(express.static(__dirname + '/static'));
+
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
 });
 
 http.listen(port, () => {

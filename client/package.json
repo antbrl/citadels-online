@@ -1,6 +1,10 @@
 {
   "name": "citadels-client",
   "version": "0.0.1",
+  "description": "Online Citadels board game (web client)",
+  "repository": "https://github.com/antbrl/citadels-client",
+  "author": "Antoine Brûlé",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,8 +13,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^1.1.5",
+    "socket.io-client": "^4.0.0",
     "vite": "^2.0.5",
-    "vue": "^3.0.5"
+    "vue": "^3.0.5",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.17.0",

@@ -1,42 +1,32 @@
 <template>
-  <ion-phaser
-    :game.prop="game"
-    :initialize.prop="initialize"
-  />
+  <div :id="containerId" v-if="downloaded" />
+  <div v-else>
+    Downloading, please wait...
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import Phaser from 'phaser';
 
 export default defineComponent({
   name: 'CitadelsGame',
   data() {
     return {
-      game: {
-        width: '100%',
-        height: '100%',
-        type: Phaser.AUTO,
-        scene: {
-          init() {
-            this.cameras.main.setBackgroundColor('#24252A');
-          },
-          create() {
-            this.helloWorld = this.add.text(
-              this.cameras.main.centerX,
-              this.cameras.main.centerY,
-              'Hello World',
-              { font: '40px Arial', fill: '#ffffff' },
-            );
-            this.helloWorld.setOrigin(0.5);
-          },
-          update() {
-            this.helloWorld.angle += 1;
-          },
-        },
-      },
+      downloaded: false,
+      gameInstance: null,
+      containerId: 'game-container',
     };
+  },
+  async mounted() {
+    const game = await import('../game/game');
+    this.downloaded = true;
+    this.$nextTick(() => {
+      this.gameInstance = game.launch(this.containerId);
+    });
+  },
+  unmounted() {
+    this.gameInstance.destroy(false);
   },
   computed: {
     ...mapGetters([

@@ -1,15 +1,41 @@
-import { createStore } from 'vuex';
+import { Socket } from 'socket.io-client';
+import { InjectionKey } from 'vue';
+import { createStore, useStore as baseUseStore, Store } from 'vuex';
 
-export default createStore({
-  state() {
-    return {
-      socket: null,
-    };
+export interface State {
+  socket: Socket | null
+  players: Map<string, {id: string, name: string}>
+  self: {id: string, name: string}
+}
+
+export const key: InjectionKey<Store<State>> = Symbol('vuex store injection key');
+
+export default createStore<State>({
+  state: {
+    socket: null,
+    players: new Map(),
+    self: { id: '', name: '' },
   },
 
   getters: {
     isConnected(state) {
       return state.socket && state.socket.connected;
+    },
+  },
+
+  mutations: {
+    addPlayer(state, player) {
+      state.players.set(player.id, player);
+    },
+    removePlayer(state, playerId) {
+      const player = state.players.get(playerId);
+      if (player !== undefined) {
+        console.log(`${player.name} disconnected`);
+        state.players.delete(playerId);
+      }
+    },
+    setSelf(state, player) {
+      state.self = player;
     },
   },
 
@@ -21,3 +47,7 @@ export default createStore({
     },
   },
 });
+
+export function useStore() {
+  return baseUseStore(key);
+}

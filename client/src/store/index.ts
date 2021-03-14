@@ -24,6 +24,12 @@ export default createStore<State>({
     hasGameStarted(state, getters) {
       return getters.isConnected;
     },
+    players(state) {
+      return state.players.values();
+    },
+    self(state) {
+      return state.self;
+    },
   },
 
   mutations: {

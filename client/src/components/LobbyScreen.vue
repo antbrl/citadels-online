@@ -1,11 +1,22 @@
 <template>
+<div class="lobby">
   <form @submit.prevent="connect(username)">
-    <label>Username: <input type="text" v-model="username" autofocus></label>
-    <input type="submit" value="Connect">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        v-model="username"
+        id="username"
+        autofocus
+        :disabled="isConnected"
+      >
+    </div>
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="Connect" :disabled="isConnected">
+    </div>
   </form>
-  <div>
-    {{ isConnected ? 'connected' : 'disconnected' }}
-  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -14,6 +25,11 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default defineComponent({
   name: 'CitadelsGame',
+  data() {
+    return {
+      username: '',
+    };
+  },
   computed: {
     ...mapGetters([
       'isConnected',
@@ -26,3 +42,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.lobby {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

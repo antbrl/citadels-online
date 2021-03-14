@@ -21,6 +21,9 @@ export default createStore<State>({
     isConnected(state) {
       return state.socket && state.socket.connected;
     },
+    hasGameStarted(state, getters) {
+      return getters.isConnected;
+    },
   },
 
   mutations: {

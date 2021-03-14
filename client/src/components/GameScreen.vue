@@ -1,8 +1,8 @@
 <template>
-  <div :id="containerId" v-if="downloaded" />
-  <div v-else>
-    Downloading, please wait...
-  </div>
+<div class="game-container" :id="containerId" v-if="downloaded"></div>
+<div v-else>
+  Downloading, please wait...
+</div>
 </template>
 
 <script lang="ts">
@@ -32,23 +32,13 @@ export default defineComponent({
     ...mapGetters([
       'isConnected',
     ]),
-    initialize() {
-      return this.isConnected;
-    },
   },
 });
 </script>
 
-<style scoped>
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
+<style lang="scss" scoped>
+.game-container {
+  width: 100%;
+  height: 100%;
 }
 </style>

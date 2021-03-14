@@ -23,7 +23,7 @@ h1 {
   background: brown;
   color: wheat;
   margin: 0;
-  padding: 1em;
+  padding: 0.5em;
 }
 
 .game {

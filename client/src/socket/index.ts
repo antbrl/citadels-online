@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import store from '../store';
 
-const socket = io('http://localhost:8081', {
+const socket = io('/', {
   path: '/s/',
   autoConnect: false,
 });

@@ -1,6 +1,14 @@
 <template>
-<div class="game-container">
-  <PlayersList />
+<div class="game-container container-lg p-3">
+  <div class="card h-100 overflow-hidden">
+    <div class="row no-gutters h-100">
+      <div class="col">
+      </div>
+      <div class="col-3 p-3 bg-light">
+        <PlayersList />
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -22,8 +30,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .game-container {
-  width: 100%;
   height: 100%;
-  padding: 1em;
 }
 </style>

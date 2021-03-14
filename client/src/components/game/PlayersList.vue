@@ -1,5 +1,5 @@
 <template>
-<div class="card border-dark">
+<div class="card">
   <div class="card-header">
     Players
   </div>

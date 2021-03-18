@@ -49,6 +49,11 @@ export default createStore<State>({
   },
 
   actions: {
+    joinRoom({ state }, roomId) {
+      if (!state.socket || state.socket.connected) return;
+      state.socket.auth = { username };
+      state.socket.connect();
+    },
     connect({ state }, username) {
       if (!state.socket || state.socket.connected) return;
       state.socket.auth = { username };

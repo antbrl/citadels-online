@@ -1,19 +1,15 @@
 <template>
 <h1>Citadels</h1>
-<div class="game">
-  <CitadelsGame />
+<div class="body">
+  <router-view></router-view>
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CitadelsGame from './components/CitadelsGame.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    CitadelsGame,
-  },
 });
 </script>
 
@@ -26,7 +22,7 @@ h1 {
   padding: 0.5em;
 }
 
-.game {
+.body {
   background: wheat;
   flex-grow: 1;
 }

@@ -15,11 +15,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import PlayersList from './game/PlayersList.vue';
+import PlayersList from './PlayersList.vue';
 
 export default defineComponent({
   components: { PlayersList },
-  name: 'CitadelsGame',
+  name: 'GameScreen',
   computed: {
     ...mapGetters([
       'isConnected',

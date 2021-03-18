@@ -11,7 +11,7 @@ import LobbyScreen from './LobbyScreen.vue';
 
 export default defineComponent({
   components: { LobbyScreen, GameScreen },
-  name: 'CitadelsGame',
+  name: 'RoomScreen',
   computed: {
     ...mapGetters([
       'hasGameStarted',

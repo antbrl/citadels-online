@@ -24,7 +24,7 @@ import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default defineComponent({
-  name: 'CitadelsGame',
+  name: 'LobbyScreen',
   data() {
     return {
       username: '',

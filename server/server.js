@@ -10,7 +10,8 @@ function initSocket(io) {
     if (socket.roomId && socket.playerId) {
       const room = gameStore.findRoom(socket.roomId);
       if (room) {
-        room.gameState.getPlayer(socket.playerId).online = true;
+        const player = room.gameState.getPlayer(socket.playerId)
+        if (player) player.online = true;
         socket.to(socket.roomId).emit('joined room', socket.playerId);
       }
     }
@@ -22,7 +23,8 @@ function initSocket(io) {
       if (socket.roomId && socket.playerId) {
         const room = gameStore.findRoom(socket.roomId);
         if (room) {
-          room.gameState.getPlayer(socket.playerId).online = false;
+          const player = room.gameState.getPlayer(socket.playerId)
+          if (player) player.online = false;
           socket.to(socket.roomId).emit('left room', socket.playerId);
         }
       }

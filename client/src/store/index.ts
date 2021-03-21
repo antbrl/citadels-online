@@ -29,6 +29,9 @@ export const store = createStore<State>({
     setGameState(state, gameState) {
       state.gameState = gameState;
     },
+    resetGameState(state) {
+      state.gameState = undefined;
+    },
     addPlayer(state, player) {
       if (state.gameState !== undefined) {
         state.gameState.players.set(player.id, player);

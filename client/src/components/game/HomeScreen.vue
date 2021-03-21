@@ -3,7 +3,13 @@
   <div class="card p-4 text-center">
     <div class="form-group">
       <p>Create a new room</p>
-      <input class="btn btn-primary" type="button" @click="createRoom()" value="Create a room">
+      <input
+        class="btn btn-primary"
+        type="button"
+        @click="createRoom()"
+        value="Create a room"
+        :disabled="creatingRoom"
+      >
     </div>
     <hr>
     <form @submit.prevent="joinRoom(filteredRoomId)" autocomplete="off">
@@ -28,12 +34,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { store } from '../../store';
 
 export default defineComponent({
   name: 'HomeScreen',
   data() {
     return {
       roomId: '',
+      creatingRoom: false,
     };
   },
   methods: {
@@ -42,7 +50,15 @@ export default defineComponent({
       return true;
     },
     createRoom() {
-      this.$router.push({ name: 'create-room' });
+      this.creatingRoom = true;
+      store.dispatch('createRoom').then((roomId) => {
+        console.log(roomId);
+        this.$router.push({ name: 'join-room', params: { roomId } });
+        this.creatingRoom = false;
+      }).catch((reason) => {
+        console.error('error when creating room', reason);
+        this.creatingRoom = false;
+      });
     },
     joinRoom(roomId: string) {
       if (!this.isRoomIdValid(roomId)) { return; }

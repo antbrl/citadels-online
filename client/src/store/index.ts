@@ -1,28 +1,26 @@
 import { Socket } from 'socket.io-client';
-import { InjectionKey } from 'vue';
-import { createStore, useStore as baseUseStore, Store } from 'vuex';
+import { createStore } from 'vuex';
+import socket from '../socket';
 
 export interface State {
-  socket: Socket | null
+  socket: Socket
   players: Map<string, {id: string, name: string}>
   self: {id: string, name: string}
 }
 
-export const key: InjectionKey<Store<State>> = Symbol('vuex store injection key');
-
-export default createStore<State>({
+export const store = createStore<State>({
   state: {
-    socket: null,
+    socket,
     players: new Map(),
     self: { id: '', name: '' },
   },
 
   getters: {
     isConnected(state) {
-      return state.socket && state.socket.connected;
+      return state.socket.connected;
     },
-    hasGameStarted(state, getters) {
-      return getters.isConnected;
+    hasGameStarted() {
+      return false;
     },
     players(state) {
       return state.players.values();
@@ -49,19 +47,35 @@ export default createStore<State>({
   },
 
   actions: {
-    joinRoom({ state }, roomId) {
-      if (!state.socket || state.socket.connected) return;
-      state.socket.auth = { username };
-      state.socket.connect();
+    createRoom({ state, dispatch }) {
+      dispatch('connect');
+      return new Promise((resolve, reject) => {
+        // TODO: add timeout
+        state.socket.emit('create room', (data: Error | string) => {
+          if (data instanceof Error) {
+            reject(data);
+          } else {
+            resolve(data);
+          }
+        });
+      });
     },
-    connect({ state }, username) {
-      if (!state.socket || state.socket.connected) return;
-      state.socket.auth = { username };
+    joinRoom({ state, dispatch }, roomId) {
+      dispatch('connect');
+      return new Promise((resolve, reject) => {
+        // TODO: add timeout
+        state.socket.emit('join room', roomId, (data: Error | object) => {
+          if (data instanceof Error) {
+            reject(data);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    connect({ state }) {
+      if (state.socket.connected) return;
       state.socket.connect();
     },
   },
 });
-
-export function useStore() {
-  return baseUseStore(key);
-}

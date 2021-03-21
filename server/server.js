@@ -46,28 +46,33 @@ function initSocket(io) {
       }
     });
 
-    socket.on('join room', (roomId, callback) => {
-      if (roomId) {
-        // find existing room
-        const room = gameStore.findRoom(roomId);
-        if (room) {
-          socket.roomId = roomId;
+    socket.on('join room', (roomId, userId, username, callback) => {
+      // get room info
+      const room = gameStore.findRoom(roomId);
+
+      if (room) {
+          // get player or create one if necessary
           if (room.gameState.containsPlayer(userId)) {
             socket.userId = userId;
           } else {
             socket.userId = idGenerator.genUserId();
+            room.gameState.addPlayer(socket.userId, username || `Player ${userId}`);
           }
 
           // join room
           socket.join(socket.roomId);
+
+          // update game state to other players
           //socket.to(socket.roomId).broadcast('new player', socket.userId);
-          socket.to(socket.roomId).broadcast('joined room', socket.userId);
-          callback(room);
-        } else {
-          callback(new Error('invalid room id'));
-        }
+
+          // notify that the new player joined the room
+          socket.broadcast.to(socket.roomId).emit('joined room', socket.userId);
+
+          // return game state to joining player
+          callback(room.gameState);
+
       } else {
-        callback(new Error('invalid room id'));
+          callback(null);
       }
     });
   });

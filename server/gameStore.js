@@ -4,10 +4,11 @@ class Room {
   constructor(roomId) {
     this.roomId = roomId;
     this.gameState = new GameState();
+    this.status = 'open';
   }
 
   getRoomInfo() {
-    return { status: 'open' };
+    return { status: this.status };
   }
 }
 

@@ -7,12 +7,24 @@ function initSocket(io) {
   io.on('connection', (socket) => {
     console.log(`user '${socket.id}' connected`);
 
+    if (socket.roomId && socket.playerId) {
+      const room = gameStore.findRoom(socket.roomId);
+      if (room) {
+        room.gameState.getPlayer(socket.playerId).online = true;
+        socket.to(socket.roomId).emit('joined room', socket.playerId);
+      }
+    }
+
     socket.on('disconnect', () => {
       console.log(`user '${socket.id}' disconnected`);
 
-      // emit a message to all players to remove this player
-      if (socket.roomId && socket.userId) {
-        socket.to(socket.roomId).broadcast('leave room', socket.userId);
+      // emit a message to all players in room to remove this player
+      if (socket.roomId && socket.playerId) {
+        const room = gameStore.findRoom(socket.roomId);
+        if (room) {
+          room.gameState.getPlayer(socket.playerId).online = false;
+          socket.to(socket.roomId).emit('left room', socket.playerId);
+        }
       }
     });
 
@@ -46,30 +58,32 @@ function initSocket(io) {
       }
     });
 
-    socket.on('join room', (roomId, userId, username, callback) => {
+    socket.on('join room', (roomId, playerId, username, callback) => {
       // get room info
       const room = gameStore.findRoom(roomId);
+      let player;
 
       if (room) {
-          // get player or create one if necessary
-          if (room.gameState.containsPlayer(userId)) {
-            socket.userId = userId;
-          } else {
-            socket.userId = idGenerator.genUserId();
-            room.gameState.addPlayer(socket.userId, username || `Player ${userId}`);
-          }
+        // get player or create one if necessary
+        if (room.gameState.containsPlayer(playerId)) {
+          player = room.gameState.getPlayer(playerId)
+        } else {
+          playerId = idGenerator.genPlayerId();
+          player = room.gameState.addPlayer(playerId, username || `Player ${playerId}`);
+          socket.to(roomId).emit('add player', player);
+          console.log('added player', player);
+        }
+        socket.playerId = playerId;
 
-          // join room
-          socket.join(socket.roomId);
+        // join room
+        socket.roomId = roomId;
+        socket.join(roomId);
 
-          // update game state to other players
-          //socket.to(socket.roomId).broadcast('new player', socket.userId);
+        // notify that the new player joined the room
+        socket.to(roomId).emit('joined room', playerId);
 
-          // notify that the new player joined the room
-          socket.broadcast.to(socket.roomId).emit('joined room', socket.userId);
-
-          // return game state to joining player
-          callback(room.gameState);
+        // return game state to joining player
+        callback(room.gameState.getStateFromPlayer(playerId));
 
       } else {
           callback(null);

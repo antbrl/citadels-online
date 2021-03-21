@@ -2,13 +2,13 @@ const nanoid = require('nanoid');
 const nolookalikesSafe = require('nanoid-dictionary/nolookalikes-safe');
 
 const roomIdGenerator = nanoid.customAlphabet(nolookalikesSafe, 6);
-const userIdGenerator = nanoid.nanoid;
+const playerIdGenerator = nanoid.nanoid;
 
 function genRoomId() {
     return roomIdGenerator();
 }
-function genUserId() {
-    return userIdGenerator();
+function genPlayerId() {
+    return playerIdGenerator();
 }
 
-module.exports = { genRoomId, genUserId };
+module.exports = { genRoomId, genPlayerId };

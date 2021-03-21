@@ -1,11 +1,12 @@
 class Player {
-  constructor(userId, username) {
-    this.userId = userId;
+  constructor(id, username, online) {
+    this.id = id;
     this.username = username;
+    this.online = online;
   }
 
   toString() {
-    return `Player ${this.username}[${this.userId}]`;
+    return `Player ${this.username}[${this.id}]`;
   }
 }
 
@@ -14,16 +15,25 @@ class GameState {
     this.players = new Map();
   }
 
-  containsPlayer(userId) {
-    return this.players.has(userId);
+  containsPlayer(playerId) {
+    return this.players.has(playerId);
   }
 
-  getPlayer(userId) {
-    return this.players.get(userId);
+  getPlayer(playerId) {
+    return this.players.get(playerId);
   }
 
-  addPlayer(userId, username) {
-    this.players.set(userId, new Player(userId, username))
+  addPlayer(id, username, online = true) {
+    const player = new Player(id, username, online);
+    this.players.set(id, player);
+    return player;
+  }
+
+  getStateFromPlayer(playerId) {
+    return {
+      players: Array.from(this.players),
+      self: playerId,
+    };
   }
 }
 

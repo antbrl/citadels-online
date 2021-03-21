@@ -1,6 +1,6 @@
 <template>
-<LobbyScreen v-show="!hasGameStarted" />
-<GameScreen v-show="hasGameStarted" />
+<LobbyScreen v-if="!hasGameStarted" />
+<GameScreen v-else />
 </template>
 
 <script lang="ts">

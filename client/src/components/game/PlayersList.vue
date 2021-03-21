@@ -4,9 +4,15 @@
     Players
   </div>
   <ul class="list-group list-group-flush text-dark">
-    <li class="list-group-item font-weight-bold">{{ self.name }} (self)</li>
-    <li class="list-group-item" v-for="player in players" :key="player.id">
-        {{ player.name }}
+    <li
+      class="list-group-item"
+      v-for="(player) in players"
+      :key="player.id"
+    >
+        {{ player.username }}
+        <span v-if="player.id === self" class="badge badge-info">You</span>
+        <span v-else-if="player.online" class="badge badge-success">Online</span>
+        <span v-else class="badge badge-secondary">Offline</span>
     </li>
   </ul>
 </div>
@@ -20,9 +26,14 @@ export default defineComponent({
   name: 'PlayersList',
   computed: {
     ...mapGetters([
-      'players',
-      'self',
+      'gameState',
     ]),
+    players() {
+      return Array.from(this.gameState.players.values());
+    },
+    self() {
+      return this.gameState.self;
+    },
   },
 });
 </script>

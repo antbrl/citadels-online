@@ -11,7 +11,7 @@ socket.onAny((event, ...args) => {
 });
 
 socket.on('connect_error', (err) => {
-  alert(err.message);
+  console.error('connection error:', err.message);
 });
 
 socket.on('connect', () => {
@@ -20,18 +20,17 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
   console.log('disconnected');
 });
-socket.on('currentPlayers', (players) => {
-  Object.keys(players).forEach((playerId) => {
-    if (playerId === socket.id) {
-      store.commit('setSelf', players[playerId]);
-    } else {
-      store.commit('addPlayer', players[playerId]);
-    }
-  });
-});
-socket.on('newPlayer', (player) => {
-  console.log(`${player.name} connected`);
+socket.on('add player', (player) => {
+  console.log(`${player.name} added`);
   store.commit('addPlayer', player);
+});
+socket.on('joined room', (playerId) => {
+  console.log(`${playerId} joined room`);
+  store.commit('setPlayerOnline', { playerId, online: true });
+});
+socket.on('left room', (playerId) => {
+  console.log(`${playerId} left room`);
+  store.commit('setPlayerOnline', { playerId, online: false });
 });
 socket.on('disconnectPlayer', (playerId) => {
   store.commit('removePlayer', playerId);

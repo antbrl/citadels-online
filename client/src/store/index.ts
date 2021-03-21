@@ -4,45 +4,52 @@ import socket from '../socket';
 
 export interface State {
   socket: Socket
-  players: Map<string, {id: string, name: string}>
-  self: {id: string, name: string}
+  gameState: { players: Map<string, string>, self: string } | undefined
 }
 
 export const store = createStore<State>({
   state: {
     socket,
-    players: new Map(),
-    self: { id: '', name: '' },
+    gameState: undefined,
   },
 
   getters: {
     isConnected(state) {
       return state.socket.connected;
     },
-    hasGameStarted() {
-      return false;
+    hasGameStarted(state) {
+      return state.gameState !== undefined;
     },
-    players(state) {
-      return state.players.values();
-    },
-    self(state) {
-      return state.self;
+    gameState(state) {
+      return state.gameState;
     },
   },
 
   mutations: {
-    addPlayer(state, player) {
-      state.players.set(player.id, player);
+    setGameState(state, gameState) {
+      state.gameState = gameState;
     },
-    removePlayer(state, playerId) {
-      const player = state.players.get(playerId);
-      if (player !== undefined) {
-        console.log(`${player.name} disconnected`);
-        state.players.delete(playerId);
+    addPlayer(state, player) {
+      if (state.gameState !== undefined) {
+        state.gameState.players.set(player.id, player);
       }
     },
-    setSelf(state, player) {
-      state.self = player;
+    removePlayer(state, playerId) {
+      if (state.gameState !== undefined) {
+        const player = state.gameState.players.get(playerId);
+        if (player !== undefined) {
+          console.log(`${player} disconnected`);
+          state.gameState.players.delete(playerId);
+        }
+      }
+    },
+    setPlayerOnline(state, { playerId, online }) {
+      if (state.gameState !== undefined) {
+        const player = state.gameState.players.get(playerId);
+        if (player) {
+          player.online = online;
+        }
+      }
     },
   },
 
@@ -65,15 +72,20 @@ export const store = createStore<State>({
         });
       });
     },
-    joinRoom({ state, dispatch }, roomId: string) {
+    joinRoom({ state, commit, dispatch }, { roomId, username }) {
       dispatch('connect');
       return new Promise((resolve, reject) => {
         // TODO: add timeout
-        state.socket.emit('join room', roomId, (data: object) => {
-          if (data instanceof Error) {
-            reject(data);
+        state.socket.emit('join room', roomId, undefined /* playerId */, username, (data: any) => {
+          if (data) {
+            const gameState = {
+              players: new Map(data.players),
+              self: data.self,
+            };
+            commit('setGameState', gameState);
+            resolve(gameState);
           } else {
-            resolve(data);
+            reject(new Error('Invalid game state'));
           }
         });
       });

@@ -7,7 +7,7 @@
     {{ errorMessage }}
   </div>
   <div v-else-if="open">
-    <form @submit.prevent="connect(username)">
+    <form @submit.prevent="joinRoom">
       <div class="form-group">
         <label for="username">Username</label>
         <input
@@ -49,6 +49,9 @@ export default defineComponent({
     ...mapGetters([
       'isConnected',
     ]),
+    roomId() {
+      return this.$route.params.roomId;
+    },
   },
   methods: {
     ...mapActions([
@@ -74,9 +77,17 @@ export default defineComponent({
         this.loading = false;
       });
     },
+    joinRoom() {
+      this.loading = true;
+      store.dispatch('joinRoom', { roomId: this.roomId, username: this.username }).catch((reason) => {
+        this.loading = false;
+        this.error = true;
+        this.errorMessage = `Error when joining the room: ${reason}`;
+      });
+    },
   },
   mounted() {
-    this.getRoomInfo(this.$route.params.roomId);
+    this.getRoomInfo(this.roomId);
   },
 });
 </script>

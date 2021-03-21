@@ -5,6 +5,10 @@ class Room {
     this.roomId = roomId;
     this.gameState = new GameState();
   }
+
+  getRoomInfo() {
+    return { status: 'open' };
+  }
 }
 
 /* abstract */ class GameStore {

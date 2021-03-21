@@ -36,6 +36,16 @@ function initSocket(io) {
       callback(socket.roomId);
     });
 
+    socket.on('get room info', (roomId, callback) => {
+      // return room info
+      const room = gameStore.findRoom(roomId);
+      if (room) {
+        callback(room.getRoomInfo());
+      } else {
+        callback({ status: 'not found' });
+      }
+    });
+
     socket.on('join room', (roomId, callback) => {
       if (roomId) {
         // find existing room

@@ -49,22 +49,27 @@ export const store = createStore<State>({
   actions: {
     createRoom({ state, dispatch }) {
       dispatch('connect');
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         // TODO: add timeout
-        state.socket.emit('create room', (data: Error | string) => {
-          if (data instanceof Error) {
-            reject(data);
-          } else {
-            resolve(data);
-          }
+        state.socket.emit('create room', (data: string) => {
+          resolve(data);
         });
       });
     },
-    joinRoom({ state, dispatch }, roomId) {
+    getRoomInfo({ state, dispatch }, roomId: string) {
+      dispatch('connect');
+      return new Promise((resolve) => {
+        // TODO: add timeout
+        state.socket.emit('get room info', roomId, (data: object) => {
+          resolve(data);
+        });
+      });
+    },
+    joinRoom({ state, dispatch }, roomId: string) {
       dispatch('connect');
       return new Promise((resolve, reject) => {
         // TODO: add timeout
-        state.socket.emit('join room', roomId, (data: Error | object) => {
+        state.socket.emit('join room', roomId, (data: object) => {
           if (data instanceof Error) {
             reject(data);
           } else {

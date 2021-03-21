@@ -75,16 +75,17 @@ export const store = createStore<State>({
         });
       });
     },
-    joinRoom({ state, commit, dispatch }, { roomId, username }) {
+    joinRoom({ state, commit, dispatch }, { roomId, playerId, username }) {
       dispatch('connect');
       return new Promise((resolve, reject) => {
         // TODO: add timeout
-        state.socket.emit('join room', roomId, undefined /* playerId */, username, (data: any) => {
+        state.socket.emit('join room', roomId, playerId, username, (data: any) => {
           if (data) {
             const gameState = {
               players: new Map(data.players),
               self: data.self,
             };
+            localStorage.setItem(roomId, data.self);
             commit('setGameState', gameState);
             resolve(gameState);
           } else {

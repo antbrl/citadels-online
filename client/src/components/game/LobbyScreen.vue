@@ -74,12 +74,17 @@ export default defineComponent({
             this.errorMessage = 'Unknown error.';
             this.error = true;
         }
-        this.loading = false;
+        if (!this.error && this.open && localStorage.getItem(this.roomId)) {
+          this.joinRoom();
+        } else {
+          this.loading = false;
+        }
       });
     },
     joinRoom() {
       this.loading = true;
-      store.dispatch('joinRoom', { roomId: this.roomId, username: this.username }).catch((reason) => {
+      const playerId = localStorage.getItem(this.roomId);
+      store.dispatch('joinRoom', { roomId: this.roomId, playerId, username: this.username }).catch((reason) => {
         this.loading = false;
         this.error = true;
         this.errorMessage = `Error when joining the room: ${reason}`;

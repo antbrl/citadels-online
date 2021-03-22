@@ -1,4 +1,4 @@
-import GameState from './GameState';
+import GameState from '../game/GameState';
 
 export default class Room {
   roomId: string;

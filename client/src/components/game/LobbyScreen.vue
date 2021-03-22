@@ -15,7 +15,7 @@
           class="form-control"
           v-model="username"
           id="username"
-          autofocus
+          v-focus
         >
       </div>
       <div class="form-group">

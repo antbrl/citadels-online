@@ -21,7 +21,6 @@
           v-model="roomId"
           placeholder="Room ID"
           id="room-id"
-          autofocus
         >
       </div>
       <div class="form-group">

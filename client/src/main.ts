@@ -8,6 +8,13 @@ import './scss/main.scss';
 
 const app = createApp(App);
 
+// Register a global custom directive called `v-focus`
+app.directive('focus', {
+  mounted(el) {
+    el.focus();
+  },
+});
+
 app.use(store);
 app.use(router);
 app.mount('#app');

@@ -21,15 +21,15 @@ socket.on('disconnect', () => {
   console.log('disconnected');
 });
 socket.on('add player', (player) => {
-  console.log(`${player.name} added`);
+  console.log(`player ${player.username} [${player.id}] added`);
   store.commit('addPlayer', player);
 });
 socket.on('joined room', (playerId) => {
-  console.log(`${playerId} joined room`);
+  console.log(`player ${playerId} joined room`);
   store.commit('setPlayerOnline', { playerId, online: true });
 });
 socket.on('left room', (playerId) => {
-  console.log(`${playerId} left room`);
+  console.log(`player ${playerId} left room`);
   store.commit('setPlayerOnline', { playerId, online: false });
 });
 socket.on('disconnectPlayer', (playerId) => {

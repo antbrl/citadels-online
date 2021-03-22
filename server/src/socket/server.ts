@@ -1,12 +1,15 @@
-const idGenerator = require('./idGenerator.js');
-const { Room, InMemoryGameStore } = require('./gameStore.js');
+import { Server } from 'socket.io';
+import InMemoryGameStore from '../game/InMemoryGameStore';
+import Player from '../game/Player';
+import Room from '../game/Room';
+import { genPlayerId, genRoomId } from '../utils/idGenerator';
+import ExtendedSocket from './ExtendedSocket';
 
 const gameStore = new InMemoryGameStore();
 
-function initSocket(io) {
-  io.on('connection', (socket) => {
+export function initSocket(io: Server) {
+  io.on('connection', (socket: ExtendedSocket) => {
     console.log(`user '${socket.id}' connected`);
-
 
     socket.on('disconnect', () => {
       console.log(`user '${socket.id}' disconnected`);
@@ -15,7 +18,7 @@ function initSocket(io) {
       if (socket.roomId && socket.playerId) {
         const room = gameStore.findRoom(socket.roomId);
         if (room) {
-          const player = room.gameState.getPlayer(socket.playerId)
+          const player = room.gameState.getPlayer(socket.playerId);
           if (player) player.online = false;
           socket.to(socket.roomId).emit('left room', socket.playerId);
         }
@@ -26,7 +29,7 @@ function initSocket(io) {
       // create new available room ID
       let roomId;
       do {
-        roomId = idGenerator.genRoomId();
+        roomId = genRoomId();
       } while (gameStore.hasRoom(roomId));
       socket.roomId = roomId;
 
@@ -52,41 +55,43 @@ function initSocket(io) {
       }
     });
 
-    socket.on('join room', (roomId, playerId, username, callback) => {
+    socket.on('join room', (roomId: string, playerId: string, username: string, callback) => {
       // get room info
       const room = gameStore.findRoom(roomId);
-      let player;
+      let player: Player | undefined;
 
       if (room) {
         // get player or create one if necessary
         if (room.gameState.containsPlayer(playerId)) {
-          player = room.gameState.getPlayer(playerId)
+          socket.playerId = playerId;
+          player = room.gameState.getPlayer(socket.playerId);
+          if (player) {
+            player.online = true;
+          } else {
+            // player id is invalid
+            return callback(null);
+          }
         } else {
-          playerId = idGenerator.genPlayerId();
-          player = room.gameState.addPlayer(playerId, username || `Player ${playerId}`);
+          socket.playerId = genPlayerId();
+          player = room.gameState.addPlayer(socket.playerId, username || `Player ${socket.playerId}`, true);
           socket.to(roomId).emit('add player', player);
           console.log('added player', player);
         }
-        socket.playerId = playerId;
-        player.online = true;
 
         // join room
         socket.roomId = roomId;
-        socket.join(roomId);
+        socket.join(socket.roomId);
 
         // notify that the new player joined the room
-        socket.to(roomId).emit('joined room', playerId);
+        socket.to(socket.roomId).emit('joined room', socket.playerId);
 
         // return game state to joining player
-        callback(room.gameState.getStateFromPlayer(playerId));
-
-      } else {
-          callback(null);
+        return callback(room.gameState.getStateFromPlayer(socket.playerId));
       }
+      // room id is invalid
+      return callback(null);
     });
   });
 }
 
-module.exports = function(httpServer) {
-  initSocket(httpServer);
-};
+export default { initSocket };

@@ -7,14 +7,6 @@ function initSocket(io) {
   io.on('connection', (socket) => {
     console.log(`user '${socket.id}' connected`);
 
-    if (socket.roomId && socket.playerId) {
-      const room = gameStore.findRoom(socket.roomId);
-      if (room) {
-        const player = room.gameState.getPlayer(socket.playerId)
-        if (player) player.online = true;
-        socket.to(socket.roomId).emit('joined room', socket.playerId);
-      }
-    }
 
     socket.on('disconnect', () => {
       console.log(`user '${socket.id}' disconnected`);
@@ -76,6 +68,7 @@ function initSocket(io) {
           console.log('added player', player);
         }
         socket.playerId = playerId;
+        player.online = true;
 
         // join room
         socket.roomId = roomId;

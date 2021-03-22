@@ -1,7 +1,10 @@
 <template>
 <div class="lobby">
   <div v-if="loading">
-    Loading...
+    <span class="btn btn-dark btn-lg text-light">
+      <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
+      <span class="align-top">Loading...</span>
+    </span>
   </div>
   <div v-else-if="error">
     {{ errorMessage }}

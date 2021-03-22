@@ -7,7 +7,7 @@
     {{ errorMessage }}
   </div>
   <div v-else-if="open">
-    <form @submit.prevent="joinRoom">
+    <form @submit.prevent="joinRoom" autocomplete="off">
       <div class="form-group">
         <label for="username">Username</label>
         <input

@@ -4,7 +4,14 @@ import socket from '../socket';
 
 export interface State {
   socket: Socket
-  gameState: { players: Map<string, string>, self: string } | undefined
+  gameState: {
+    players: Map<string, {
+      id: string
+      username: string
+      online: boolean
+    }>
+    self: string
+  } | undefined
 }
 
 export const store = createStore<State>({

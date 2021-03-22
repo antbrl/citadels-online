@@ -11,22 +11,6 @@
         :disabled="creatingRoom"
       >
     </div>
-    <hr>
-    <form @submit.prevent="joinRoom(filteredRoomId)" autocomplete="off">
-      <div class="form-group">
-        <p>Join a room</p>
-        <input
-          type="text"
-          class="form-control"
-          v-model="roomId"
-          placeholder="Room ID"
-          id="room-id"
-        >
-      </div>
-      <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Join room">
-      </div>
-    </form>
   </div>
 </div>
 </template>
@@ -44,10 +28,6 @@ export default defineComponent({
     };
   },
   methods: {
-    isRoomIdValid(roomId: string): boolean {
-      if (!roomId) { return false; }
-      return true;
-    },
     createRoom() {
       this.creatingRoom = true;
       store.dispatch('createRoom').then((roomId) => {
@@ -58,15 +38,6 @@ export default defineComponent({
         console.error('error when creating room', reason);
         this.creatingRoom = false;
       });
-    },
-    joinRoom(roomId: string) {
-      if (!this.isRoomIdValid(roomId)) { return; }
-      this.$router.push({ name: 'join-room', params: { roomId } });
-    },
-  },
-  computed: {
-    filteredRoomId(): string {
-      return this.roomId.trim();
     },
   },
 });

@@ -2,9 +2,7 @@ import GameState from '../game/GameState';
 
 export default class Room {
   roomId: string;
-
   gameState: GameState;
-
   status: string;
 
   constructor(roomId: string) {

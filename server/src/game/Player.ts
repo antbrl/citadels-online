@@ -1,8 +1,6 @@
 export default class Player {
   id: string;
-
   username: string;
-
   online: boolean;
 
   constructor(id: string, username: string, online: boolean) {

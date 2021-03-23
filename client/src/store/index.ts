@@ -1,17 +1,11 @@
 import { Socket } from 'socket.io-client';
 import { createStore } from 'vuex';
 import socket from '../socket';
+import { ClientGameState, GameProgress } from '../types/gameTypes';
 
 export interface State {
   socket: Socket
-  gameState: {
-    players: Map<string, {
-      id: string
-      username: string
-      online: boolean
-    }>
-    self: string
-  } | undefined
+  gameState: ClientGameState | undefined
 }
 
 export const store = createStore<State>({
@@ -24,11 +18,23 @@ export const store = createStore<State>({
     isConnected(state) {
       return state.socket.connected;
     },
-    hasGameStarted(state) {
+    isInRoom(state) {
       return state.gameState !== undefined;
     },
     gameState(state) {
       return state.gameState;
+    },
+    gameProgress(state) {
+      switch (state.gameState?.progress) {
+        case GameProgress.IN_LOBBY:
+          return 'IN_LOBBY';
+        case GameProgress.IN_GAME:
+          return 'IN_GAME';
+        case GameProgress.FINISHED:
+          return 'FINISHED';
+        default:
+          return 'UNKNOWN';
+      }
     },
   },
 
@@ -88,7 +94,8 @@ export const store = createStore<State>({
         // TODO: add timeout
         state.socket.emit('join room', roomId, playerId, username, (data: any) => {
           if (data) {
-            const gameState = {
+            const gameState: ClientGameState = {
+              progress: data.progress,
               players: new Map(data.players),
               self: data.self,
             };

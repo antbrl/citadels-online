@@ -36,7 +36,13 @@
         "mjs": "never",
         "jsx": "never"
       }
-    ]
+    ],
+    "lines-between-class-members": "off",
+    "@typescript-eslint/lines-between-class-members": ["off"],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   },
   "settings": {
     "import/resolver": {

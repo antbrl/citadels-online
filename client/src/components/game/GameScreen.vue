@@ -1,6 +1,6 @@
 <template>
 <div class="game-container container-lg p-3">
-  <div class="card h-100 overflow-hidden">
+  <div v-if="gameProgress === 'IN_LOBBY'" class="card h-100 overflow-hidden">
     <div class="row no-gutters h-100">
       <div class="col">
       </div>
@@ -8,6 +8,15 @@
         <PlayersList />
       </div>
     </div>
+  </div>
+  <div v-else-if="gameProgress === 'IN_GAME'">
+    GAME
+  </div>
+  <div v-else-if="gameProgress === 'FINISHED'">
+    FINISHED
+  </div>
+  <div v-else>
+    Invalid game state progress: {{ gameProgress }}
   </div>
 </div>
 </template>
@@ -23,6 +32,8 @@ export default defineComponent({
   computed: {
     ...mapGetters([
       'isConnected',
+      'gameState',
+      'gameProgress',
     ]),
   },
 });

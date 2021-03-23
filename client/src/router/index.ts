@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import HomeScreen from '../components/game/HomeScreen.vue';
+import HomeScreen from '../components/HomeScreen.vue';
 import RoomScreen from '../components/game/RoomScreen.vue';
 
 const routes = [

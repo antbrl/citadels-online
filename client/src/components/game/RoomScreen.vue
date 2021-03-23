@@ -1,5 +1,5 @@
 <template>
-<LobbyScreen v-if="!hasGameStarted" />
+<RoomEntryScreen v-if="!isInRoom" />
 <GameScreen v-else />
 </template>
 
@@ -7,15 +7,15 @@
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
 import GameScreen from './GameScreen.vue';
-import LobbyScreen from './LobbyScreen.vue';
+import RoomEntryScreen from './RoomEntryScreen.vue';
 import { store } from '../../store';
 
 export default defineComponent({
-  components: { LobbyScreen, GameScreen },
+  components: { RoomEntryScreen, GameScreen },
   name: 'RoomScreen',
   computed: {
     ...mapGetters([
-      'hasGameStarted',
+      'isInRoom',
     ]),
   },
   unmounted() {

@@ -5,7 +5,9 @@
   </div>
   <ul class="list-group list-group-flush text-dark">
     <li class="list-group-item">
-        {{ self.username }} <span class="badge badge-info">You</span>
+        {{ self.username }}
+        <span class="badge badge-info">You</span>
+        <span v-if="self.manager" class="badge badge-danger">Manager</span>
     </li>
     <li
       class="list-group-item"
@@ -15,6 +17,7 @@
         {{ player.username }}
         <span v-if="player.online" class="badge badge-success">Online</span>
         <span v-else class="badge badge-secondary">Offline</span>
+        <span v-if="player.manager" class="badge badge-danger">Manager</span>
     </li>
   </ul>
 </div>

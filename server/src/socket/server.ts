@@ -73,7 +73,14 @@ export function initSocket(io: Server) {
           }
         } else {
           socket.playerId = genPlayerId();
-          player = room.gameState.addPlayer(socket.playerId, username || `Player ${socket.playerId}`, true);
+          player = room.gameState.addPlayer(
+            // player id
+            socket.playerId,
+            // username
+            username || `Player ${socket.playerId}`,
+            // first player gets to be the manager
+            room.gameState.players.size === 0,
+          );
           socket.to(roomId).emit('add player', player);
           console.log('added player', player);
         }

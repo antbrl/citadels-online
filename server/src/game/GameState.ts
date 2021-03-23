@@ -23,8 +23,8 @@ export default class GameState {
     return this.players.get(playerId);
   }
 
-  addPlayer(id: string, username: string, online = true) {
-    const player = new Player(id, username, online);
+  addPlayer(id: string, username: string, manager = false, online = true) {
+    const player = new Player(id, username, manager, online);
     this.players.set(id, player);
     return player;
   }

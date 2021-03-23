@@ -1,9 +1,17 @@
 import Player from './Player';
 
+export enum GameProgress {
+  IN_LOBBY = 1,
+  IN_GAME,
+  FINISHED,
+}
+
 export default class GameState {
+  progress: GameProgress;
   players: Map<string, Player>;
 
   constructor() {
+    this.progress = GameProgress.IN_LOBBY;
     this.players = new Map();
   }
 
@@ -23,6 +31,7 @@ export default class GameState {
 
   getStateFromPlayer(playerId: string) {
     return {
+      progress: this.progress,
       players: Array.from(this.players),
       self: playerId,
     };

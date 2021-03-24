@@ -20,3 +20,7 @@ export type ClientGameState = {
   }>
   self: string
 }
+
+export type GameSetupData = {
+  players: string[]
+}

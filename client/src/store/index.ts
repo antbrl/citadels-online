@@ -1,17 +1,23 @@
 import { Socket } from 'socket.io-client';
 import { createStore } from 'vuex';
 import socket from '../socket';
-import { ClientGameState, GameProgress } from '../types/gameTypes';
+import {
+  ClientGameState, GameProgress, GameSetupData, PlayerRole,
+} from '../types/gameTypes';
 
 export interface State {
   socket: Socket
   gameState: ClientGameState | undefined
+  gameSetupData: GameSetupData
 }
 
 export const store = createStore<State>({
   state: {
     socket,
     gameState: undefined,
+    gameSetupData: {
+      players: [],
+    },
   },
 
   getters: {
@@ -35,6 +41,12 @@ export const store = createStore<State>({
         default:
           return 'UNKNOWN';
       }
+    },
+    gameSetupData(state) {
+      return state.gameSetupData;
+    },
+    getPlayerFromId(state) {
+      return (playerId: string) => state.gameState?.players.get(playerId);
     },
   },
 
@@ -66,6 +78,11 @@ export const store = createStore<State>({
           player.online = online;
         }
       }
+    },
+    prepareGameSetupConfirmation(state) {
+      state.gameSetupData.players = Array.from(state.gameState?.players.values() || [])
+        .filter((player) => player.role === PlayerRole.PLAYER)
+        .map((player) => player.id);
     },
   },
 

@@ -1,5 +1,5 @@
 <template>
-<div class="game-container container-lg p-3">
+<div class="container-lg p-3">
   <LobbyScreen v-if="gameProgress === 'IN_LOBBY'" />
   <div v-else-if="gameProgress === 'IN_GAME'">
     GAME
@@ -28,9 +28,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.game-container {
-  height: 100%;
-}
-</style>

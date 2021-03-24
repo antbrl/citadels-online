@@ -1,6 +1,8 @@
 <template>
-<RoomEntryScreen v-if="!isInRoom" />
-<GameScreen v-else />
+<div class="h-100 d-flex">
+  <RoomEntryScreen v-if="!isInRoom" />
+  <GameScreen v-else />
+</div>
 </template>
 
 <script lang="ts">

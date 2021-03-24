@@ -1,14 +1,6 @@
 <template>
 <div class="game-container container-lg p-3">
-  <div v-if="gameProgress === 'IN_LOBBY'" class="card h-100 overflow-hidden">
-    <div class="row no-gutters h-100">
-      <div class="col">
-      </div>
-      <div class="col-3 p-3 bg-light">
-        <PlayersList />
-      </div>
-    </div>
-  </div>
+  <LobbyScreen v-if="gameProgress === 'IN_LOBBY'" />
   <div v-else-if="gameProgress === 'IN_GAME'">
     GAME
   </div>
@@ -24,15 +16,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import PlayersList from './PlayersList.vue';
+import LobbyScreen from './LobbyScreen.vue';
 
 export default defineComponent({
-  components: { PlayersList },
+  components: { LobbyScreen },
   name: 'GameScreen',
   computed: {
     ...mapGetters([
-      'isConnected',
-      'gameState',
       'gameProgress',
     ]),
   },

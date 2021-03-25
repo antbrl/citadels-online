@@ -2,10 +2,7 @@
 <div class="container-fluid d-flex justify-content-center align-items-center">
   <transition name="fade" mode="out-in">
     <div v-if="loading">
-      <button type="button" class="btn btn-dark btn-lg text-light" disabled>
-        <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
-        <span class="align-top">Loading...</span>
-      </button>
+      <LoadingSpinner />
     </div>
     <div v-else-if="error">
       {{ errorMessage }}
@@ -38,8 +35,10 @@
 import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 import { store } from '../../store';
+import LoadingSpinner from './elements/LoadingSpinner.vue';
 
 export default defineComponent({
+  components: { LoadingSpinner },
   name: 'RoomEntryScreen',
   data() {
     return {

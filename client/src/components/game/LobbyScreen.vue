@@ -26,17 +26,17 @@
             >
               <span>{{ getPlayerFromId(playerId).username }}</span>
               <span
-                v-if="!getPlayerFromId(playerId).online"
+                v-if="playerId === gameState.self"
+                class="badge badge-info"
+              >You</span>
+              <span
+                v-else-if="!getPlayerFromId(playerId).online"
                 class="badge badge-secondary"
-              >
-                Offline
-              </span>
+              >Offline</span>
               <span
                 v-else
                 class="badge badge-success"
-              >
-                Online
-              </span>
+              >Online</span>
             </li>
           </ul>
         </div>
@@ -93,6 +93,7 @@ export default defineComponent({
     ...mapGetters([
       'getPlayerFromId',
       'gameSetupData',
+      'gameState',
     ]),
   },
   methods: {

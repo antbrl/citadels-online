@@ -1,34 +1,36 @@
 <template>
 <div class="container-fluid d-flex justify-content-center align-items-center">
-  <div v-if="loading">
-    <span class="btn btn-dark btn-lg text-light">
-      <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
-      <span class="align-top">Loading...</span>
-    </span>
-  </div>
-  <div v-else-if="error">
-    {{ errorMessage }}
-  </div>
-  <div v-else-if="open">
-    <form @submit.prevent="joinRoom" autocomplete="off">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="username"
-          id="username"
-          v-focus
-        >
-      </div>
-      <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Connect">
-      </div>
-    </form>
-  </div>
-  <div v-else>
-    This room is not open for new players.
-  </div>
+  <transition name="fade" mode="out-in">
+    <div v-if="loading">
+      <button type="button" class="btn btn-dark btn-lg text-light" disabled>
+        <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
+        <span class="align-top">Loading...</span>
+      </button>
+    </div>
+    <div v-else-if="error">
+      {{ errorMessage }}
+    </div>
+    <div v-else-if="open">
+      <form @submit.prevent="joinRoom" autocomplete="off">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="username"
+            id="username"
+            v-focus
+          >
+        </div>
+        <div class="form-group">
+          <input class="btn btn-primary" type="submit" value="Connect">
+        </div>
+      </form>
+    </div>
+    <div v-else>
+      This room is not open for new players.
+    </div>
+  </transition>
 </div>
 </template>
 
@@ -42,7 +44,7 @@ export default defineComponent({
   data() {
     return {
       username: '',
-      loading: false,
+      loading: true,
       open: false,
       error: false,
       errorMessage: undefined,

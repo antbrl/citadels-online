@@ -1,7 +1,9 @@
 <template>
 <div class="h-100 d-flex">
-  <RoomEntryScreen v-if="!isInRoom" />
-  <GameScreen v-else />
+  <transition name="fade" mode="out-in">
+    <RoomEntryScreen v-if="!isInRoom" />
+    <GameScreen v-else />
+  </transition>
 </div>
 </template>
 

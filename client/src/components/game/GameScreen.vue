@@ -1,15 +1,17 @@
 <template>
 <div class="container-lg p-3">
-  <LobbyScreen v-if="gameProgress === 'IN_LOBBY'" />
-  <div v-else-if="gameProgress === 'IN_GAME'">
-    GAME
-  </div>
-  <div v-else-if="gameProgress === 'FINISHED'">
-    FINISHED
-  </div>
-  <div v-else>
-    Invalid game state progress: {{ gameProgress }}
-  </div>
+  <transition name="fade" mode="out-in">
+    <LobbyScreen v-if="gameProgress === 'IN_LOBBY'" />
+    <div v-else-if="gameProgress === 'IN_GAME'">
+      GAME
+    </div>
+    <div v-else-if="gameProgress === 'FINISHED'">
+      FINISHED
+    </div>
+    <div v-else>
+      Invalid game state progress: {{ gameProgress }}
+    </div>
+  </transition>
 </div>
 </template>
 

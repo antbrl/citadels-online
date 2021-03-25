@@ -78,7 +78,7 @@
 import { defineComponent } from 'vue';
 import $ from 'jquery';
 import { mapGetters } from 'vuex';
-import PlayersList from './PlayersList.vue';
+import PlayersList from './elements/PlayersList.vue';
 import { store } from '../../store';
 
 export default defineComponent({

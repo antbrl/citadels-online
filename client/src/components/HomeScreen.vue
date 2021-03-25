@@ -1,5 +1,5 @@
 <template>
-<div class="lobby">
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center">
   <div class="card p-4 text-center">
     <div class="form-group">
       <p>Create a new room</p>
@@ -42,12 +42,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.lobby {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>

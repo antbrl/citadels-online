@@ -1,5 +1,5 @@
 <template>
-<div class="lobby">
+<div class="container-fluid d-flex justify-content-center align-items-center">
   <div v-if="loading">
     <span class="btn btn-dark btn-lg text-light">
       <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
@@ -99,12 +99,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.lobby {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>

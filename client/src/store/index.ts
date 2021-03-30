@@ -53,6 +53,7 @@ export const store = createStore<State>({
   mutations: {
     setGameState(state, gameState) {
       state.gameState = gameState;
+      console.log('new game state:', state.gameState);
     },
     resetGameState(state) {
       state.gameState = undefined;
@@ -128,6 +129,23 @@ export const store = createStore<State>({
     connect({ state }) {
       if (state.socket.connected) return;
       state.socket.connect();
+    },
+    startGame({ state }) {
+      return new Promise((resolve, reject) => {
+        if (!state.socket.connected) {
+          return reject(new Error('You must be connected'));
+        }
+        // TODO: add timeout
+        state.socket.emit('start game', state.gameSetupData, (data: any) => {
+          if (data.status === 'ok') {
+            return resolve(undefined);
+          }
+          if (data.status === 'error') {
+            return reject(new Error(`Error when starting game: ${data.message}`));
+          }
+          return reject(new Error('Invalid response'));
+        });
+      });
     },
   },
 });

@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 import { store } from '../store';
+import { ClientGameState } from '../types/gameTypes';
 
 const socket = io('/', {
   path: '/s/',
@@ -34,6 +35,16 @@ socket.on('left room', (playerId) => {
 });
 socket.on('disconnectPlayer', (playerId) => {
   store.commit('removePlayer', playerId);
+});
+socket.on('update game state', (data) => {
+  console.log('data', data);
+
+  const newGameState: ClientGameState = {
+    progress: data.progress,
+    players: new Map(data.players),
+    self: data.self,
+  };
+  store.commit('setGameState', newGameState);
 });
 
 export default socket;

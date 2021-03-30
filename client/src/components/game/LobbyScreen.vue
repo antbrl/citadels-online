@@ -103,8 +103,16 @@ export default defineComponent({
     },
     startGame() {
       this.startingGame = true;
-      console.log('start game', this.gameSetupData);
+      store.dispatch('startGame').then(() => {
+        this.startingGame = false;
+      }).catch((reason) => {
+        console.error('error when starting game', reason);
+        this.startingGame = false;
+      });
     },
+  },
+  beforeUnmount() {
+    $('#setupConfirmationModal').modal('hide');
   },
 });
 </script>

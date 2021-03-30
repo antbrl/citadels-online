@@ -1,7 +1,9 @@
 <template>
-<div class="container-lg p-3">
+<div class="game-container container-lg p-3">
   <transition name="fade" mode="out-in">
-    <LobbyScreen v-if="gameProgress === 'IN_LOBBY'" />
+    <div v-if="gameProgress === 'IN_LOBBY'">
+      <LobbyScreen />
+    </div>
     <div v-else-if="gameProgress === 'IN_GAME'">
       GAME
     </div>
@@ -30,3 +32,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.game-container > div {
+  height: 100%;
+}
+</style>

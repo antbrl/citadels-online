@@ -1,4 +1,5 @@
-import Player from './Player';
+import GameSetupData from './GameSetupData';
+import Player, { PlayerRole } from './Player';
 
 export enum GameProgress {
   IN_LOBBY = 1,
@@ -15,11 +16,13 @@ export default class GameState {
     this.players = new Map();
   }
 
-  containsPlayer(playerId: string) {
+  containsPlayer(playerId: string | undefined) {
+    if (playerId === undefined) { return false; }
     return this.players.has(playerId);
   }
 
-  getPlayer(playerId: string) {
+  getPlayer(playerId: string | undefined) {
+    if (playerId === undefined) { return undefined; }
     return this.players.get(playerId);
   }
 
@@ -29,11 +32,34 @@ export default class GameState {
     return player;
   }
 
-  getStateFromPlayer(playerId: string) {
+  getStateFromPlayer(playerId: string | undefined) {
+    if (playerId === undefined) { return undefined; }
     return {
       progress: this.progress,
       players: Array.from(this.players),
       self: playerId,
     };
+  }
+
+  validateGameSetup(gameSetupData: GameSetupData): boolean {
+    const roomPlayerIds = Array.from(this.players.keys());
+    const validPlayerIds = gameSetupData.players.every(
+      (playerId) => roomPlayerIds.includes(playerId),
+    );
+    return validPlayerIds;
+  }
+
+  setupGame(gameSetupData: GameSetupData) {
+    Array.from(this.players.keys()).forEach((playerId) => {
+      const player = this.players.get(playerId);
+      if (player) {
+        if (gameSetupData.players.includes(playerId)) {
+          player.role = PlayerRole.PLAYER;
+        } else {
+          player.role = PlayerRole.SPECTATOR;
+        }
+      }
+    });
+    this.progress = GameProgress.IN_GAME;
   }
 }

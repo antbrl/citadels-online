@@ -4,6 +4,7 @@ import Player from '../game/Player';
 import Room from '../gameManager/Room';
 import { genPlayerId, genRoomId } from '../utils/idGenerator';
 import ExtendedSocket from './ExtendedSocket';
+import GameSetupData from '../game/GameSetupData';
 
 const gameStore = new InMemoryGameStore();
 
@@ -97,6 +98,50 @@ export function initSocket(io: Server) {
       }
       // room id is invalid
       return callback(null);
+    });
+
+    socket.on('start game', (serializedGameSetupData, callback) => {
+      // room must exist
+      const room = gameStore.findRoom(socket.roomId);
+      if (!room) {
+        return callback({ status: 'error', message: 'room id is invalid' });
+      }
+
+      // player must exist
+      const player = room.gameState.getPlayer(socket.playerId);
+      if (!player) {
+        return callback({ status: 'error', message: 'player id is invalid' });
+      }
+
+      // player must be manager
+      if (!player.manager) {
+        return callback({ status: 'error', message: 'you must be a manager' });
+      }
+
+      // construct setup data
+      const gameSetupData = GameSetupData.fromJSON(serializedGameSetupData);
+
+      // check setup data
+      if (!room.gameState.validateGameSetup(gameSetupData)) {
+        return callback({ status: 'error', message: 'setup data is invalid' });
+      }
+
+      // update game state
+      room.gameState.setupGame(gameSetupData);
+      console.log(`game in room ${room.roomId} has been set up`);
+
+      // send new game state to all players
+      const clients = io.sockets.adapter.rooms.get(room.roomId);
+      if (clients) {
+        clients.forEach((clientId) => {
+          const clientSocket: ExtendedSocket | undefined = io.sockets.sockets.get(clientId);
+          if (clientSocket) {
+            clientSocket.emit('update game state', room.gameState.getStateFromPlayer(clientSocket.playerId));
+          }
+        });
+      }
+
+      return callback({ status: 'ok' });
     });
   });
 }

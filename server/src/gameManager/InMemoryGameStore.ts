@@ -9,7 +9,8 @@ export default class InMemoryGameStore extends GameStore {
     this.rooms = new Map();
   }
 
-  findRoom(roomId: string) {
+  findRoom(roomId: string | undefined) {
+    if (roomId === undefined) { return undefined; }
     return this.rooms.get(roomId);
   }
 

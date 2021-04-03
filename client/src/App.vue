@@ -1,5 +1,5 @@
 <template>
-<h1>Citadels</h1>
+<h1>{{ $t('ui.title') }}</h1>
 <div class="body">
   <router-view></router-view>
 </div>

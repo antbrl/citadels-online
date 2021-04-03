@@ -1,0 +1,173 @@
+{
+    "ui": {
+        "title": "Citadels",
+        "subtitle1": "Bruno Faidutti's",
+        "subtitle2": "Classic Edition",
+        "loading": "Loading...",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "unknown_error": "Unknown error.",
+        "homepage": {
+            "intro_text": "Create a new room",
+            "create_room": "Create a room"
+        },
+        "room": {
+            "username": "Username",
+            "connect": "Connect",
+            "not_open": "This room is not open for new players.",
+            "error_does_not_exist": "This room does not exist.",
+            "error_join": "Error when joining the room: {msg}"
+        },
+        "lobby": {
+            "title": "Game Setup",
+            "no_settings": "No settings for now.",
+            "players": "Players",
+            "you": "You",
+            "online": "Online",
+            "offline": "Offline",
+            "manager": "Manager",
+            "start_game": "Start Game"
+        },
+        "game": {
+        }
+    },
+    "characters": [
+        {
+            "name": "Assassin",
+            "description": "Call a character you wish to kill. The killed character skips their turn."
+        },
+        {
+            "name": "Thief",
+            "description": ""
+        },
+        {
+            "name": "Magician",
+            "description": "Either exchange hands of cards with another player or discard any number of cards to gain an equal number of cards."
+        },
+        {
+            "name": "King",
+            "description": "Take the crown. Gain 1 gold for each of your Noble districts."
+        },
+        {
+            "name": "Bishop",
+            "description": "The Warlord cannot use its ability on your districts. Gain 1 gold for each of your Religious districts."
+        },
+        {
+            "name": "Merchant",
+            "description": "Gain 1 extra gold. Gain 1 gold for each of your Trade districts."
+        },
+        {
+            "name": "Architect",
+            "description": "Gain 2 extra cards. You can build up to 3 districts."
+        },
+        {
+            "name": "Warlord",
+            "description": "Destroy 1 district by paying 1 fewer gold than its cost. Gain 1 gold for each of your Military districts."
+        }
+    ],
+    "districts": {
+        "manor": {
+            "name": "Manor"
+        },
+        "castle": {
+            "name": "Castle"
+        },
+        "palace": {
+            "name": "Palace"
+        },
+        "temple": {
+            "name": "Temple"
+        },
+        "church": {
+            "name": "Church"
+        },
+        "monastery": {
+            "name": "Monastery"
+        },
+        "cathedral": {
+            "name": "Cathedral"
+        },
+        "tavern": {
+            "name": "Tavern"
+        },
+        "market": {
+            "name": "Market"
+        },
+        "trading_post": {
+            "name": "Trading Post"
+        },
+        "docks": {
+            "name": "Docks"
+        },
+        "harbor": {
+            "name": "Harbor"
+        },
+        "town_hall": {
+            "name": "Town Hall"
+        },
+        "watchtower": {
+            "name": "Watchtower"
+        },
+        "prison": {
+            "name": "Prison"
+        },
+        "barracks": {
+            "name": "Barracks"
+        },
+        "fortress": {
+            "name": "Fortress"
+        },
+        "dragon_gate": {
+            "name": "Dragon Gate",
+            "description": "At the end of the game, score 2 extra points."
+        },
+        "university": {
+            "name": "University",
+            "description": "At the end of the game, score 2 extra points."
+        },
+        "map_room": {
+            "name": "Map Room",
+            "description": "At the end of the game, score 1 extra point for each card in your hand."
+        },
+        "imperial_treasury": {
+            "name": "Imperial Treasury",
+            "description": "At the end of the game, score 1 extra point for each gold in your stash."
+        },
+        "haunted_quarter": {
+            "name": "Haunted Quarter",
+            "description": "At the end of the game, the Haunted Quarter counts as any 1 district type of your choice."
+        },
+        "school_of_magic": {
+            "name": "School of Magic",
+            "description": "For abilities that gain resources for your districts, the School of Magic counts as the district type of your choice."
+        },
+        "keep": {
+            "name": "Keep",
+            "description": "The Warlord cannot use its ability on the Keep."
+        },
+        "great_wall": {
+            "name": "Great Wall",
+            "description": "The Warlord must pay 1 extra gold to destroy your other districts."
+        },
+        "graveyard": {
+            "name": "Graveyard",
+            "description": "When the Warlord destroys a district, you may pay 1 gold to recover it in your hand. You cannot use this ability if you are Warlord yourself."
+        },
+        "observatory": {
+            "name": "Observatory",
+            "description": "If you choose to draw cards when gathering resources, draw 3 cards instead of 2."
+        },
+        "library": {
+            "name": "Library",
+            "description": "If you choose to draw cards when gathering resources, keep all drawn cards."
+        },
+        "laboratory": {
+            "name": "Laboratory",
+            "description": "Once per turn, discard 1 card from your hand to gain 2 gold."
+        },
+        "smithy": {
+            "name": "Smithy",
+            "description": "Once per turn, pay 2 gold to gain 3 cards."
+        }
+    }
+}

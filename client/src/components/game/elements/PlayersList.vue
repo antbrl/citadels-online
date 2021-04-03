@@ -1,13 +1,13 @@
 <template>
 <div class="card">
   <div class="card-header">
-    Players
+    {{ $t('ui.lobby.players') }}
   </div>
   <ul class="list-group list-group-flush text-dark">
     <li class="list-group-item">
         {{ self.username }}
-        <span class="badge badge-info">You</span>
-        <span v-if="self.manager" class="badge badge-danger">Manager</span>
+        <span class="badge badge-info">{{ $t('ui.lobby.you') }}</span>
+        <span v-if="self.manager" class="badge badge-danger">{{ $t('ui.lobby.manager') }}</span>
     </li>
     <li
       class="list-group-item"
@@ -15,9 +15,9 @@
       :key="player.id"
     >
         {{ player.username }}
-        <span v-if="player.online" class="badge badge-success">Online</span>
-        <span v-else class="badge badge-secondary">Offline</span>
-        <span v-if="player.manager" class="badge badge-danger">Manager</span>
+        <span v-if="player.online" class="badge badge-success">{{ $t('ui.lobby.online') }}</span>
+        <span v-else class="badge badge-secondary">{{ $t('ui.lobby.offline') }}</span>
+        <span v-if="player.manager" class="badge badge-danger">{{ $t('ui.lobby.manager') }}</span>
     </li>
   </ul>
 </div>

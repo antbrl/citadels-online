@@ -1,7 +1,7 @@
 <template>
 <button type="button" class="btn btn-dark btn-lg text-light" disabled>
   <span class="spinner-border mr-2" role="status" aria-hidden="true"></span>
-  <span class="align-top">Loading...</span>
+  <span class="align-top">{{ $t('ui.loading') }}</span>
 </button>
 </template>
 

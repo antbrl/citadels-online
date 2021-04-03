@@ -1,0 +1,173 @@
+{
+    "ui": {
+        "title": "Citadelles",
+        "subtitle1": "Un jeu de Bruno Faidutti",
+        "subtitle2": "Édition Classique",
+        "loading": "Chargement...",
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "unknown_error": "Erreur inconnue.",
+        "homepage": {
+            "intro_text": "Créer un nouveau salon",
+            "create_room": "Créer un salon"
+        },
+        "room": {
+            "username": "Nom d'utilisateur",
+            "connect": "Se connecter",
+            "not_open": "Ce salon n'est pas ouvert pour de nouveaux joueurs.",
+            "error_does_not_exist": "Ce salon n'existe pas.",
+            "error_join": "Erreur en rejoignant le salon : {msg}"
+        },
+        "lobby": {
+            "title": "Mise en place de la partie",
+            "no_settings": "Pas de paramètres pour le moment.",
+            "players": "Joueurs",
+            "you": "Vous",
+            "online": "En ligne",
+            "offline": "Hors ligne",
+            "manager": "Manager",
+            "start_game": "Commencer la partie"
+        },
+        "game": {
+        }
+    },
+    "characters": [
+        {
+            "name": "Assassin",
+            "description": "L'Assassin peut tuer un personnage de son choix. Celui-ci ne jouera pas durant ce tour."
+        },
+        {
+            "name": "Voleur",
+            "description": "Le Voleur peut voler le trésor du personnage de son choix. Il ne peut dépouiller ni l'Assassin, ni sa victime. Quand le personnage détroussé sera révélé, il donnera tout son or au voleur."
+        },
+        {
+            "name": "Magicien",
+            "description": "Au choix - Le Magicien peut échanger la totalité des cartes de sa main avec celles du joueur de son choix. Ou - Le magicien peut échanger des cartes de sa main contre le même nombre de cartes de la pioche."
+        },
+        {
+            "name": "Roi",
+            "description": "Le Roi prend la Couronne, et choisira en premier son personnage lors du prochain tour. Chaque quartier Noble dans sa cité lui rapporte 1 pièce d'or."
+        },
+        {
+            "name": "Évêque",
+            "description": "L'Évêque ne peut pas être attaqué par le Condottiere, sauf s'il a été assassiné. Chaque quartier Religieux dans sa cité lui rapporte 1 pièce d'or."
+        },
+        {
+            "name": "Marchand",
+            "description": "Le Marchand reçoit 1 pièce d'or supplémentaire au début de son tour. Chaque quartier Commerçant dans sa cité lui rapporte 1 pièce d'or."
+        },
+        {
+            "name": "Architecte",
+            "description": "L'Architecte pioche 2 cartes supplémentaires au début de son tour. Il peut bâtir jusqu'à 3 quartiers."
+        },
+        {
+            "name": "Condottiere",
+            "description": "Le Condottiere peut détruire un quartier en payant son coût de construction moins 1. Chaque quartier Militaire dans sa cité lui rapporte 1 pièce d'or."
+        }
+    ],
+    "districts": {
+        "manor": {
+            "name": "Manoir"
+        },
+        "castle": {
+            "name": "Château"
+        },
+        "palace": {
+            "name": "Palais"
+        },
+        "temple": {
+            "name": "Temple"
+        },
+        "church": {
+            "name": "Église"
+        },
+        "monastery": {
+            "name": "Monastère"
+        },
+        "cathedral": {
+            "name": "Cathédrale"
+        },
+        "tavern": {
+            "name": "Taverne"
+        },
+        "market": {
+            "name": "Marché"
+        },
+        "trading_post": {
+            "name": "Échoppe"
+        },
+        "docks": {
+            "name": "Comptoir"
+        },
+        "harbor": {
+            "name": "Port"
+        },
+        "town_hall": {
+            "name": "Hôtel de Ville"
+        },
+        "watchtower": {
+            "name": "Tour de Guet"
+        },
+        "prison": {
+            "name": "Prison"
+        },
+        "barracks": {
+            "name": "Caserne"
+        },
+        "fortress": {
+            "name": "Forteresse"
+        },
+        "dragon_gate": {
+            "name": "Dracoport",
+            "description": "Coûte 6 pièces d'or à bâtir mais vaut 8 points pour le calcul du score."
+        },
+        "university": {
+            "name": "Université",
+            "description": "Coûte 6 pièces d'or à bâtir mais vaut 8 points pour le calcul du score."
+        },
+        "map_room": {
+            "name": "Salle des Cartes",
+            "description": "À la fin de la partie, marquez 1 point supplémentaire pour chaque carte dans votre main."
+        },
+        "imperial_treasury": {
+            "name": "Trésor Impérial",
+            "description": "À la fin de la partie, marquez 1 point supplémentaire pour chaque pièce d'or dans votre trésor."
+        },
+        "haunted_quarter": {
+            "name": "Cour des Miracles",
+            "description": "Pour le calcul du score, la Cour des Miracles est considérée comme un quartier de la couleur de votre choix."
+        },
+        "school_of_magic": {
+            "name": "École de Magie",
+            "description": "Pour la perception des revenus, l'École de Magie est considérée comme un quartier de la couleur de votre choix. Elle vous rapporte donc si vous êtes Roi, Évêque, Marchand ou Condottiere."
+        },
+        "keep": {
+            "name": "Donjon",
+            "description": "Le Donjon ne peut pas être détruit par le Condottiere."
+        },
+        "great_wall": {
+            "name": "Grande Muraille",
+            "description": "Le prix à payer par le Condottiere pour détruire vos autres quartiers est augmenté de 1."
+        },
+        "graveyard": {
+            "name": "Cimetière",
+            "description": "Lorsque le Condottiere détruit un quartier, vous pouvez payer 1 pièce d'or pour le prendre dans votre main. Vous ne pouvez pas le faire si vous êtes vous-même Condottiere."
+        },
+        "observatory": {
+            "name": "Observatoire",
+            "description": "Si vous choisissez de piocher des cartes au début de votre tour, piochez-en 3 au lieu de 2. Choisissez-en une et défaussez les 2 autres."
+        },
+        "library": {
+            "name": "Bibliothèque",
+            "description": "Si vous choisissez de piocher des cartes au début de votre tour, conservez-les toutes."
+        },
+        "laboratory": {
+            "name": "Laboratoire",
+            "description": "Une fois par tour, vous pouvez défausser 1 carte et recevoir 2 pièces d'or."
+        },
+        "smithy": {
+            "name": "Forge",
+            "description": "Une fois par tour, vous pouvez payer 2 pièces d'or pour piocher 3 cartes."
+        }
+    }
+}

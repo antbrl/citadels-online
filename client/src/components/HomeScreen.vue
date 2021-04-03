@@ -2,12 +2,12 @@
 <div class="container-fluid h-100 d-flex justify-content-center align-items-center">
   <div class="card p-4 text-center">
     <div class="form-group">
-      <p>Create a new room</p>
+      <p>{{ $t('ui.homepage.intro_text') }}</p>
       <input
         class="btn btn-primary"
         type="button"
         @click="createRoom()"
-        value="Create a room"
+        :value="$t('ui.homepage.create_room')"
         :disabled="creatingRoom"
       >
     </div>

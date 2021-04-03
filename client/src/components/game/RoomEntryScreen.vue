@@ -10,7 +10,7 @@
     <div v-else-if="open">
       <form @submit.prevent="joinRoom" autocomplete="off">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">{{ $t('ui.room.username') }}</label>
           <input
             type="text"
             class="form-control"
@@ -20,12 +20,12 @@
           >
         </div>
         <div class="form-group">
-          <input class="btn btn-primary" type="submit" value="Connect">
+          <input class="btn btn-primary" type="submit" :value="$t('ui.room.connect')">
         </div>
       </form>
     </div>
     <div v-else>
-      This room is not open for new players.
+      {{ $t('ui.room.not_open') }}
     </div>
   </transition>
 </div>
@@ -70,12 +70,12 @@ export default defineComponent({
             this.open = true;
             break;
           case 'not found':
-            this.errorMessage = 'This room does not exist.';
+            this.errorMessage = this.$t('ui.room.error_does_not_exist');
             this.error = true;
             break;
           default:
             console.log('get room info error:', roomInfo);
-            this.errorMessage = 'Unknown error.';
+            this.errorMessage = this.$t('ui.unknown_error');
             this.error = true;
         }
         if (!this.error && this.open && localStorage.getItem(this.roomId)) {
@@ -91,7 +91,7 @@ export default defineComponent({
       store.dispatch('joinRoom', { roomId: this.roomId, playerId, username: this.username }).catch((reason) => {
         this.loading = false;
         this.error = true;
-        this.errorMessage = `Error when joining the room: ${reason}`;
+        this.errorMessage = this.$t('ui.room.error_join', { msg: reason });
       });
     },
   },

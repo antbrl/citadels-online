@@ -9,14 +9,16 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="setupConfirmationModalLabel">Start Game</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="setupConfirmationModalLabel">
+          {{ $t('ui.lobby.start_game') }}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" :aria-label="$t('ui.cancel')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="card">
-          <div class="card-header">Players</div>
+          <div class="card-header">{{ $t('ui.lobby.players') }}</div>
           <ul class="list-group list-group-flush">
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
@@ -28,36 +30,38 @@
               <span
                 v-if="playerId === gameState.self"
                 class="badge badge-info"
-              >You</span>
+              >{{ $t('ui.lobby.you') }}</span>
               <span
                 v-else-if="!getPlayerFromId(playerId).online"
                 class="badge badge-secondary"
-              >Offline</span>
+              >{{ $t('ui.lobby.offline') }}</span>
               <span
                 v-else
                 class="badge badge-success"
-              >Online</span>
+              >{{ $t('ui.lobby.online') }}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ $t('ui.cancel') }}
+        </button>
         <button
           type="button"
           class="btn btn-primary"
           @click="startGame"
           :disabled="startingGame"
-        >Confirm</button>
+        >{{ $t('ui.confirm') }}</button>
       </div>
     </div>
   </div>
 </div>
 <div class="card h-100">
-  <div class="card-header">Game Setup</div>
+  <div class="card-header">{{ $t('ui.lobby.title') }}</div>
   <div class="row no-gutters h-100">
     <div class="col p-3">
-      <p class="text-muted">No settings for now.</p>
+      <p class="text-muted">{{ $t('ui.lobby.no_settings') }}</p>
     </div>
     <div class="col-3 p-3 bg-light">
       <PlayersList />
@@ -67,7 +71,7 @@
     <input
     type="button"
     class="btn btn-primary btn-lg btn-block"
-    value="Start Game"
+    :value="$t('ui.lobby.start_game')"
     @click="showConfirmationModal"
   >
   </div>

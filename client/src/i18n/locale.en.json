@@ -8,7 +8,12 @@
         "loading": "Loading...",
         "cancel": "Cancel",
         "confirm": "Confirm",
+        "close": "Close",
         "unknown_error": "Unknown error.",
+        "about": {
+            "title": "About",
+            "text": "<div>Flag icons made by <a href='https://www.freepik.com' title='Freepik'>Freepik</a> from <a href='https://www.flaticon.com/' title='Flaticon'>www.flaticon.com</a></div>"
+        },
         "homepage": {
             "intro_text": "Create a new room",
             "create_room": "Create a room"

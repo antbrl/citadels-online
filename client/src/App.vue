@@ -1,4 +1,25 @@
 <template>
+<div
+  class="modal fade"
+  id="aboutModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ $t('ui.about.title') }}</h5>
+        <button type="button" class="close" data-dismiss="modal" :aria-label="$t('ui.close')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p v-html="$t('ui.about.text')"></p>
+      </div>
+    </div>
+  </div>
+</div>
 <header>
   <div class="container-lg">
     <div class="row align-items-center">
@@ -8,8 +29,14 @@
         <h1><a href="/" class="text-reset">{{ $t('ui.title') }}</a></h1>
         <h6>{{ $t('ui.subtitle2') }}</h6>
       </div>
-      <div class="col-2">
+      <div class="col-2 text-right">
         <LocaleSelector class="opacity-4" />
+        <a
+          class="text-reset text-decoration-none"
+          href="#"
+          data-toggle="modal"
+          data-target="#aboutModal"
+        >{{ $t('ui.about.title') }}</a>
       </div>
     </div>
   </div>

@@ -143,8 +143,9 @@ export const store = createStore<State>({
           if (data.status === 'error') {
             return reject(new Error(`Error when starting game: ${data.message}`));
           }
-          return reject(new Error('Invalid response'));
+          return reject(new Error(`Unknown response type: ${data.status}`));
         });
+        return reject(new Error('Invalid response'));
       });
     },
   },

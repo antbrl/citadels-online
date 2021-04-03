@@ -18,9 +18,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { updateTitle } from '../i18n';
 
 export default defineComponent({
   name: 'LocaleSelector',
+  watch: {
+    '$i18n.locale': {
+      handler() {
+        updateTitle();
+      },
+    },
+  },
 });
 </script>
 

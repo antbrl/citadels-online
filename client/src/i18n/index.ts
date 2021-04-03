@@ -5,8 +5,14 @@ import en from './locale.en.json';
 
 export const messages = { fr, en };
 
-export default createI18n({
+const i18n = createI18n({
   locale: 'fr',
   fallbackLocale: 'fr',
   messages,
 });
+
+export function updateTitle() {
+  document.title = i18n.global.t('ui.title');
+}
+
+export default i18n;

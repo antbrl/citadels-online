@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomeScreen from '../components/HomeScreen.vue';
 import RoomScreen from '../components/game/RoomScreen.vue';
+import { updateTitle } from '../i18n';
 
 const routes = [
   { path: '/', component: HomeScreen },
@@ -11,7 +12,14 @@ const routes = [
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ];
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  updateTitle();
+  next();
+});
+
+export default router;

@@ -1,3 +1,4 @@
+import BoardState from './BoardState';
 import GameSetupData from './GameSetupData';
 import Player, { PlayerRole } from './Player';
 
@@ -10,10 +11,12 @@ export enum GameProgress {
 export default class GameState {
   progress: GameProgress;
   players: Map<string, Player>;
+  board: BoardState | undefined;
 
   constructor() {
     this.progress = GameProgress.IN_LOBBY;
     this.players = new Map();
+    this.board = undefined;
   }
 
   containsPlayer(playerId: string | undefined) {
@@ -38,6 +41,7 @@ export default class GameState {
       progress: this.progress,
       players: Array.from(this.players),
       self: playerId,
+      board: this.board?.exportForPlayer(this.getPlayer(playerId)),
     };
   }
 
@@ -50,16 +54,19 @@ export default class GameState {
   }
 
   setupGame(gameSetupData: GameSetupData) {
+    const players: string[] = [];
     Array.from(this.players.keys()).forEach((playerId) => {
       const player = this.players.get(playerId);
       if (player) {
         if (gameSetupData.players.includes(playerId)) {
           player.role = PlayerRole.PLAYER;
+          players.push(playerId);
         } else {
           player.role = PlayerRole.SPECTATOR;
         }
       }
     });
+    this.board = new BoardState(players);
     this.progress = GameProgress.IN_GAME;
   }
 }

@@ -1,0 +1,142 @@
+{
+    "manor": {
+        "type": 1,
+        "cost": 3,
+        "count": 5
+    },
+    "castle": {
+        "type": 1,
+        "cost": 4,
+        "count": 4
+    },
+    "palace": {
+        "type": 1,
+        "cost": 5,
+        "count": 3
+    },
+    "temple": {
+        "type": 2,
+        "cost": 1,
+        "count": 3
+    },
+    "church": {
+        "type": 2,
+        "cost": 2,
+        "count": 3
+    },
+    "monastery": {
+        "type": 2,
+        "cost": 3,
+        "count": 3
+    },
+    "cathedral": {
+        "type": 2,
+        "cost": 5,
+        "count": 2
+    },
+    "tavern": {
+        "type": 3,
+        "cost": 1,
+        "count": 5
+    },
+    "market": {
+        "type": 3,
+        "cost": 2,
+        "count": 4
+    },
+    "trading_post": {
+        "type": 3,
+        "cost": 2,
+        "count": 3
+    },
+    "docks": {
+        "type": 3,
+        "cost": 3,
+        "count": 3
+    },
+    "harbor": {
+        "type": 3,
+        "cost": 4,
+        "count": 3
+    },
+    "town_hall": {
+        "type": 3,
+        "cost": 5,
+        "count": 2
+    },
+    "watchtower": {
+        "type": 4,
+        "cost": 1,
+        "count": 3
+    },
+    "prison": {
+        "type": 4,
+        "cost": 2,
+        "count": 3
+    },
+    "barracks": {
+        "type": 4,
+        "cost": 3,
+        "count": 3
+    },
+    "fortress": {
+        "type": 4,
+        "cost": 5,
+        "count": 2
+    },
+    "dragon_gate": {
+        "type": 5,
+        "cost": 6,
+        "extra_points": 2
+    },
+    "university": {
+        "type": 5,
+        "cost": 6,
+        "extra_points": 2
+    },
+    "map_room": {
+        "type": 5,
+        "cost": 5
+    },
+    "imperial_treasury": {
+        "type": 5,
+        "cost": 5
+    },
+    "haunted_quarter": {
+        "type": 5,
+        "cost": 2
+    },
+    "school_of_magic": {
+        "type": 5,
+        "cost": 6
+    },
+    "keep": {
+        "type": 5,
+        "cost": 3,
+        "count": 2
+    },
+    "great_wall": {
+        "type": 5,
+        "cost": 6
+    },
+    "graveyard": {
+        "type": 5,
+        "cost": 5
+    },
+    "observatory": {
+        "type": 5,
+        "cost": 4
+    },
+    "library": {
+        "type": 5,
+        "cost": 6
+    },
+    "laboratory": {
+        "type": 5,
+        "cost": 5
+    },
+    "smithy": {
+        "type": 5,
+        "cost": 5
+    }
+}

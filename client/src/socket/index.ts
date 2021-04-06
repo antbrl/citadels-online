@@ -43,6 +43,10 @@ socket.on('update game state', (data) => {
     progress: data.progress,
     players: new Map(data.players),
     self: data.self,
+    board: {
+      players: new Map(data.board?.players),
+      ...data.board,
+    },
   };
   store.commit('setGameState', newGameState);
 });

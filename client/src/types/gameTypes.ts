@@ -19,6 +19,15 @@ export type ClientGameState = {
     role: PlayerRole
   }>
   self: string
+  board: {
+    players: Map<string, {
+      stash: number,
+      hand: (string | null)[]
+      city: string[],
+    }>
+    crown: string,
+    currentCharacter: number
+  }
 }
 
 export type GameSetupData = {

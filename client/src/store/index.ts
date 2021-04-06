@@ -116,6 +116,10 @@ export const store = createStore<State>({
               progress: data.progress,
               players: new Map(data.players),
               self: data.self,
+              board: {
+                players: new Map(data.board?.players),
+                ...data.board,
+              },
             };
             localStorage.setItem(roomId, data.self);
             commit('setGameState', gameState);

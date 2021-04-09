@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import $ from 'jquery';
 import router from './router';
 import { store } from './store';
 import App from './App.vue';
@@ -10,10 +11,21 @@ import './scss/main.scss';
 
 const app = createApp(App);
 
-// Register a global custom directive called `v-focus`
+// Input focus directive
 app.directive('focus', {
   mounted(el) {
     el.focus();
+  },
+});
+
+// Bootstrap tooltip directive
+app.directive('tooltip', {
+  mounted(el) {
+    $(el).tooltip();
+  },
+  updated(el) {
+    $(el).tooltip('dispose');
+    $(el).tooltip();
   },
 });
 

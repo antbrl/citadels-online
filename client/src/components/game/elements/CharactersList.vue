@@ -5,6 +5,7 @@
   </div>
   <ul class="list-group list-group-flush text-dark shadow-sm">
     <li
+      v-for="(character, i) in characters" :key="i"
       class="list-group-item p-2 d-flex justify-content-between"
       :class="{
         'list-group-item-danger': character.killed,
@@ -13,8 +14,9 @@
           character.id === current,
         'bg-light': character.id > current && !character.killed,
       }"
-      v-for="(character, i) in characters"
-      :key="i"
+      v-tooltip
+      data-placement="left"
+      :title="$t(`characters.${character.id}.description`)"
     >
       <span>
         <span

@@ -25,6 +25,8 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.0.12",
+    "@types/jquery": "^3.5.5",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "@vue/compiler-sfc": "^3.0.5",

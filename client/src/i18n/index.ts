@@ -9,6 +9,7 @@ const i18n = createI18n({
   locale: 'fr',
   fallbackLocale: 'fr',
   messages,
+  warnHtmlInMessage: 'off',
 });
 
 export function updateTitle() {

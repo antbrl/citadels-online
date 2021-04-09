@@ -36,16 +36,21 @@
             "start_game": "Start Game"
         },
         "game": {
+            "characters": "Characters"
         }
     },
     "characters": [
+        {
+            "name": "",
+            "description": "Unknown character"
+        },
         {
             "name": "Assassin",
             "description": "Call a character you wish to kill. The killed character skips their turn."
         },
         {
             "name": "Thief",
-            "description": ""
+            "description": "Call a character you wish to rob. When the robbed character is revealed, you take all his gold."
         },
         {
             "name": "Magician",

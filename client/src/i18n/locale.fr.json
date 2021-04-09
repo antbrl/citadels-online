@@ -36,9 +36,14 @@
             "start_game": "Commencer la partie"
         },
         "game": {
+            "characters": "Personnages"
         }
     },
     "characters": [
+        {
+            "name": "",
+            "description": "Personnage inconnu"
+        },
         {
             "name": "Assassin",
             "description": "L'Assassin peut tuer un personnage de son choix. Celui-ci ne jouera pas durant ce tour."

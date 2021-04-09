@@ -48,6 +48,20 @@ export const store = createStore<State>({
     getPlayerFromId(state) {
       return (playerId: string) => state.gameState?.players.get(playerId);
     },
+    charactersList(state) {
+      return {
+        current: state.gameState?.board.currentCharacter,
+        callable: [...Array(8).keys()].map((i) => ({
+          id: i + 1,
+          killed: false,
+          stolen: false,
+        })),
+        aside: [
+          { id: 0 },
+          { id: 0 },
+        ],
+      };
+    },
   },
 
   mutations: {

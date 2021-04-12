@@ -33,7 +33,8 @@
             "online": "Online",
             "offline": "Offline",
             "manager": "Manager",
-            "start_game": "Start Game"
+            "start_game": "Start Game",
+            "wait_message": "Waiting for the manager to start the game."
         },
         "game": {
             "characters": "Characters"

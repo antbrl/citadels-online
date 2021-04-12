@@ -69,11 +69,19 @@
   </div>
   <div class="card-footer">
     <input
-    type="button"
-    class="btn btn-primary btn-lg btn-block"
-    :value="$t('ui.lobby.start_game')"
-    @click="showConfirmationModal"
-  >
+      v-if="isManager"
+      type="button"
+      class="btn btn-primary btn-lg btn-block"
+      :value="$t('ui.lobby.start_game')"
+      @click="showConfirmationModal"
+    >
+    <input
+      v-else
+      type="button"
+      class="btn btn-primary btn-lg btn-block"
+      :value="$t('ui.lobby.wait_message')"
+      disabled
+    >
   </div>
 </div>
 </template>
@@ -99,6 +107,9 @@ export default defineComponent({
       'gameSetupData',
       'gameState',
     ]),
+    isManager() {
+      return this.getPlayerFromId(this.gameState.self)?.manager || false;
+    },
   },
   methods: {
     showConfirmationModal() {

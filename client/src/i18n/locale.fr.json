@@ -33,7 +33,8 @@
             "online": "En ligne",
             "offline": "Hors ligne",
             "manager": "Manager",
-            "start_game": "Commencer la partie"
+            "start_game": "Commencer la partie",
+            "wait_message": "En attente du lancement de la partie par le manager."
         },
         "game": {
             "characters": "Personnages"

@@ -10,6 +10,11 @@
     flex-flow: column;
 }
 
+/* Disable user selection */
+#app, .tooltip {
+    user-select: none;
+}
+
 .opacity-0 { opacity: 0; }
 .opacity-1 { opacity: 0.2; }
 .opacity-2 { opacity: 0.4; }

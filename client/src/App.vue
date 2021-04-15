@@ -20,6 +20,7 @@
     </div>
   </div>
 </div>
+<div class="d-flex flex-column h-100">
 <header>
   <div class="container-lg">
     <div class="row align-items-center">
@@ -41,8 +42,9 @@
     </div>
   </div>
 </header>
-<div class="body">
+<div class="body flex-fill overflow-hidden">
   <router-view></router-view>
+</div>
 </div>
 </template>
 

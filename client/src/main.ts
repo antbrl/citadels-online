@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
 import $ from 'jquery';
+import { Boundary } from 'popper.js';
 import router from './router';
 import { store } from './store';
 import App from './App.vue';
 import i18n from './i18n';
 
 import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/main.scss';
 
 const app = createApp(App);
@@ -19,13 +19,14 @@ app.directive('focus', {
 });
 
 // Bootstrap tooltip directive
+const tooltipOptions = { boundary: 'window' as Boundary };
 app.directive('tooltip', {
   mounted(el) {
-    $(el).tooltip();
+    $(el).tooltip(tooltipOptions);
   },
   updated(el) {
     $(el).tooltip('dispose');
-    $(el).tooltip();
+    $(el).tooltip(tooltipOptions);
   },
 });
 

@@ -4,6 +4,7 @@ import socket from '../socket';
 import {
   ClientGameState, GameProgress, GameSetupData, PlayerRole,
 } from '../types/gameTypes';
+import districts from '../data/districts.json';
 
 export interface State {
   socket: Socket
@@ -47,6 +48,9 @@ export const store = createStore<State>({
     },
     getPlayerFromId(state) {
       return (playerId: string) => state.gameState?.players.get(playerId);
+    },
+    getDistrictFromId() {
+      return (districtId: string) => districts[districtId as keyof typeof districts];
     },
     charactersList(state) {
       return {

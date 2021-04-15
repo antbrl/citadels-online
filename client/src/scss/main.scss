@@ -1,3 +1,4 @@
+@import './bootstrap';
 @import './animation';
 
 #app {
@@ -15,3 +16,7 @@
 .opacity-3 { opacity: 0.6; }
 .opacity-4 { opacity: 0.8; }
 .opacity-5 { opacity: 1; }
+
+.bg-purple {
+    background-color: $purple;
+}

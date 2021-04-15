@@ -1,9 +1,30 @@
 <template>
-<div class="card h-100 bg-light">
+<div class="card h-100 bg-secondary shadow">
   <div class="row no-gutters h-100">
-    <div class="col p-3">
+    <div class="col h-100 d-flex flex-column">
+      <div class="px-2 pt-2 flex-fill overflow-auto">
+        <PlayerCity
+          v-for="[id, board] in otherPlayersBoards"
+          :key="id"
+          :player-id="id"
+          :board="board"
+          class="mb-2"
+        />
+      </div>
+      <div class="p-2 bg-dark border-top border-secondary shadow-lg active">
+        <PlayerCity
+          :player-id="self"
+          :board="selfBoard"
+        />
+        <PlayerHand
+          :hand="selfBoard.hand"
+        />
+      </div>
     </div>
-    <div class="col-2 p-2 bg-white d-flex flex-column justify-content-between">
+    <div
+      class="col-2 p-2 bg-dark border-left border-secondary shadow
+      h-100 d-flex flex-column justify-content-between overflow-auto"
+    >
       <CharactersList
         :title="$t('ui.game.characters')"
         :characters="charactersList.callable"
@@ -21,9 +42,11 @@ import $ from 'jquery';
 import { mapGetters } from 'vuex';
 import { store } from '../../store';
 import CharactersList from './elements/CharactersList.vue';
+import PlayerCity from './elements/PlayerCity.vue';
+import PlayerHand from './elements/PlayerHand.vue';
 
 export default defineComponent({
-  components: { CharactersList },
+  components: { CharactersList, PlayerCity, PlayerHand },
   name: 'LobbyScreen',
   data() {
     return {
@@ -37,6 +60,15 @@ export default defineComponent({
       'gameState',
       'charactersList',
     ]),
+    self() {
+      return this.gameState.self;
+    },
+    otherPlayersBoards() {
+      return this.gameState.board.players.filter((player) => player[0] !== this.self);
+    },
+    selfBoard() {
+      return this.gameState.board.players.filter((player) => player[0] === this.self)[0][1];
+    },
   },
   methods: {
     showConfirmationModal() {

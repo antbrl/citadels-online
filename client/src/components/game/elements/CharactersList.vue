@@ -10,7 +10,7 @@
       :class="{
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,
-        'active bg-white text-dark border border-dark mx-n2 px-3 shadow rounded':
+        'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
           character.id === current,
         'bg-light': character.id > current && !character.killed,
       }"
@@ -28,7 +28,7 @@
           class="badge badge-pill shadow-sm"
           :class="`bg-${bgColor(character.id)} text-${textColor(character.id)}`"
         >{{ character.id }}</span>
-        {{ $t(`characters.${character.id}.name`) }}
+        <span class="badge">{{ $t(`characters.${character.id}.name`) }}</span>
       </span>
       <span>
         <span

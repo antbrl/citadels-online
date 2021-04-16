@@ -18,6 +18,8 @@
         />
         <PlayerHand
           :hand="selfBoard.hand"
+          :stash="selfBoard.stash"
+          :crown="selfBoard.crown"
         />
       </div>
     </div>
@@ -64,10 +66,17 @@ export default defineComponent({
       return this.gameState.self;
     },
     otherPlayersBoards() {
-      return this.gameState.board.players.filter((player) => player[0] !== this.self);
+      return this.gameState.board.players.filter((player) => player[0] !== this.self)
+        .map((board) => ([board[0], {
+          ...board[1],
+          crown: this.gameState.board.crown === board[0],
+        }]));
     },
     selfBoard() {
-      return this.gameState.board.players.filter((player) => player[0] === this.self)[0][1];
+      return {
+        ...this.gameState.board.players.filter((player) => player[0] === this.self)[0][1],
+        crown: this.gameState.board.crown === this.self,
+      };
     },
   },
   methods: {

@@ -5,6 +5,7 @@
       <div class="flex-fill">
         <h5><span class="badge badge-light w-100">{{ username }}</span></h5>
         <p class="text-center">
+          <span v-if="hasCrown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
           <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
           <span class="badge badge-pill badge-secondary p-2">{{ board.hand.length }} 🃏</span>
         </p>
@@ -51,9 +52,13 @@ export default defineComponent({
   computed: {
     ...mapGetters([
       'getPlayerFromId',
+      'gameState',
     ]),
     username() {
       return this.getPlayerFromId(this.playerId)?.username;
+    },
+    hasCrown() {
+      return this.board.crown || false;
     },
   },
 });

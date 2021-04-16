@@ -2,10 +2,7 @@
 <div class="input-group">
   <div class="input-group-prepend">
     <label class="input-group-text px-2" for="inputGroupLocale">
-      <img
-        :src="`/flags/${$t('flag', $i18n.locale)}.svg`"
-        :alt="$i18n.locale"
-      >
+      {{ $t('flag', $i18n.locale) }}
     </label>
   </div>
   <select class="custom-select" v-model="$i18n.locale" id="inputGroupLocale">
@@ -31,9 +28,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-img {
-  height: 1em;
-}
-</style>

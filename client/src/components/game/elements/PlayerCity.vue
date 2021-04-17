@@ -14,7 +14,7 @@
         <CharactersList :characters="[]" />
       </div>
     </div>
-    <div class="col py-2 pl-2 bg-light d-flex justify-content-start overflow-auto">
+    <div class="col py-2 pl-2 bg-secondary d-flex justify-content-start overflow-auto">
       <div v-if="board.city.length === 0" style="height: 9em;"></div>
       <DistrictCard
         v-else

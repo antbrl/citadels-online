@@ -37,7 +37,10 @@
             "wait_message": "Waiting for the manager to start the game."
         },
         "game": {
-            "characters": "Characters"
+            "characters": "Characters",
+            "messages": {
+                "welcome": "Welcome to Citadels Classic Edition!"
+            }
         }
     },
     "characters": [

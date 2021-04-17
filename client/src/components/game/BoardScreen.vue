@@ -1,8 +1,8 @@
 <template>
-<div class="card h-100 bg-secondary border-dark shadow">
+<div class="card h-100 bg-dark border-dark shadow">
   <div class="row no-gutters h-100 overflow-hidden">
     <div class="col h-100 d-flex flex-column">
-      <div class="flex-fill d-flex flex-column overflow-auto">
+      <div class="flex-fill bg-secondary d-flex flex-column overflow-auto">
         <div
           class="bg-dark p-2 mb-2"
           v-for="[id, board] in otherPlayersBoards"
@@ -37,6 +37,9 @@
       />
       <CharactersList :characters="charactersList.aside" />
     </div>
+  </div>
+  <div class="card-footer bg-dark border-top border-secondary h5 p-2 m-0 d-flex">
+    <span class="flex-fill badge badge-lg badge-secondary p-2">{{ statusMessage }} </span>
   </div>
 </div>
 </template>
@@ -80,6 +83,9 @@ export default defineComponent({
         ...this.gameState.board.players.filter((player) => player[0] === this.self)[0][1],
         crown: this.gameState.board.crown === this.self,
       };
+    },
+    statusMessage() {
+      return this.$t('ui.game.messages.welcome');
     },
   },
   methods: {

@@ -37,7 +37,10 @@
             "wait_message": "En attente du lancement de la partie par le manager."
         },
         "game": {
-            "characters": "Personnages"
+            "characters": "Personnages",
+            "messages": {
+                "welcome": "Bienvenue dans Citadelles Édition Classique !"
+            }
         }
     },
     "characters": [

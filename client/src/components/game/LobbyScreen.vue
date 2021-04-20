@@ -69,18 +69,11 @@
   </div>
   <div class="card-footer">
     <input
-      v-if="isManager"
       type="button"
       class="btn btn-primary btn-lg btn-block"
-      :value="$t('ui.lobby.start_game')"
       @click="showConfirmationModal"
-    >
-    <input
-      v-else
-      type="button"
-      class="btn btn-primary btn-lg btn-block"
-      :value="$t('ui.lobby.wait_message')"
-      disabled
+      :disabled="validation.disabled"
+      :value="validation.message"
     >
   </div>
 </div>
@@ -92,6 +85,7 @@ import $ from 'jquery';
 import { mapGetters } from 'vuex';
 import PlayersList from './elements/PlayersList.vue';
 import { store } from '../../store';
+import { PlayerRole } from '../../types/gameTypes';
 
 export default defineComponent({
   components: { PlayersList },
@@ -109,6 +103,41 @@ export default defineComponent({
     ]),
     isManager() {
       return this.getPlayerFromId(this.gameState.self)?.manager || false;
+    },
+    validation() {
+      // get players
+      const playersCount = Array.from(this.gameState?.players.values() || [])
+        .filter((player) => player.role === PlayerRole.PLAYER).length;
+
+      // too many players
+      if (playersCount > 7) {
+        return {
+          disabled: true,
+          message: this.$t('ui.lobby.too_many_players'),
+        };
+      }
+
+      // not enough players
+      if (playersCount < 2) {
+        return {
+          disabled: true,
+          message: this.$t('ui.lobby.not_enough_players'),
+        };
+      }
+
+      // not a manager
+      if (!this.isManager) {
+        return {
+          disabled: true,
+          message: this.$t('ui.lobby.wait_message'),
+        };
+      }
+
+      // pass all checks
+      return {
+        disabled: false,
+        message: this.$t('ui.lobby.start_game'),
+      };
     },
   },
   methods: {

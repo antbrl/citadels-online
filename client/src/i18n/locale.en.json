@@ -34,7 +34,9 @@
             "offline": "Offline",
             "manager": "Manager",
             "start_game": "Start Game",
-            "wait_message": "Waiting for the manager to start the game."
+            "wait_message": "Waiting for the manager to start the game.",
+            "not_enough_players": "There must be at least 2 players to start the game.",
+            "too_many_players": "Too many players (7 max)."
         },
         "game": {
             "characters": "Characters",

@@ -46,11 +46,18 @@ export default class GameState {
   }
 
   validateGameSetup(gameSetupData: GameSetupData): boolean {
+    // check whether all player ids are valid (in the room)
     const roomPlayerIds = Array.from(this.players.keys());
     const validPlayerIds = gameSetupData.players.every(
       (playerId) => roomPlayerIds.includes(playerId),
     );
-    return validPlayerIds;
+    if (!validPlayerIds) return false;
+
+    // number of players must be between 2 and 7
+    if (gameSetupData.players.length < 2 || gameSetupData.players.length > 7) return false;
+
+    // all checks pass
+    return true;
   }
 
   setupGame(gameSetupData: GameSetupData) {

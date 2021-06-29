@@ -1,36 +1,34 @@
+import CharacterManager from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
-import Player, { PlayerRole } from './Player';
+import { PlayerPosition } from './Player';
 import PlayerBoardState from './PlayerBoardState';
 
-export enum CharacterType {
-  NONE = 0,
-  ASSASSIN,
-  THIEF,
-  MAGICIAN,
-  KING,
-  BISHOP,
-  MERCHANT,
-  ARCHITECT,
-  WARLORD,
+export enum TurnPhase {
+  CHOOSE_CHARACTERS = 0,
+  DO_ACTIONS,
 }
 
 export default class BoardState {
   // player city, hand and stash
   players: Map<string, PlayerBoardState>;
 
-  // player id of the crown owner
-  crown: string;
+  // player order, first player has the crown
+  playerOrder: Array<string>;
 
-  // turn progress state
-  currentCharacter: CharacterType;
+  // character manager
+  characterManager: CharacterManager;
+
+  // current turn phase
+  turnPhase: TurnPhase;
 
   // district cards deck
   districtsDeck: DistrictsDeck;
 
   constructor(players: string[]) {
     this.players = new Map();
-    [this.crown] = players; // first player gets the crown
-    this.currentCharacter = CharacterType.NONE;
+    this.playerOrder = [...players];
+    this.characterManager = new CharacterManager(players.length);
+    this.turnPhase = TurnPhase.CHOOSE_CHARACTERS;
     this.districtsDeck = new DistrictsDeck();
 
     // initialize each player hand with 2 gold and 4 district cards
@@ -40,21 +38,25 @@ export default class BoardState {
     });
   }
 
-  exportForPlayer(player: Player | undefined) {
-    if (player === undefined) { return undefined; }
-
+  exportForPlayer(destPlayerId: string) {
     // whether the player can see all hands
-    const seesAll = player.role === PlayerRole.SPECTATOR;
+    const playerPos = Array.from(this.players.keys()).indexOf(destPlayerId) as PlayerPosition;
+    const seesAll = playerPos === PlayerPosition.SPECTATOR;
 
     return {
       players: Array.from(this.players).map((elem) => {
         const playerId = elem[0];
         const board = elem[1];
-        const canSeeHand = seesAll || playerId === player.id;
-        return [playerId, board.exportForPlayer(canSeeHand)];
+        const canSeeHand = seesAll || playerId === destPlayerId;
+        const otherPlayerPos = this.playerOrder.indexOf(playerId) as PlayerPosition;
+        return [playerId, {
+          ...board.exportForPlayer(canSeeHand),
+          characters: this.characterManager.exportPlayerCharacters(otherPlayerPos, playerPos),
+        }];
       }),
-      crown: this.crown,
-      currentCharacter: this.currentCharacter,
+      turnPhase: this.turnPhase,
+      crown: this.playerOrder[0],
+      characters: this.characterManager.exportCharactersList(playerPos),
     };
   }
 }

@@ -41,7 +41,7 @@ export default class GameState {
       progress: this.progress,
       players: Array.from(this.players),
       self: playerId,
-      board: this.board?.exportForPlayer(this.getPlayer(playerId)),
+      board: this.board?.exportForPlayer(playerId),
     };
   }
 

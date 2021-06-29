@@ -14,7 +14,7 @@
           />
         </div>
       </div>
-      <div class="p-2 bg-dark border-top border-secondary active">
+      <div class="p-2 bg-dark border-top border-secondary">
         <PlayerCity
           :player-id="self"
           :board="selfBoard"

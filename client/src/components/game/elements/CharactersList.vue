@@ -36,7 +36,7 @@
           class="badge badge-pill badge-danger p-1 shadow-sm"
         >💀</span>
         <span
-          v-else-if="character.stolen"
+          v-else-if="character.robbed"
           class="badge badge-pill badge-dark p-1 shadow-sm"
         >💰</span>
       </span>

@@ -58,7 +58,7 @@ export const store = createStore<State>({
         callable: [...Array(8).keys()].map((i) => ({
           id: i + 1,
           killed: false,
-          stolen: false,
+          robbed: false,
         })),
         aside: [
           { id: 0 },

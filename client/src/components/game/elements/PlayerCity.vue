@@ -52,7 +52,6 @@ export default defineComponent({
   computed: {
     ...mapGetters([
       'getPlayerFromId',
-      'gameState',
     ]),
     username() {
       return this.getPlayerFromId(this.playerId)?.username;

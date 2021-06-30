@@ -28,16 +28,17 @@ export default defineComponent({
     };
   },
   methods: {
-    createRoom() {
+    async createRoom() {
       this.creatingRoom = true;
-      store.dispatch('createRoom').then((roomId) => {
+      try {
+        const roomId = await store.dispatch('createRoom');
         console.log(roomId);
         this.$router.push({ name: 'join-room', params: { roomId } });
         this.creatingRoom = false;
-      }).catch((reason) => {
-        console.error('error when creating room', reason);
+      } catch (error) {
+        console.error('error when creating room', error);
         this.creatingRoom = false;
-      });
+      }
     },
   },
 });

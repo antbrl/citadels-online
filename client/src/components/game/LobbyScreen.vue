@@ -145,14 +145,15 @@ export default defineComponent({
       store.commit('prepareGameSetupConfirmation');
       $('#setupConfirmationModal').modal();
     },
-    startGame() {
-      this.startingGame = true;
-      store.dispatch('startGame').then(() => {
+    async startGame() {
+      try {
+        this.startingGame = true;
+        await store.dispatch('startGame');
         this.startingGame = false;
-      }).catch((reason) => {
-        console.error('error when starting game', reason);
+      } catch (error) {
+        console.error('error when starting game', error);
         this.startingGame = false;
-      });
+      }
     },
   },
   beforeUnmount() {

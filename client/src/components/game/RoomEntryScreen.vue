@@ -61,10 +61,11 @@ export default defineComponent({
     ...mapActions([
       'connect',
     ]),
-    getRoomInfo(roomId: string) {
-      this.loading = true;
-      this.open = false;
-      store.dispatch('getRoomInfo', roomId).then((roomInfo) => {
+    async getRoomInfo(roomId: string) {
+      try {
+        this.loading = true;
+        this.open = false;
+        const roomInfo = await store.dispatch('getRoomInfo', roomId);
         switch (roomInfo.status) {
           case 'open':
             this.open = true;
@@ -83,7 +84,9 @@ export default defineComponent({
         } else {
           this.loading = false;
         }
-      });
+      } catch (error) {
+        console.log(error);
+      }
     },
     joinRoom() {
       this.loading = true;

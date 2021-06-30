@@ -5,6 +5,7 @@ import {
   ClientGameState, GameProgress, GameSetupData, PlayerRole,
 } from '../types/gameTypes';
 import districts from '../data/districts.json';
+import api from '../api';
 
 export interface State {
   socket: Socket
@@ -106,68 +107,41 @@ export const store = createStore<State>({
   },
 
   actions: {
-    createRoom({ state, dispatch }) {
-      dispatch('connect');
-      return new Promise((resolve) => {
-        // TODO: add timeout
-        state.socket.emit('create room', (data: string) => {
-          resolve(data);
-        });
-      });
-    },
-    getRoomInfo({ state, dispatch }, roomId: string) {
-      dispatch('connect');
-      return new Promise((resolve) => {
-        // TODO: add timeout
-        state.socket.emit('get room info', roomId, (data: object) => {
-          resolve(data);
-        });
-      });
-    },
-    joinRoom({ state, commit, dispatch }, { roomId, playerId, username }) {
-      dispatch('connect');
-      return new Promise((resolve, reject) => {
-        // TODO: add timeout
-        state.socket.emit('join room', roomId, playerId, username, (data: any) => {
-          if (data) {
-            const gameState: ClientGameState = {
-              progress: data.progress,
-              players: new Map(data.players),
-              self: data.self,
-              board: {
-                players: new Map(data.board?.players),
-                ...data.board,
-              },
-            };
-            localStorage.setItem(roomId, data.self);
-            commit('setGameState', gameState);
-            resolve(gameState);
-          } else {
-            reject(new Error('Invalid game state'));
-          }
-        });
-      });
-    },
     connect({ state }) {
       if (state.socket.connected) return;
       state.socket.connect();
     },
-    startGame({ state }) {
-      return new Promise((resolve, reject) => {
-        if (!state.socket.connected) {
-          return reject(new Error('You must be connected'));
-        }
-        // TODO: add timeout
-        return state.socket.emit('start game', state.gameSetupData, (data: any) => {
-          if (data.status === 'ok') {
-            return resolve(undefined);
-          }
-          if (data.status === 'error') {
-            return reject(new Error(`Error when starting game: ${data.message}`));
-          }
-          return reject(new Error(`Unknown response type: ${data.status}`));
-        });
-      });
+
+    async createRoom({ state, dispatch }) {
+      await dispatch('connect');
+      return api.createRoom(state.socket);
+    },
+
+    async getRoomInfo({ state, dispatch }, roomId: string) {
+      await dispatch('connect');
+      return api.getRoomInfo(state.socket, roomId);
+    },
+
+    async joinRoom({ state, commit, dispatch }, { roomId, playerId, username }) {
+      await dispatch('connect');
+      const gameState = await api.joinRoom(state.socket, roomId, playerId, username);
+      localStorage.setItem(roomId, gameState.self);
+      commit('setGameState', gameState);
+      return gameState;
+    },
+
+    async startGame({ state, dispatch }) {
+      await dispatch('connect');
+      const response = await api.startGame(state.socket, state.gameSetupData);
+      switch (response.status) {
+        case 'error':
+          throw new Error(`Error when starting game: ${response.message}`);
+        case 'ok':
+          // everything is fine
+          break;
+        default:
+          throw new Error(`Unknown response type: ${response.status}`);
+      }
     },
   },
 });

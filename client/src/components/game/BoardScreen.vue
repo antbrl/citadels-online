@@ -39,7 +39,23 @@
     </div>
   </div>
   <div class="card-footer bg-dark border-top border-secondary h5 p-2 m-0 d-flex">
-    <span class="flex-fill badge badge-lg badge-secondary p-2">{{ statusMessage }} </span>
+    <!-- status message -->
+    <div class="flex-fill badge badge-lg py-3" :class="{
+      'badge-secondary': statusBar.type === 'NORMAL',
+      'badge-primary': statusBar.type === 'HIGHLIGHTED',
+      'badge-danger': statusBar.type === 'ERROR',
+    }">
+      {{ $t(statusBar.message, statusBar.args) }}
+    </div>
+    <!-- actions -->
+    <input
+      v-for="(action, i) in statusBar.actions"
+      :key="i"
+      type="button"
+      class="btn btn-primary ml-2 font-weight-bold"
+      :value="$t(action.title)"
+      @click="sendMove(action.move)"
+    >
   </div>
 </div>
 </template>
@@ -52,6 +68,8 @@ import { store } from '../../store';
 import CharactersList from './elements/CharactersList.vue';
 import PlayerCity from './elements/PlayerCity.vue';
 import PlayerHand from './elements/PlayerHand.vue';
+import { Move } from '../../types/gameTypes';
+import { getStatusBarData } from '../../data/statusBarData';
 
 export default defineComponent({
   components: { CharactersList, PlayerCity, PlayerHand },
@@ -84,8 +102,8 @@ export default defineComponent({
         crown: this.gameState.board.crown === this.self,
       };
     },
-    statusMessage() {
-      return this.$t('ui.game.messages.welcome');
+    statusBar() {
+      return getStatusBarData(this.gameState);
     },
   },
   methods: {
@@ -102,6 +120,9 @@ export default defineComponent({
         console.error('error when starting game', error);
         this.startingGame = false;
       }
+    },
+    sendMove(move: Move) {
+      alert(move.type, move.data);
     },
   },
   beforeUnmount() {

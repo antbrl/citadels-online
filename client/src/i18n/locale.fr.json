@@ -41,7 +41,22 @@
         "game": {
             "characters": "Personnages",
             "messages": {
-                "welcome": "Bienvenue dans Citadelles Édition Classique !"
+                "welcome": "Bienvenue dans Citadelles Édition Classique !",
+                "choose_characters": {
+                    "initial": "Le joueur possédant la Couronne va débuter le choix des personnages.",
+                    "put_aside_face_up": "{0} doit choisir un personnage à mettre de côté face visible.",
+                    "put_aside_face_down": "{0} doit choisir un personnage à mettre de côté face cachée.",
+                    "choose_character": "{0} doit choisir un personnage.",
+                    "done": "Les personnages sont choisis. Le tour va débuter."
+                },
+                "errors": {
+                    "invalid_state": "Erreur : l'état de la partie est invalide."
+                }
+            },
+            "actions": {
+                "take_coins": "Prendre 2 pièces",
+                "take_cards": "Prendre une carte",
+                "finish_turn": "Terminer le tour"
             }
         }
     },

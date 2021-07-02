@@ -6,7 +6,7 @@
   <ul class="list-group list-group-flush text-dark shadow-sm">
     <li
       v-for="(character, i) in characters" :key="i"
-      class="list-group-item p-2 d-flex justify-content-between"
+      class="list-group-item list-group-item-dark p-2 d-flex justify-content-between"
       :class="{
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,

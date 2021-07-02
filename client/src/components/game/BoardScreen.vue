@@ -2,9 +2,9 @@
 <div class="card h-100 bg-dark border-dark shadow">
   <div class="row no-gutters h-100 overflow-hidden">
     <div class="col h-100 d-flex flex-column">
-      <div class="flex-fill bg-secondary d-flex flex-column overflow-auto">
+      <div class="flex-fill bg-dark d-flex flex-column overflow-auto">
         <div
-          class="bg-dark p-2 mb-2"
+          class="p-2 mb-n2"
           v-for="[id, board] in otherPlayersBoards"
           :key="id"
         >
@@ -14,7 +14,7 @@
           />
         </div>
       </div>
-      <div class="p-2 bg-dark border-top border-secondary">
+      <div class="p-2 bg-gradient-dark border-top border-secondary">
         <PlayerCity
           :player-id="self"
           :board="selfBoard"

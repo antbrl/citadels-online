@@ -1,9 +1,9 @@
 <template>
 <div class="card bg-secondary shadow-sm overflow-hidden">
   <div class="row no-gutters h-100">
-    <div class="col-2 p-2 bg-dark text-light d-flex flex-column">
-      <div class="flex-fill">
-        <h5><span class="badge badge-light w-100">{{ username }}</span></h5>
+    <div class="col-2 p-1 text-light d-flex flex-column">
+      <div class="bg-dark p-1 flex-fill rounded">
+        <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
           <span v-if="hasCrown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
           <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="col py-2 pl-2 bg-secondary d-flex justify-content-start overflow-auto">
-      <div v-if="board.city.length === 0" style="height: 9em;"></div>
+      <div v-if="board.city.length === 0" style="height: 10em;"></div>
       <DistrictCard
         v-else
         v-for="id, i in board.city"

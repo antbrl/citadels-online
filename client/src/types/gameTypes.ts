@@ -67,6 +67,7 @@ export type GameSetupData = {
 
 export enum MoveType {
   AUTO = 0,
+  CHOOSE_CHARACTER,
 }
 
 export interface Move {

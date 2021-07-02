@@ -2,7 +2,7 @@ import { Socket } from 'socket.io-client';
 import { createStore } from 'vuex';
 import socket from '../socket';
 import {
-  ClientGameState, GameProgress, GameSetupData, PlayerRole,
+  ClientGameState, GameProgress, GameSetupData, Move, PlayerRole,
 } from '../types/gameTypes';
 import districts from '../data/districts.json';
 import api from '../api';
@@ -133,6 +133,23 @@ export const store = createStore<State>({
         default:
           throw new Error(`Unknown response type: ${response.status}`);
       }
+    },
+
+    sendMove({ state }, move: Move) {
+      return new Promise((resolve, reject) => {
+        if (!state.socket.connected) {
+          return reject(new Error('You must be connected'));
+        }
+        return state.socket.emit('make move', move, (res: any) => {
+          if (res.status === 'ok') {
+            return resolve(undefined);
+          }
+          if (res.status === 'error') {
+            return reject(new Error(`Error when sending move: ${res.message}`));
+          }
+          return reject(new Error(`Unknown response type: ${res.status}`));
+        });
+      });
     },
   },
 });

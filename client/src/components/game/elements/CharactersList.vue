@@ -13,10 +13,12 @@
         'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
           character.id === current,
         'bg-light': character.id > current && !character.killed,
+        'cursor-pointer': character.selectable,
       }"
       v-tooltip
       data-placement="left"
       :title="$t(`characters.${character.id}.description`)"
+      @click="selectCharacter(i)"
     >
       <span>
         <span
@@ -47,6 +49,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Move, MoveType } from '../../../types/gameTypes';
+import { store } from '../../../store';
 
 export default defineComponent({
   name: 'CharactersList',
@@ -92,6 +96,10 @@ export default defineComponent({
         default:
           return 'light';
       }
+    },
+    async selectCharacter(index: number) {
+      const move: Move = { type: MoveType.CHOOSE_CHARACTER, data: index };
+      await store.dispatch('sendMove', move);
     },
   },
 });

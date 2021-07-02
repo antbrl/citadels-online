@@ -1,6 +1,6 @@
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState, { TurnPhase } from './BoardState';
-import { CharacterChoosingStateType } from './ChoosingState';
+import { CharacterChoosingStateType as CCST } from './ChoosingState';
 import GameSetupData from './GameSetupData';
 import Move, { MoveType } from './Move';
 import Player, { PlayerRole } from './Player';
@@ -82,7 +82,7 @@ export default class GameState implements Subject {
     this.board = new BoardState(players);
   }
 
-  // step through the FSM and return whether or not the action is valid
+  // step through the FSM and return whether the action is valid
   step(move = { type: MoveType.AUTO } as Move): boolean {
     switch (this.progress) {
       case GameProgress.IN_LOBBY:
@@ -97,9 +97,10 @@ export default class GameState implements Subject {
           case TurnPhase.CHOOSE_CHARACTERS:
             {
               // get character choosing state
-              const ccs = this.board.characterManager.choosingState;
+              const cm = this.board.characterManager;
+              const ccs = cm.choosingState;
               switch (ccs.getState().type) {
-                case CharacterChoosingStateType.INITIAL:
+                case CCST.INITIAL:
                   if (move.type === MoveType.AUTO) {
                     setTimeout(() => {
                       ccs.step();
@@ -108,6 +109,13 @@ export default class GameState implements Subject {
                     return true;
                   }
                   return false;
+
+                case CCST.PUT_ASIDE_FACE_DOWN:
+                case CCST.PUT_ASIDE_FACE_UP:
+                  return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseRandomCharacter();
+
+                case CCST.CHOOSE_CHARACTER:
+                  return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseCharacter(move.data);
 
                 default:
                   break;

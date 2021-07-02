@@ -5,6 +5,7 @@ import Room from '../gameManager/Room';
 import { genPlayerId, genRoomId } from '../utils/idGenerator';
 import ExtendedSocket from './ExtendedSocket';
 import GameSetupData from '../game/GameSetupData';
+import Move, { MoveType } from '../game/Move';
 
 const gameStore = new InMemoryGameStore();
 
@@ -140,6 +141,48 @@ export function initSocket(io: Server) {
       if (room.gameState.step()) {
         room.update();
       }
+
+      // tell the client that the request succeeded
+      callback({ status: 'ok' });
+    });
+
+    socket.on('make move', (move: Move, callback) => {
+      // room must exist
+      const room = gameStore.findRoom(socket.roomId);
+      if (!room) {
+        callback({ status: 'error', message: 'room id is invalid' });
+        return;
+      }
+
+      // player must exist
+      const player = room.gameState.getPlayer(socket.playerId);
+      if (!player) {
+        callback({ status: 'error', message: 'player id is invalid' });
+        return;
+      }
+
+      // player must be current player
+      if (player.id !== room.gameState.board?.getCurrentPlayerId()) {
+        callback({ status: 'error', message: 'you must be the current player' });
+        return;
+      }
+
+      // check move type (user move cannot be of AUTO type)
+      if (move.type === MoveType.AUTO) {
+        callback({ status: 'error', message: 'invalid move' });
+        return;
+      }
+
+      // apply move
+      if (!room.gameState.step(move)) {
+        callback({ status: 'error', message: 'invalid move' });
+        return;
+      }
+
+      room.gameState.board.characterManager.choosingState.step();
+
+      // notify clients
+      room.update();
 
       // tell the client that the request succeeded
       callback({ status: 'ok' });

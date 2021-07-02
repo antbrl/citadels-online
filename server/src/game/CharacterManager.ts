@@ -1,4 +1,4 @@
-import { CharacterChoosingStateType, CharacterChoosingState } from './ChoosingState';
+import { CharacterChoosingStateType as CCST, CharacterChoosingState } from './ChoosingState';
 import { PlayerPosition } from './Player';
 
 export enum CharacterType {
@@ -73,17 +73,17 @@ export default class CharacterManager {
     let characters = {};
 
     switch (this.choosingState.getState().type) {
-      case CharacterChoosingStateType.INITIAL:
+      case CCST.INITIAL:
         characters = CharacterManager.exportListInitial();
         break;
-      case CharacterChoosingStateType.PUT_ASIDE_FACE_UP:
-      case CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN:
-        characters = this.exportListPutAside();
+      case CCST.PUT_ASIDE_FACE_UP:
+      case CCST.PUT_ASIDE_FACE_DOWN:
+        characters = this.exportListPutAside(dest);
         break;
-      case CharacterChoosingStateType.CHOOSE_CHARACTER:
+      case CCST.CHOOSE_CHARACTER:
         characters = this.exportListChooseCard(dest);
         break;
-      case CharacterChoosingStateType.DONE:
+      case CCST.DONE:
         characters = this.exportListDone();
         break;
       default:
@@ -116,8 +116,8 @@ export default class CharacterManager {
     };
   }
 
-  private exportListPutAside() {
-    return this.exportListChooseCard(PlayerPosition.SPECTATOR, false);
+  private exportListPutAside(dest: PlayerPosition) {
+    return this.exportListChooseCard(dest, false);
   }
 
   private exportListChooseCard(dest: PlayerPosition, canSee = true) {
@@ -134,6 +134,7 @@ export default class CharacterManager {
           ?.includes(characterType),
       ).map((characterType) => ({
         id: canSeeList ? characterType : 0,
+        selectable: dest === player,
       })),
       // characters that are put aside
       aside: this.getAsideCards(),
@@ -156,5 +157,41 @@ export default class CharacterManager {
       // characters that are put aside
       aside: this.getAsideCards(),
     };
+  }
+
+  chooseRandomCharacter(): boolean {
+    const index = Math.floor(
+      Math.random() * this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN).length,
+    );
+    return this.chooseCharacter(index);
+  }
+
+  chooseCharacter(index: number): boolean {
+    const characters = this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN);
+
+    if (index < 0 || index >= characters.length) {
+      return false;
+    }
+
+    if (this.choosingState.getState().player === PlayerPosition.SPECTATOR) {
+      return false;
+    }
+
+    switch (this.choosingState.getState().type) {
+      case CCST.PUT_ASIDE_FACE_UP:
+        this.characters[characters[index]] = CharacterPosition.ASIDE_FACE_UP;
+        return true;
+      case CCST.PUT_ASIDE_FACE_DOWN:
+        this.characters[characters[index]] = CharacterPosition.ASIDE_FACE_DOWN;
+        return true;
+      case CCST.CHOOSE_CHARACTER:
+        this.characters[characters[index]] = (
+          this.choosingState.getState().player + CharacterPosition.PLAYER_1
+        );
+        return true;
+
+      default:
+    }
+    return false;
   }
 }

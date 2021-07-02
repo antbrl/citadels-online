@@ -1,5 +1,6 @@
 export enum MoveType {
   AUTO = 0,
+  CHOOSE_CHARACTER,
 }
 
 export default interface Move {

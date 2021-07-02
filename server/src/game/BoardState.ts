@@ -65,4 +65,8 @@ export default class BoardState {
       characters: this.characterManager.exportCharactersList(playerPos),
     };
   }
+
+  getCurrentPlayerId() {
+    return this.playerOrder[this.currentPlayer];
+  }
 }

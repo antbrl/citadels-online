@@ -35,7 +35,7 @@ export function initSocket(io: Server) {
       socket.roomId = roomId;
 
       // create room
-      const room = new Room(socket.roomId);
+      const room = new Room(socket.roomId, io);
       gameStore.saveRoom(room.roomId, room);
 
       // join room
@@ -70,7 +70,8 @@ export function initSocket(io: Server) {
             player.online = true;
           } else {
             // player id is invalid
-            return callback(null);
+            callback(null);
+            return;
           }
         } else {
           socket.playerId = genPlayerId();
@@ -94,28 +95,32 @@ export function initSocket(io: Server) {
         socket.to(socket.roomId).emit('joined room', socket.playerId);
 
         // return game state to joining player
-        return callback(room.gameState.getStateFromPlayer(socket.playerId));
+        callback(room.gameState.getStateFromPlayer(socket.playerId));
+        return;
       }
       // room id is invalid
-      return callback(null);
+      callback(null);
     });
 
     socket.on('start game', (serializedGameSetupData, callback) => {
       // room must exist
       const room = gameStore.findRoom(socket.roomId);
       if (!room) {
-        return callback({ status: 'error', message: 'room id is invalid' });
+        callback({ status: 'error', message: 'room id is invalid' });
+        return;
       }
 
       // player must exist
       const player = room.gameState.getPlayer(socket.playerId);
       if (!player) {
-        return callback({ status: 'error', message: 'player id is invalid' });
+        callback({ status: 'error', message: 'player id is invalid' });
+        return;
       }
 
       // player must be manager
       if (!player.manager) {
-        return callback({ status: 'error', message: 'you must be a manager' });
+        callback({ status: 'error', message: 'you must be a manager' });
+        return;
       }
 
       // construct setup data
@@ -123,25 +128,21 @@ export function initSocket(io: Server) {
 
       // check setup data
       if (!room.gameState.validateGameSetup(gameSetupData)) {
-        return callback({ status: 'error', message: 'setup data is invalid' });
+        callback({ status: 'error', message: 'setup data is invalid' });
+        return;
       }
 
       // update game state
       room.gameState.setupGame(gameSetupData);
       console.log(`game in room ${room.roomId} has been set up`);
 
-      // send new game state to all players
-      const clients = io.sockets.adapter.rooms.get(room.roomId);
-      if (clients) {
-        clients.forEach((clientId) => {
-          const clientSocket: ExtendedSocket | undefined = io.sockets.sockets.get(clientId);
-          if (clientSocket) {
-            clientSocket.emit('update game state', room.gameState.getStateFromPlayer(clientSocket.playerId));
-          }
-        });
+      // start game
+      if (room.gameState.step()) {
+        room.update();
       }
 
-      return callback({ status: 'ok' });
+      // tell the client that the request succeeded
+      callback({ status: 'ok' });
     });
   });
 }

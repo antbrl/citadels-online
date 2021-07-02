@@ -1,5 +1,8 @@
-import BoardState from './BoardState';
+import { Observer, Subject } from '../utils/observerPattern';
+import BoardState, { TurnPhase } from './BoardState';
+import { CharacterChoosingStateType } from './ChoosingState';
 import GameSetupData from './GameSetupData';
+import Move, { MoveType } from './Move';
 import Player, { PlayerRole } from './Player';
 
 export enum GameProgress {
@@ -8,15 +11,17 @@ export enum GameProgress {
   FINISHED,
 }
 
-export default class GameState {
+export default class GameState implements Subject {
   progress: GameProgress;
   players: Map<string, Player>;
   board: BoardState | undefined;
+  observers: Observer[];
 
   constructor() {
     this.progress = GameProgress.IN_LOBBY;
     this.players = new Map();
     this.board = undefined;
+    this.observers = [];
   }
 
   containsPlayer(playerId: string | undefined) {
@@ -61,6 +66,7 @@ export default class GameState {
   }
 
   setupGame(gameSetupData: GameSetupData) {
+    // initialize board
     const players: string[] = [];
     Array.from(this.players.keys()).forEach((playerId) => {
       const player = this.players.get(playerId);
@@ -74,6 +80,73 @@ export default class GameState {
       }
     });
     this.board = new BoardState(players);
-    this.progress = GameProgress.IN_GAME;
+  }
+
+  // step through the FSM and return whether or not the action is valid
+  step(move = { type: MoveType.AUTO } as Move): boolean {
+    switch (this.progress) {
+      case GameProgress.IN_LOBBY:
+        if (move.type === MoveType.AUTO) {
+          this.progress = GameProgress.IN_GAME;
+          return this.step(move);
+        }
+        break;
+
+      case GameProgress.IN_GAME:
+        switch (this.board?.turnPhase) {
+          case TurnPhase.CHOOSE_CHARACTERS:
+            {
+              // get character choosing state
+              const ccs = this.board.characterManager.choosingState;
+              switch (ccs.getState().type) {
+                case CharacterChoosingStateType.INITIAL:
+                  if (move.type === MoveType.AUTO) {
+                    setTimeout(() => {
+                      ccs.step();
+                      this.notify();
+                    }, 3000);
+                    return true;
+                  }
+                  return false;
+
+                default:
+                  break;
+              }
+            }
+            break;
+
+          case TurnPhase.DO_ACTIONS:
+            break;
+          default:
+            this.progress = GameProgress.FINISHED;
+            break;
+        }
+        break;
+
+      case GameProgress.FINISHED:
+        break;
+
+      default:
+    }
+    return false;
+  }
+
+  attach(observer: Observer): void {
+    if (!this.observers.includes(observer)) {
+      this.observers.push(observer);
+    }
+  }
+
+  detach(observer: Observer): void {
+    const index = this.observers.indexOf(observer);
+    if (index !== -1) {
+      this.observers.splice(index, 1);
+    }
+  }
+
+  notify(): void {
+    this.observers.forEach((observer) => {
+      observer.update();
+    });
   }
 }

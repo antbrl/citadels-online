@@ -15,6 +15,9 @@ export default class BoardState {
   // player order, first player has the crown
   playerOrder: Array<string>;
 
+  // current player (index of playerOrder)
+  currentPlayer: PlayerPosition;
+
   // character manager
   characterManager: CharacterManager;
 
@@ -27,6 +30,7 @@ export default class BoardState {
   constructor(players: string[]) {
     this.players = new Map();
     this.playerOrder = [...players];
+    this.currentPlayer = PlayerPosition.PLAYER_1;
     this.characterManager = new CharacterManager(players.length);
     this.turnPhase = TurnPhase.CHOOSE_CHARACTERS;
     this.districtsDeck = new DistrictsDeck();
@@ -55,6 +59,8 @@ export default class BoardState {
         }];
       }),
       turnPhase: this.turnPhase,
+      playerOrder: this.playerOrder,
+      currentPlayer: this.currentPlayer,
       crown: this.playerOrder[0],
       characters: this.characterManager.exportCharactersList(playerPos),
     };

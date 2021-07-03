@@ -1,5 +1,5 @@
 import { Observer, Subject } from '../utils/observerPattern';
-import BoardState, { TurnPhase } from './BoardState';
+import BoardState, { GamePhase } from './BoardState';
 import { CharacterChoosingStateType as CCST } from './ChoosingState';
 import GameSetupData from './GameSetupData';
 import Move, { MoveType } from './Move';
@@ -94,7 +94,20 @@ export default class GameState implements Subject {
 
       case GameProgress.IN_GAME:
         switch (this.board?.turnPhase) {
-          case TurnPhase.CHOOSE_CHARACTERS:
+          case GamePhase.INITIAL:
+            if (move.type === MoveType.AUTO) {
+              setTimeout(() => {
+                if (this.board) {
+                  this.board.turnPhase = GamePhase.CHOOSE_CHARACTERS;
+                  this.step();
+                  this.notify();
+                }
+              }, 3000);
+              return true;
+            }
+            return false;
+
+          case GamePhase.CHOOSE_CHARACTERS:
             {
               // get character choosing state
               const cm = this.board.characterManager;
@@ -125,7 +138,7 @@ export default class GameState implements Subject {
             }
             break;
 
-          case TurnPhase.DO_ACTIONS:
+          case GamePhase.DO_ACTIONS:
             break;
           default:
             this.progress = GameProgress.FINISHED;

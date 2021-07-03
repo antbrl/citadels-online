@@ -111,8 +111,10 @@ export default class GameState implements Subject {
                   return false;
 
                 case CCST.PUT_ASIDE_FACE_DOWN:
-                case CCST.PUT_ASIDE_FACE_UP:
                   return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseRandomCharacter();
+
+                case CCST.PUT_ASIDE_FACE_UP:
+                  return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseRandomCharacter(true);
 
                 case CCST.CHOOSE_CHARACTER:
                   return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseCharacter(move.data);

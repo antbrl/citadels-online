@@ -15,9 +15,6 @@ export default class BoardState {
   // player order, first player has the crown
   playerOrder: Array<string>;
 
-  // current player (index of playerOrder)
-  currentPlayer: PlayerPosition;
-
   // character manager
   characterManager: CharacterManager;
 
@@ -30,7 +27,6 @@ export default class BoardState {
   constructor(players: string[]) {
     this.players = new Map();
     this.playerOrder = [...players];
-    this.currentPlayer = PlayerPosition.PLAYER_1;
     this.characterManager = new CharacterManager(players.length);
     this.turnPhase = TurnPhase.CHOOSE_CHARACTERS;
     this.districtsDeck = new DistrictsDeck();
@@ -44,8 +40,8 @@ export default class BoardState {
 
   exportForPlayer(destPlayerId: string) {
     // whether the player can see all hands
-    const playerPos = Array.from(this.players.keys()).indexOf(destPlayerId) as PlayerPosition;
-    const seesAll = playerPos === PlayerPosition.SPECTATOR;
+    const destPlayerPos = Array.from(this.players.keys()).indexOf(destPlayerId) as PlayerPosition;
+    const seesAll = destPlayerPos === PlayerPosition.SPECTATOR;
 
     return {
       players: Array.from(this.players).map((elem) => {
@@ -55,18 +51,29 @@ export default class BoardState {
         const otherPlayerPos = this.playerOrder.indexOf(playerId) as PlayerPosition;
         return [playerId, {
           ...board.exportForPlayer(canSeeHand),
-          characters: this.characterManager.exportPlayerCharacters(otherPlayerPos, playerPos),
+          characters: this.characterManager.exportPlayerCharacters(otherPlayerPos, destPlayerPos),
         }];
       }),
       turnPhase: this.turnPhase,
       playerOrder: this.playerOrder,
-      currentPlayer: this.currentPlayer,
+      currentPlayer: this.getCurrentPlayerPosition(),
       crown: this.playerOrder[0],
-      characters: this.characterManager.exportCharactersList(playerPos),
+      characters: this.characterManager.exportCharactersList(destPlayerPos),
     };
   }
 
+  // current player (index of playerOrder)
+  getCurrentPlayerPosition(): PlayerPosition {
+    switch (this.turnPhase) {
+      case TurnPhase.CHOOSE_CHARACTERS:
+        return this.characterManager.choosingState.getState().player;
+
+      default:
+    }
+    return PlayerPosition.SPECTATOR;
+  }
+
   getCurrentPlayerId() {
-    return this.playerOrder[this.currentPlayer];
+    return this.playerOrder[this.getCurrentPlayerPosition()];
   }
 }

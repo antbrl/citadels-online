@@ -128,12 +128,12 @@ export default class CharacterManager {
     return {
       // current character
       current: this.currentCharacter,
-      // callable characters: all characters except those that are aside and face up
+      // callable characters: characters that have not been chosen
       callable: CharacterManager.getAllCharacters().filter(
-        (characterType) => !this.getCharactersAtPosition(CharacterPosition.ASIDE_FACE_UP)
+        (characterType) => this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN)
           ?.includes(characterType),
       ).map((characterType) => ({
-        id: canSeeList ? characterType : 0,
+        id: canSeeList ? characterType + 1 : 0,
         selectable: dest === player,
       })),
       // characters that are put aside
@@ -150,7 +150,7 @@ export default class CharacterManager {
         (characterType) => !this.getCharactersAtPosition(CharacterPosition.ASIDE_FACE_UP)
           ?.includes(characterType),
       ).map((characterType) => ({
-        id: characterType,
+        id: characterType + 1,
         killed: this.killedCharacter === characterType,
         robbed: this.robbedCharacter === characterType,
       })),
@@ -159,10 +159,14 @@ export default class CharacterManager {
     };
   }
 
-  chooseRandomCharacter(): boolean {
-    const index = Math.floor(
-      Math.random() * this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN).length,
-    );
+  chooseRandomCharacter(avoidKing = false): boolean {
+    const characters = this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN);
+    let index;
+
+    do {
+      index = Math.floor(Math.random() * characters.length);
+    } while (avoidKing && characters.length > 1 && characters[index] === CharacterType.KING);
+
     return this.chooseCharacter(index);
   }
 

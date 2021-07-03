@@ -179,8 +179,6 @@ export function initSocket(io: Server) {
         return;
       }
 
-      room.gameState.board.characterManager.choosingState.step();
-
       // notify clients
       room.update();
 

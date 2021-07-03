@@ -171,7 +171,7 @@ export default class CharacterManager {
   }
 
   chooseCharacter(index: number): boolean {
-    const characters = this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN);
+    let characters = this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN);
 
     if (index < 0 || index >= characters.length) {
       return false;
@@ -184,18 +184,53 @@ export default class CharacterManager {
     switch (this.choosingState.getState().type) {
       case CCST.PUT_ASIDE_FACE_UP:
         this.characters[characters[index]] = CharacterPosition.ASIDE_FACE_UP;
-        return true;
+        break;
+
       case CCST.PUT_ASIDE_FACE_DOWN:
         this.characters[characters[index]] = CharacterPosition.ASIDE_FACE_DOWN;
-        return true;
+        break;
+
       case CCST.CHOOSE_CHARACTER:
         this.characters[characters[index]] = (
           this.choosingState.getState().player + CharacterPosition.PLAYER_1
         );
-        return true;
+        break;
+
+      case CCST.GET_ASIDE_FACE_DOWN:
+        this.characters[characters[index]] = CharacterPosition.NOT_CHOSEN;
+        break;
 
       default:
+        // invalid state
+        return false;
     }
-    return false;
+
+    this.choosingState.step();
+
+    // apply next automatic steps
+    while (this.choosingState.getState().player === PlayerPosition.SPECTATOR) {
+      characters = this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN);
+
+      switch (this.choosingState.getState().type) {
+        case CCST.GET_ASIDE_FACE_DOWN:
+          this.characters[this.getCharactersAtPosition(CharacterPosition.ASIDE_FACE_DOWN)[0]] = (
+            CharacterPosition.NOT_CHOSEN
+          );
+          break;
+
+        case CCST.PUT_ASIDE_FACE_DOWN:
+          this.characters[characters[0]] = CharacterPosition.ASIDE_FACE_DOWN;
+          break;
+
+        case CCST.DONE:
+          return true;
+
+        default:
+      }
+
+      this.choosingState.step();
+    }
+
+    return true;
   }
 }

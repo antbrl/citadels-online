@@ -38,6 +38,9 @@ export type ClientGameState = {
       stash: number
       hand: (string | null)[]
       city: string[]
+      characters: {
+        id: number
+      }[]
     }>
     turnPhase: TurnPhase
     playerOrder: string[],

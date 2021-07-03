@@ -11,7 +11,7 @@
         </p>
       </div>
       <div>
-        <CharactersList :characters="[]" />
+        <CharactersList :characters="board.characters" />
       </div>
     </div>
     <div class="col py-2 pl-2 bg-secondary d-flex justify-content-start overflow-auto">

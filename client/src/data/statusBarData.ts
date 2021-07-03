@@ -3,7 +3,7 @@ import {
   ClientGameState,
   GameProgress,
   StatusBarData,
-  TurnPhase,
+  GamePhase,
 } from '../types/gameTypes';
 
 const INVALID_STATE: StatusBarData = {
@@ -28,7 +28,14 @@ export function getStatusBarData(state: ClientGameState): StatusBarData {
   const isCurrentPlayerSelf = currentPlayer === state.self;
   const currentPlayerName = state.players.get(currentPlayer)?.username ?? '';
 
-  if (state.board.turnPhase === TurnPhase.CHOOSE_CHARACTERS) {
+  if (state.board.turnPhase === GamePhase.INITIAL) {
+    return {
+      type: 'NORMAL',
+      message: 'ui.game.messages.welcome',
+    };
+  }
+
+  if (state.board.turnPhase === GamePhase.CHOOSE_CHARACTERS) {
     const message = MESSAGES_CHOOSE_CHARACTERS[
       state.board.characters.state.type as keyof typeof MESSAGES_CHOOSE_CHARACTERS
     ];

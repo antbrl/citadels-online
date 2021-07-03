@@ -9,8 +9,9 @@ export enum PlayerRole {
   PLAYER,
 }
 
-export enum TurnPhase {
-  CHOOSE_CHARACTERS = 0,
+export enum GamePhase {
+  INITIAL = 0,
+  CHOOSE_CHARACTERS,
   DO_ACTIONS,
 }
 
@@ -42,7 +43,7 @@ export type ClientGameState = {
         id: number
       }[]
     }>
-    turnPhase: TurnPhase
+    turnPhase: GamePhase
     playerOrder: string[],
     currentPlayer: number,
     crown: string

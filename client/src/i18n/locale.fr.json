@@ -47,7 +47,7 @@
                     "put_aside_face_up": "{0} doit choisir un personnage à mettre de côté face visible.",
                     "put_aside_face_down": "{0} doit choisir un personnage à mettre de côté face cachée.",
                     "choose_character": "{0} doit choisir un personnage.",
-                    "done": "Les personnages sont choisis. Le tour va débuter."
+                    "done": "Les personnages sont choisis. L'appel va débuter."
                 },
                 "errors": {
                     "invalid_state": "Erreur : l'état de la partie est invalide."

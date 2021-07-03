@@ -41,7 +41,17 @@
         "game": {
             "characters": "Characters",
             "messages": {
-                "welcome": "Welcome to Citadels Classic Edition!"
+                "welcome": "Welcome to Citadels Classic Edition!",
+                "choose_characters": {
+                    "initial": "The player owning the crown will start choosing characters.",
+                    "put_aside_face_up": "{0} must choose a character to put aside face up.",
+                    "put_aside_face_down": "{0} must choose a character to put aside face down.",
+                    "choose_character": "{0} must choose a character.",
+                    "done": "Characters have been chosen. The call is going to start."
+                },
+                "errors": {
+                    "invalid_state": "Error: invalid game state."
+                }
             }
         }
     },

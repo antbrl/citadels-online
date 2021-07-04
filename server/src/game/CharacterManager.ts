@@ -14,6 +14,57 @@ export enum CharacterType {
   CHARACTER_COUNT,
 }
 
+export enum TurnState {
+  INITIAL = 0,
+
+  ASSASSIN_RESOURCES,
+  ASSASSIN_CHOOSE_CARD,
+  ASSASSIN_ACTIONS,
+  ASSASSIN_KILL,
+  ASSASSIN_BUILD,
+
+  THIEF_RESOURCES,
+  THIEF_CHOOSE_CARD,
+  THIEF_ACTIONS,
+  THIEF_ROB,
+  THIEF_BUILD,
+
+  MAGICIAN_RESOURCES,
+  MAGICIAN_CHOOSE_CARD,
+  MAGICIAN_ACTIONS,
+  MAGICIAN_EXCHANGE_HAND,
+  MAGICIAN_DISCARD_CARDS,
+  MAGICIAN_BUILD,
+
+  KING_RESOURCES,
+  KING_CHOOSE_CARD,
+  KING_ACTIONS,
+  KING_BUILD,
+
+  BISHOP_RESOURCES,
+  BISHOP_CHOOSE_CARD,
+  BISHOP_ACTIONS,
+  BISHOP_BUILD,
+
+  MERCHANT_RESOURCES,
+  MERCHANT_CHOOSE_CARD,
+  MERCHANT_ACTIONS,
+  MERCHANT_BUILD,
+
+  ARCHITECT_RESOURCES,
+  ARCHITECT_CHOOSE_CARD,
+  ARCHITECT_ACTIONS,
+  ARCHITECT_BUILD,
+
+  WARLORD_RESOURCES,
+  WARLORD_CHOOSE_CARD,
+  WARLORD_ACTIONS,
+  WARLORD_DESTROY_DISTRICT,
+  WARLORD_BUILD,
+
+  DONE,
+}
+
 export enum CharacterPosition {
   NOT_CHOSEN = 0,
   ASIDE_FACE_UP,
@@ -29,24 +80,37 @@ export enum CharacterPosition {
 
 export default class CharacterManager {
   // characters position on board, indexed by CharacterType
-  characters: Array<CharacterPosition>;
+  characters!: Array<CharacterPosition>;
 
   // choosing state
   choosingState: CharacterChoosingState;
 
   // turn progress state
-  currentCharacter: CharacterType;
+  turnState!: TurnState;
 
   // special character attributes
-  killedCharacter: CharacterType;
-  robbedCharacter: CharacterType;
+  killedCharacter!: CharacterType;
+  robbedCharacter!: CharacterType;
+
+  // action restriction data
+  districtsToBuild!: number[];
+  canTakeEarnings!: boolean[];
+  canDoSpecialAction!: boolean[];
 
   constructor(playerCount: number) {
-    this.characters = Array(CharacterType.CHARACTER_COUNT).fill(CharacterPosition.NOT_CHOSEN);
     this.choosingState = new CharacterChoosingState(playerCount);
-    this.currentCharacter = CharacterType.NONE;
+    this.reset();
+  }
+
+  reset() {
+    this.characters = Array(CharacterType.CHARACTER_COUNT).fill(CharacterPosition.NOT_CHOSEN);
+    this.choosingState.reset();
+    this.turnState = TurnState.INITIAL;
     this.killedCharacter = CharacterType.NONE;
     this.robbedCharacter = CharacterType.NONE;
+    this.districtsToBuild = [1, 1, 1, 1, 1, 1, 3, 1];
+    this.canTakeEarnings = [false, false, false, true, true, true, false, true];
+    this.canDoSpecialAction = [false, false, false, false, false, true, true, true];
   }
 
   static getAllCharacters() {
@@ -58,6 +122,77 @@ export default class CharacterManager {
       if (position === pos) characters.push(character);
       return characters;
     }, new Array<CharacterType>());
+  }
+
+  getCurrentCharacter(): CharacterType {
+    switch (this.turnState) {
+      case TurnState.ASSASSIN_RESOURCES:
+      case TurnState.ASSASSIN_CHOOSE_CARD:
+      case TurnState.ASSASSIN_ACTIONS:
+      case TurnState.ASSASSIN_KILL:
+      case TurnState.ASSASSIN_BUILD:
+        return CharacterType.ASSASSIN;
+      case TurnState.THIEF_RESOURCES:
+      case TurnState.THIEF_CHOOSE_CARD:
+      case TurnState.THIEF_ACTIONS:
+      case TurnState.THIEF_ROB:
+      case TurnState.THIEF_BUILD:
+        return CharacterType.THIEF;
+      case TurnState.MAGICIAN_RESOURCES:
+      case TurnState.MAGICIAN_CHOOSE_CARD:
+      case TurnState.MAGICIAN_ACTIONS:
+      case TurnState.MAGICIAN_EXCHANGE_HAND:
+      case TurnState.MAGICIAN_DISCARD_CARDS:
+      case TurnState.MAGICIAN_BUILD:
+        return CharacterType.MAGICIAN;
+      case TurnState.KING_RESOURCES:
+      case TurnState.KING_CHOOSE_CARD:
+      case TurnState.KING_ACTIONS:
+      case TurnState.KING_BUILD:
+        return CharacterType.KING;
+      case TurnState.BISHOP_RESOURCES:
+      case TurnState.BISHOP_CHOOSE_CARD:
+      case TurnState.BISHOP_ACTIONS:
+      case TurnState.BISHOP_BUILD:
+        return CharacterType.BISHOP;
+      case TurnState.MERCHANT_RESOURCES:
+      case TurnState.MERCHANT_CHOOSE_CARD:
+      case TurnState.MERCHANT_ACTIONS:
+      case TurnState.MERCHANT_BUILD:
+        return CharacterType.MERCHANT;
+      case TurnState.ARCHITECT_RESOURCES:
+      case TurnState.ARCHITECT_CHOOSE_CARD:
+      case TurnState.ARCHITECT_ACTIONS:
+      case TurnState.ARCHITECT_BUILD:
+        return CharacterType.ARCHITECT;
+      case TurnState.WARLORD_RESOURCES:
+      case TurnState.WARLORD_CHOOSE_CARD:
+      case TurnState.WARLORD_ACTIONS:
+      case TurnState.WARLORD_DESTROY_DISTRICT:
+      case TurnState.WARLORD_BUILD:
+        return CharacterType.WARLORD;
+      default:
+        return CharacterType.NONE;
+    }
+  }
+
+  getCurrentPlayerPosition(): PlayerPosition {
+    const pos = this.characters[this.getCurrentCharacter()];
+    switch (pos) {
+      case CharacterPosition.PLAYER_1:
+      case CharacterPosition.PLAYER_2:
+      case CharacterPosition.PLAYER_3:
+      case CharacterPosition.PLAYER_4:
+      case CharacterPosition.PLAYER_5:
+      case CharacterPosition.PLAYER_6:
+      case CharacterPosition.PLAYER_7:
+        return pos - CharacterPosition.PLAYER_1;
+
+      default:
+        break;
+    }
+
+    return PlayerPosition.SPECTATOR;
   }
 
   exportPlayerCharacters(pos: PlayerPosition, dest: PlayerPosition) {
@@ -127,7 +262,7 @@ export default class CharacterManager {
 
     return {
       // current character
-      current: this.currentCharacter,
+      current: this.getCurrentCharacter(),
       // callable characters: characters that have not been chosen
       callable: CharacterManager.getAllCharacters().filter(
         (characterType) => this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN)
@@ -144,7 +279,7 @@ export default class CharacterManager {
   private exportListDone() {
     return {
       // current character
-      current: this.currentCharacter,
+      current: this.getCurrentCharacter(),
       // callable characters: all characters except those that are aside and face up
       callable: CharacterManager.getAllCharacters().filter(
         (characterType) => !this.getCharactersAtPosition(CharacterPosition.ASIDE_FACE_UP)

@@ -43,6 +43,11 @@ export class CharacterChoosingState {
       default:
         throw new Error('invalid number of players');
     }
+
+    this.stateNumber = 0;
+  }
+
+  reset() {
     this.stateNumber = 0;
   }
 

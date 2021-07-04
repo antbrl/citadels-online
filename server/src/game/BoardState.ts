@@ -68,6 +68,8 @@ export default class BoardState {
     switch (this.turnPhase) {
       case GamePhase.CHOOSE_CHARACTERS:
         return this.characterManager.choosingState.getState().player;
+      case GamePhase.DO_ACTIONS:
+        return this.characterManager.getCurrentPlayerPosition();
 
       default:
     }

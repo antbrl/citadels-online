@@ -422,7 +422,7 @@ export default class GameState implements Subject {
     const cm = this.board.characterManager;
     const player = this.board.players.get(this.board.getCurrentPlayerId());
     if (player === undefined) return false;
-    const otherPlayer = this.board.players.get(`${move.data}`);
+    const otherPlayer = this.board.players.get(this.board.playerOrder[move.data]);
     if (otherPlayer === undefined) return false;
 
     // swap hands
@@ -466,15 +466,15 @@ export default class GameState implements Subject {
   private destroyDistrict(move: Move) {
     if (move.type !== MoveType.WARLORD_DESTROY_DISTRICT) return false;
     const data = {
-      player: move.data?.player,
-      card: move.data?.card,
+      player: move.data?.player as PlayerPosition,
+      card: move.data?.card as string,
     };
 
     if (!this.board) return false;
     const cm = this.board.characterManager;
     const player = this.board.players.get(this.board.getCurrentPlayerId());
     if (player === undefined) return false;
-    const otherPlayer = this.board.players.get(data.player);
+    const otherPlayer = this.board.players.get(this.board.playerOrder[data.player]);
     if (otherPlayer === undefined) return false;
 
     // check that the current character can destroy
@@ -488,9 +488,8 @@ export default class GameState implements Subject {
     }
 
     // check that victim is not an alive bishop
-    const isOtherPlayerBishop = cm.exportPlayerCharacters(
-      cm.getCurrentPlayerPosition(), PlayerPosition.SPECTATOR,
-    ).some((character) => character.id === CharacterType.BISHOP);
+    const isOtherPlayerBishop = cm.exportPlayerCharacters(data.player, PlayerPosition.SPECTATOR)
+      .some((character) => character.id === CharacterType.BISHOP);
     if (isOtherPlayerBishop && cm.killedCharacter !== CharacterType.BISHOP) {
       return false;
     }

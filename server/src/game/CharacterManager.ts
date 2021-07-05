@@ -236,6 +236,15 @@ export default class CharacterManager {
     }));
   }
 
+  exportCurrentPlayerExtraData() {
+    const character = this.getCurrentCharacter();
+    return {
+      districtsToBuild: this.districtsToBuild[character],
+      canTakeEarnings: this.canTakeEarnings[character],
+      canDoSpecialAction: this.canDoSpecialAction[character],
+    };
+  }
+
   exportCharactersList(dest: PlayerPosition) {
     let characters = {};
 

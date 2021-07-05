@@ -58,6 +58,7 @@ export default class BoardState {
       turnPhase: this.turnPhase,
       playerOrder: this.playerOrder,
       currentPlayer: this.getCurrentPlayerPosition(),
+      currentPlayerExtraData: this.characterManager.exportCurrentPlayerExtraData(),
       crown: this.playerOrder[0],
       characters: this.characterManager.exportCharactersList(destPlayerPos),
     };

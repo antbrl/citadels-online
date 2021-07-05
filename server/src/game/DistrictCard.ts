@@ -1,4 +1,5 @@
 import districtsJson from '../data/districts.json';
+import { CharacterType } from './CharacterManager';
 
 export enum DistrictType {
   NOBLE = 1,
@@ -19,6 +20,21 @@ export default class DistrictCard {
     this.type = type;
     this.cost = cost;
     this.extraPoints = extraPoints;
+  }
+
+  static getDistrictTypeFromCharacter(character: CharacterType) {
+    switch (character) {
+      case CharacterType.KING:
+        return DistrictType.NOBLE;
+      case CharacterType.BISHOP:
+        return DistrictType.RELIGIOUS;
+      case CharacterType.MERCHANT:
+        return DistrictType.TRADE;
+      case CharacterType.WARLORD:
+        return DistrictType.MILITARY;
+      default:
+        return undefined;
+    }
   }
 }
 

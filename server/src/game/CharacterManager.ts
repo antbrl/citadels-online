@@ -113,6 +113,38 @@ export default class CharacterManager {
     this.canDoSpecialAction = [false, false, false, false, false, true, true, true];
   }
 
+  jumpToCharacter(character: CharacterType) {
+    this.turnState = [
+      TurnState.ASSASSIN_RESOURCES,
+      TurnState.THIEF_RESOURCES,
+      TurnState.MAGICIAN_RESOURCES,
+      TurnState.KING_RESOURCES,
+      TurnState.BISHOP_RESOURCES,
+      TurnState.MERCHANT_RESOURCES,
+      TurnState.ARCHITECT_RESOURCES,
+      TurnState.WARLORD_RESOURCES,
+    ][character] ?? TurnState.DONE;
+  }
+
+  jumpToNextCharacter() {
+    this.jumpToCharacter(this.getCurrentCharacter() + 1);
+  }
+
+  isCharacterPlayable(character: CharacterType): boolean {
+    switch (this.characters[character]) {
+      case CharacterPosition.PLAYER_1:
+      case CharacterPosition.PLAYER_2:
+      case CharacterPosition.PLAYER_3:
+      case CharacterPosition.PLAYER_4:
+      case CharacterPosition.PLAYER_5:
+      case CharacterPosition.PLAYER_6:
+      case CharacterPosition.PLAYER_7:
+        return character !== this.killedCharacter;
+      default:
+        return false;
+    }
+  }
+
   static getAllCharacters() {
     return Array.from(Array(CharacterType.CHARACTER_COUNT).keys()) as CharacterType[];
   }

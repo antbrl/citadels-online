@@ -1,14 +1,23 @@
+import { CharacterType } from './CharacterManager';
+import DistrictCard, { ALL_DISTRICTS } from './DistrictCard';
+
 export default class PlayerBoardState {
   // amount of gold coins
   stash: number;
   // district card ids
   hand: string[];
   city: string[];
+  tmpHand: string[];
 
   constructor(initialStash: number, initialHand: string[], initialCity: string[] = []) {
     this.stash = initialStash;
     this.hand = initialHand;
     this.city = initialCity;
+    this.tmpHand = [];
+  }
+
+  hasCardInCity(card: string): boolean {
+    return this.city.includes(card);
   }
 
   addCardsToHand(cards: string[]) {
@@ -21,6 +30,50 @@ export default class PlayerBoardState {
       return this.hand.splice(index, 1)[0];
     }
     return null;
+  }
+
+  buildDistrict(card: string): boolean {
+    if (!this.hand.includes(card)) {
+      return false;
+    }
+
+    // check price
+    const price = ALL_DISTRICTS.get(card)?.card.cost;
+    if (price === undefined || price > this.stash) {
+      return false;
+    }
+
+    // take coins from stash
+    this.stash -= price;
+
+    // move card
+    this.takeCardFromHand(card);
+    this.city.push(card);
+
+    return true;
+  }
+
+  computeEarningsForCharacter(character: CharacterType): number {
+    const districtType = DistrictCard.getDistrictTypeFromCharacter(character);
+
+    const earnings = districtType === undefined ? 0 : this.city.filter((card) => (
+      ALL_DISTRICTS.get(card)?.card.type === districtType
+    )).length;
+    const extraEarnings = this.city.includes('school_of_magic') ? 1 : 0;
+
+    return earnings + extraEarnings;
+  }
+
+  computeDestroyCost(card: string): number {
+    const discount = (this.hasCardInCity('great_wall') && card !== 'great_wall') ? 0 : 1;
+    return ALL_DISTRICTS.get(card)?.card.cost ?? 0 - discount;
+  }
+
+  destroyDistrict(card: string) {
+    const index = this.city.indexOf(card);
+    if (index > -1) {
+      this.city.splice(index, 1);
+    }
   }
 
   exportForPlayer(canSeeHand: boolean) {

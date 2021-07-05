@@ -32,7 +32,7 @@ export default class DistrictsDeck {
     return this.cards.splice(-n, n);
   }
 
-  discardCard(cards: string[]) {
+  discardCards(cards: string[]) {
     this.cards.unshift(...cards);
   }
 }

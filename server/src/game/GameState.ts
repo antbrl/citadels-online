@@ -155,6 +155,11 @@ export default class GameState implements Subject {
               return true;
             }
 
+            if (move.type === MoveType.FINISH_TURN) {
+              cm.jumpToNextCharacter();
+              return true;
+            }
+
             // player actions
             switch (cm.turnState) {
               case TurnState.ASSASSIN_RESOURCES:

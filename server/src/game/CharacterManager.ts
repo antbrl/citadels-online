@@ -130,6 +130,32 @@ export default class CharacterManager {
     this.jumpToCharacter(this.getCurrentCharacter() + 1);
   }
 
+  jumpToBuildState() {
+    this.turnState = [
+      TurnState.ASSASSIN_BUILD,
+      TurnState.THIEF_BUILD,
+      TurnState.MAGICIAN_BUILD,
+      TurnState.KING_BUILD,
+      TurnState.BISHOP_BUILD,
+      TurnState.MERCHANT_BUILD,
+      TurnState.ARCHITECT_BUILD,
+      TurnState.WARLORD_BUILD,
+    ][this.getCurrentCharacter()] ?? this.turnState;
+  }
+
+  jumpToActionsState() {
+    this.turnState = [
+      TurnState.ASSASSIN_ACTIONS,
+      TurnState.THIEF_ACTIONS,
+      TurnState.MAGICIAN_ACTIONS,
+      TurnState.KING_ACTIONS,
+      TurnState.BISHOP_ACTIONS,
+      TurnState.MERCHANT_ACTIONS,
+      TurnState.ARCHITECT_ACTIONS,
+      TurnState.WARLORD_ACTIONS,
+    ][this.getCurrentCharacter()] ?? this.turnState;
+  }
+
   isCharacterPlayable(character: CharacterType): boolean {
     switch (this.characters[character]) {
       case CharacterPosition.PLAYER_1:

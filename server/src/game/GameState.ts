@@ -267,6 +267,7 @@ export default class GameState implements Subject {
     if (move.type !== MoveType.DRAW_CARD) return false;
 
     if (!this.board) return false;
+    const cm = this.board.characterManager;
     const player = this.board.players.get(this.board.getCurrentPlayerId());
     if (player === undefined) return false;
 
@@ -282,7 +283,7 @@ export default class GameState implements Subject {
     player.tmpHand = [];
 
     // go to actions step
-    this.board.characterManager.turnState += 1;
+    cm.jumpToActionsState();
 
     return true;
   }
@@ -308,7 +309,7 @@ export default class GameState implements Subject {
     cm.districtsToBuild[cm.getCurrentCharacter()] -= 1;
 
     // go to actions step
-    this.board.characterManager.turnState += 1;
+    cm.jumpToActionsState();
 
     return true;
   }
@@ -323,6 +324,9 @@ export default class GameState implements Subject {
       // ============
       // change state
       // ============
+      case MoveType.BUILD_DISTRICT:
+        cm.jumpToBuildState();
+        break;
       case MoveType.ASSASSIN_KILL:
         cm.turnState = TurnState.ASSASSIN_KILL;
         break;
@@ -390,6 +394,7 @@ export default class GameState implements Subject {
       case CharacterType.WARLORD:
         cm.killedCharacter = character;
         cm.canDoSpecialAction[CharacterType.ASSASSIN] = false;
+        cm.jumpToActionsState();
         return true;
 
       default:
@@ -413,6 +418,7 @@ export default class GameState implements Subject {
       case CharacterType.WARLORD:
         cm.robbedCharacter = character;
         cm.canDoSpecialAction[CharacterType.THIEF] = false;
+        cm.jumpToActionsState();
         return true;
 
       default:
@@ -433,6 +439,7 @@ export default class GameState implements Subject {
     // swap hands
     [player.hand, otherPlayer.hand] = [otherPlayer.hand, player.hand];
     cm.canDoSpecialAction[CharacterType.MAGICIAN] = false;
+    cm.jumpToActionsState();
     return true;
   }
 
@@ -465,6 +472,7 @@ export default class GameState implements Subject {
     player.addCardsToHand(this.board.districtsDeck.drawCards(cards.length));
 
     cm.canDoSpecialAction[CharacterType.MAGICIAN] = false;
+    cm.jumpToActionsState();
     return true;
   }
 
@@ -516,6 +524,7 @@ export default class GameState implements Subject {
     this.board.districtsDeck.discardCards([data.card]);
 
     cm.canDoSpecialAction[CharacterType.WARLORD] = false;
+    cm.jumpToActionsState();
     return true;
   }
 

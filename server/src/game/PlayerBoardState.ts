@@ -81,6 +81,7 @@ export default class PlayerBoardState {
       stash: this.stash,
       hand: canSeeHand ? this.hand : Array(this.hand.length).fill(null),
       city: this.city,
+      tmpHand: canSeeHand ? this.tmpHand : Array(this.tmpHand.length).fill(null),
     };
   }
 }

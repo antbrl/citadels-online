@@ -159,22 +159,33 @@ export default class GameState implements Subject {
             const cm = this.board.characterManager;
 
             // jump to next character automatically
-            if (move.type === MoveType.AUTO && !cm.isCharacterPlayable(cm.getCurrentCharacter())) {
-              setTimeout(() => {
+            switch (move.type) {
+              case MoveType.AUTO:
+                if (cm.turnState === TurnState.DONE) {
+                  setTimeout(() => {
+                    this.finishTurnPhase();
+                    this.step();
+                    this.notify();
+                  }, 3000);
+                  return true;
+                }
+                if (!cm.isCharacterPlayable(cm.getCurrentCharacter())) {
+                  setTimeout(() => {
+                    cm.jumpToNextCharacter();
+                    this.step();
+                    this.notify();
+                  }, 3000);
+                  return true;
+                }
+                return false;
+              case MoveType.DECLINE:
+                return this.decline();
+              case MoveType.FINISH_TURN:
                 cm.jumpToNextCharacter();
-                this.step();
-                this.notify();
-              }, 3000);
-              return true;
-            }
+                return true;
 
-            if (move.type === MoveType.DECLINE) {
-              return this.decline();
-            }
-
-            if (move.type === MoveType.FINISH_TURN) {
-              cm.jumpToNextCharacter();
-              return true;
+              default:
+                break;
             }
 
             // player actions
@@ -219,6 +230,24 @@ export default class GameState implements Subject {
       default:
     }
     return false;
+  }
+
+  private finishTurnPhase(): boolean {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+
+    const isEndOfGame = Array.from(this.board.players.values()).some(
+      (player) => player.city.length >= this.completeCitySize,
+    );
+
+    if (isEndOfGame) {
+      this.progress = GameProgress.FINISHED;
+    } else {
+      this.board.gamePhase = GamePhase.CHOOSE_CHARACTERS;
+      cm.reset();
+    }
+
+    return true;
   }
 
   private decline(): boolean {

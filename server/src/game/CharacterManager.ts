@@ -398,10 +398,6 @@ export default class CharacterManager {
         );
         break;
 
-      case CCST.GET_ASIDE_FACE_DOWN:
-        this.characters[characters[index]] = CharacterPosition.NOT_CHOSEN;
-        break;
-
       default:
         // invalid state
         return false;

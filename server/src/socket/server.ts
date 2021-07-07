@@ -179,6 +179,9 @@ export function initSocket(io: Server) {
         return;
       }
 
+      // try auto move
+      room.gameState.step();
+
       // notify clients
       room.update();
 

@@ -135,6 +135,18 @@ export default class GameState implements Subject {
                 case CCST.CHOOSE_CHARACTER:
                   return move.type === MoveType.CHOOSE_CHARACTER && cm.chooseCharacter(move.data);
 
+                case CCST.DONE:
+                  if (move.type === MoveType.AUTO) {
+                    setTimeout(() => {
+                      if (this.board) {
+                        this.board.turnPhase = GamePhase.DO_ACTIONS;
+                        this.notify();
+                      }
+                    }, 3000);
+                    return true;
+                  }
+                  return false;
+
                 default:
                   break;
               }

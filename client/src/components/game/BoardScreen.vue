@@ -14,13 +14,14 @@
           />
         </div>
       </div>
-      <div class="p-2 bg-gradient-dark border-top border-secondary">
+      <div class="px-2 pt-2 bg-gradient-dark border-top border-secondary">
         <PlayerCity
           :player-id="self"
           :board="selfBoard"
         />
         <PlayerHand
           :hand="selfBoard.hand"
+          :tmp-hand="selfBoard.tmpHand"
           :stash="selfBoard.stash"
           :crown="selfBoard.crown"
         />

@@ -1,5 +1,5 @@
 <template>
-<div class="pt-2 d-flex justify-content-start align-items-end overflow-auto">
+<div class="py-2 d-flex justify-content-start align-items-end overflow-auto">
   <div v-if="crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">👑</div>
   <div class="mr-auto"></div>
   <DistrictCard
@@ -9,6 +9,18 @@
     class="mr-2"
   />
   <div
+    v-if="showTmpHand"
+    class="bg-light d-flex justify-content-start pl-2 py-2 my-n2 cursor-pointer"
+  >
+    <DistrictCard
+      v-for="id, i in tmpHand"
+      :key="i"
+      :district-id="id"
+      class="mr-2"
+      @click="chooseCard(id)"
+    />
+  </div>
+  <div
     class="stash d-flex flex-column-reverse flex-wrap-reverse justify-content-start ml-auto"
   ><span v-for="i in stash" :key="i" class="coin">🪙</span></div>
 </div>
@@ -16,6 +28,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { store } from '../../../store';
+import { Move, MoveType } from '../../../types/gameTypes';
 import DistrictCard from './DistrictCard.vue';
 
 export default defineComponent({
@@ -28,6 +42,10 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    tmpHand: {
+      type: Array,
+      required: true,
+    },
     stash: {
       type: Number,
       required: true,
@@ -35,6 +53,21 @@ export default defineComponent({
     crown: {
       type: Boolean,
       default: false,
+    },
+  },
+  computed: {
+    showTmpHand() {
+      return this.tmpHand.length > 0;
+    },
+  },
+  methods: {
+    async chooseCard(name: string) {
+      const move: Move = { type: MoveType.DRAW_CARDS, data: name };
+      try {
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
     },
   },
 });

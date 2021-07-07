@@ -11,9 +11,9 @@
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,
         'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
-          character.id === current,
+          character.id === current && current !== 0,
         'bg-light': character.id > current && !character.killed,
-        'cursor-pointer': character.selectable,
+        'bg-white text-dark cursor-pointer': character.selectable,
       }"
       v-tooltip
       data-placement="left"
@@ -65,7 +65,7 @@ export default defineComponent({
     },
     current: {
       type: Number,
-      default: undefined,
+      default: 0,
     },
   },
   methods: {

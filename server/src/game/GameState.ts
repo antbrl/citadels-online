@@ -96,12 +96,12 @@ export default class GameState implements Subject {
         break;
 
       case GameProgress.IN_GAME:
-        switch (this.board?.turnPhase) {
+        switch (this.board?.gamePhase) {
           case GamePhase.INITIAL:
             if (move.type === MoveType.AUTO) {
               setTimeout(() => {
                 if (this.board) {
-                  this.board.turnPhase = GamePhase.CHOOSE_CHARACTERS;
+                  this.board.gamePhase = GamePhase.CHOOSE_CHARACTERS;
                   this.step();
                   this.notify();
                 }
@@ -139,7 +139,7 @@ export default class GameState implements Subject {
                   if (move.type === MoveType.AUTO) {
                     setTimeout(() => {
                       if (this.board) {
-                        this.board.turnPhase = GamePhase.DO_ACTIONS;
+                        this.board.gamePhase = GamePhase.DO_ACTIONS;
                         this.notify();
                       }
                     }, 3000);

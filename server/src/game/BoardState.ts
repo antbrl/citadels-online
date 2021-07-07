@@ -19,8 +19,8 @@ export default class BoardState {
   // character manager
   characterManager: CharacterManager;
 
-  // current turn phase
-  turnPhase: GamePhase;
+  // current game phase
+  gamePhase: GamePhase;
 
   // district cards deck
   districtsDeck: DistrictsDeck;
@@ -29,7 +29,7 @@ export default class BoardState {
     this.players = new Map();
     this.playerOrder = [...players];
     this.characterManager = new CharacterManager(players.length);
-    this.turnPhase = GamePhase.INITIAL;
+    this.gamePhase = GamePhase.INITIAL;
     this.districtsDeck = new DistrictsDeck();
 
     // initialize each player hand with 2 gold and 4 district cards
@@ -55,7 +55,7 @@ export default class BoardState {
           characters: this.characterManager.exportPlayerCharacters(otherPlayerPos, destPlayerPos),
         }];
       }),
-      turnPhase: this.turnPhase,
+      gamePhase: this.gamePhase,
       playerOrder: this.playerOrder,
       currentPlayer: this.getCurrentPlayerPosition(),
       currentPlayerExtraData: this.characterManager.exportCurrentPlayerExtraData(),
@@ -66,7 +66,7 @@ export default class BoardState {
 
   // current player (index of playerOrder)
   getCurrentPlayerPosition(): PlayerPosition {
-    switch (this.turnPhase) {
+    switch (this.gamePhase) {
       case GamePhase.CHOOSE_CHARACTERS:
         return this.characterManager.choosingState.getState().player;
       case GamePhase.DO_ACTIONS:

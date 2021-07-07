@@ -168,6 +168,10 @@ export default class GameState implements Subject {
               return true;
             }
 
+            if (move.type === MoveType.DECLINE) {
+              return this.decline();
+            }
+
             if (move.type === MoveType.FINISH_TURN) {
               cm.jumpToNextCharacter();
               return true;
@@ -191,6 +195,10 @@ export default class GameState implements Subject {
                 return this.exchangeHand(move);
               case ClientTurnState.MAGICIAN_DISCARD_CARDS:
                 return this.discardCards(move);
+              case ClientTurnState.MERCHANT_TAKE_1_GOLD:
+                return this.takeOneGold(move);
+              case ClientTurnState.ARCHITECT_DRAW_2_CARDS:
+                return this.drawTwoCards(move);
               case ClientTurnState.WARLORD_DESTROY_DISTRICT:
                 return this.destroyDistrict(move);
               default:
@@ -211,6 +219,29 @@ export default class GameState implements Subject {
       default:
     }
     return false;
+  }
+
+  private decline(): boolean {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+
+    switch (cm.getClientTurnState()) {
+      case ClientTurnState.ASSASSIN_KILL:
+      case ClientTurnState.THIEF_ROB:
+      case ClientTurnState.MAGICIAN_EXCHANGE_HAND:
+      case ClientTurnState.MAGICIAN_DISCARD_CARDS:
+      case ClientTurnState.MERCHANT_TAKE_1_GOLD:
+      case ClientTurnState.ARCHITECT_DRAW_2_CARDS:
+      case ClientTurnState.WARLORD_DESTROY_DISTRICT:
+      case ClientTurnState.BUILD_DISTRICT:
+        cm.jumpToActionsState();
+        break;
+
+      default:
+        return false;
+    }
+
+    return true;
   }
 
   private gatherResources(move: Move): boolean {
@@ -448,6 +479,46 @@ export default class GameState implements Subject {
     player.addCardsToHand(this.board.districtsDeck.drawCards(cards.length));
 
     cm.canDoSpecialAction[CharacterType.MAGICIAN] = false;
+    cm.jumpToActionsState();
+    return true;
+  }
+
+  private takeOneGold(move: Move) {
+    if (move.type !== MoveType.MERCHANT_TAKE_1_GOLD) return false;
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+    const player = this.board.players.get(this.board.getCurrentPlayerId());
+    if (player === undefined) return false;
+
+    // check that action is permitted
+    if (!cm.canDoSpecialAction[CharacterType.MERCHANT]) {
+      return false;
+    }
+
+    // add 1 to stash
+    player.stash += 1;
+
+    cm.canDoSpecialAction[CharacterType.MERCHANT] = false;
+    cm.jumpToActionsState();
+    return true;
+  }
+
+  private drawTwoCards(move: Move) {
+    if (move.type !== MoveType.ARCHITECT_DRAW_2_CARDS) return false;
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+    const player = this.board.players.get(this.board.getCurrentPlayerId());
+    if (player === undefined) return false;
+
+    // check that action is permitted
+    if (!cm.canDoSpecialAction[CharacterType.ARCHITECT]) {
+      return false;
+    }
+
+    // draw 2 cards
+    player.addCardsToHand(this.board.districtsDeck.drawCards(2));
+
+    cm.canDoSpecialAction[CharacterType.ARCHITECT] = false;
     cm.jumpToActionsState();
     return true;
   }

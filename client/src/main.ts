@@ -28,6 +28,9 @@ app.directive('tooltip', {
     $(el).tooltip('dispose');
     $(el).tooltip(tooltipOptions);
   },
+  unmounted(el) {
+    $(el).tooltip('dispose');
+  },
 });
 
 app.use(store);

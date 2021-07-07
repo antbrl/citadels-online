@@ -329,7 +329,7 @@ export default class CharacterManager {
 
     return {
       // current character
-      current: this.getCurrentCharacter(),
+      current: this.getCurrentCharacter() + 1,
       // callable characters: characters that have not been chosen
       callable: CharacterManager.getAllCharacters().filter(
         (characterType) => this.getCharactersAtPosition(CharacterPosition.NOT_CHOSEN)
@@ -346,7 +346,7 @@ export default class CharacterManager {
   private exportListDone() {
     return {
       // current character
-      current: this.getCurrentCharacter(),
+      current: this.getCurrentCharacter() + 1,
       // callable characters: all characters except those that are aside and face up
       callable: CharacterManager.getAllCharacters().filter(
         (characterType) => !this.getCharactersAtPosition(CharacterPosition.ASIDE_FACE_UP)

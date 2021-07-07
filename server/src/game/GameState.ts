@@ -140,6 +140,7 @@ export default class GameState implements Subject {
                     setTimeout(() => {
                       if (this.board) {
                         this.board.gamePhase = GamePhase.DO_ACTIONS;
+                        this.step();
                         this.notify();
                       }
                     }, 3000);
@@ -159,8 +160,8 @@ export default class GameState implements Subject {
 
             // jump to next character automatically
             if (move.type === MoveType.AUTO && !cm.isCharacterPlayable(cm.getCurrentCharacter())) {
-              cm.jumpToNextCharacter();
               setTimeout(() => {
+                cm.jumpToNextCharacter();
                 this.step();
                 this.notify();
               }, 3000);

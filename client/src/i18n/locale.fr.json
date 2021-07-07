@@ -47,15 +47,41 @@
                     "put_aside_face_up": "{0} doit choisir un personnage à mettre de côté face visible.",
                     "put_aside_face_down": "{0} doit choisir un personnage à mettre de côté face cachée.",
                     "choose_character": "{0} doit choisir un personnage.",
-                    "done": "Les personnages sont choisis. L'appel va débuter."
+                    "done": "Les personnages sont choisis."
+                },
+                "actions": {
+                    "initial": "L'appel va débuter.",
+                    "take_resources": "Choisissez de prendre de l'or ou de piocher des cartes.",
+                    "choose_card": "Choisissez la carte à conserver.",
+                    "choose_action": "Choisissez une action à effectuer.",
+                    "assassin_kill": "Choisissez un personnage à tuer.",
+                    "thief_rob": "Choisissez un personnage à voler.",
+                    "magician_exchange_hand": "Choisissez un joueur avec lequel échanger votre main.",
+                    "magician_discard_cards": "Choisissez les cartes à défausser.",
+                    "merchant_take_1_gold": "Prendre une pièce d'or supplémentaire ?",
+                    "architect_draw_2_cards": "Piocher 2 cartes supplémentaires ?",
+                    "warlord_destroy_district": "Choisissez un quartier à détruire.",
+                    "build_district": "Choisissez un quartier à construire.",
+                    "done": "C'est la fin du tour !"
                 },
                 "errors": {
                     "invalid_state": "Erreur : l'état de la partie est invalide."
                 }
             },
             "actions": {
-                "take_coins": "Prendre 2 pièces",
-                "take_cards": "Prendre une carte",
+                "accept": "Accepter",
+                "decline": "Refuser",
+                "confirm": "Confirmer",
+                "cancel": "Annuler",
+                "take_gold": "Prendre 2 pièces",
+                "draw_cards": "Piocher 2 cartes",
+                "assassin_kill": "Tuer un personnage",
+                "thief_rob": "Voler un personnage",
+                "magician_exchange_hand": "Échanger la main",
+                "magician_discard_cards": "Échanger des cartes",
+                "take_gold_earnings": "Recevoir les revenus",
+                "warlord_destroy_district": "Détruire un quartier",
+                "build_district": "Construire un quartier",
                 "finish_turn": "Terminer le tour"
             }
         }
@@ -63,39 +89,48 @@
     "characters": [
         {
             "name": "",
-            "description": "Personnage inconnu"
+            "description": "Personnage inconnu",
+            "turn": ""
         },
         {
             "name": "Assassin",
-            "description": "L'Assassin peut tuer un personnage de son choix. Celui-ci ne jouera pas durant ce tour."
+            "description": "L'Assassin peut tuer un personnage de son choix. Celui-ci ne jouera pas durant ce tour.",
+            "turn": "C'est au tour de l'Assassin."
         },
         {
             "name": "Voleur",
-            "description": "Le Voleur peut voler le trésor du personnage de son choix. Il ne peut dépouiller ni l'Assassin, ni sa victime. Quand le personnage détroussé sera révélé, il donnera tout son or au voleur."
+            "description": "Le Voleur peut voler le trésor du personnage de son choix. Il ne peut dépouiller ni l'Assassin, ni sa victime. Quand le personnage détroussé sera révélé, il donnera tout son or au voleur.",
+            "turn": "C'est au tour du Voleur."
         },
         {
             "name": "Magicien",
-            "description": "Au choix - Le Magicien peut échanger la totalité des cartes de sa main avec celles du joueur de son choix. Ou - Le magicien peut échanger des cartes de sa main contre le même nombre de cartes de la pioche."
+            "description": "Au choix - Le Magicien peut échanger la totalité des cartes de sa main avec celles du joueur de son choix. Ou - Le magicien peut échanger des cartes de sa main contre le même nombre de cartes de la pioche.",
+            "turn": "C'est au tour du Magicien."
         },
         {
             "name": "Roi",
-            "description": "Le Roi prend la Couronne, et choisira en premier son personnage lors du prochain tour. Chaque quartier Noble dans sa cité lui rapporte 1 pièce d'or."
+            "description": "Le Roi prend la Couronne, et choisira en premier son personnage lors du prochain tour. Chaque quartier Noble dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Roi."
         },
         {
             "name": "Évêque",
-            "description": "L'Évêque ne peut pas être attaqué par le Condottiere, sauf s'il a été assassiné. Chaque quartier Religieux dans sa cité lui rapporte 1 pièce d'or."
+            "description": "L'Évêque ne peut pas être attaqué par le Condottiere, sauf s'il a été assassiné. Chaque quartier Religieux dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour de l'Évêque."
         },
         {
             "name": "Marchand",
-            "description": "Le Marchand reçoit 1 pièce d'or supplémentaire au début de son tour. Chaque quartier Commerçant dans sa cité lui rapporte 1 pièce d'or."
+            "description": "Le Marchand reçoit 1 pièce d'or supplémentaire au début de son tour. Chaque quartier Commerçant dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Marchand."
         },
         {
             "name": "Architecte",
-            "description": "L'Architecte pioche 2 cartes supplémentaires au début de son tour. Il peut bâtir jusqu'à 3 quartiers."
+            "description": "L'Architecte pioche 2 cartes supplémentaires au début de son tour. Il peut bâtir jusqu'à 3 quartiers.",
+            "turn": "C'est au tour de l'Architecte."
         },
         {
             "name": "Condottiere",
-            "description": "Le Condottiere peut détruire un quartier en payant son coût de construction moins 1. Chaque quartier Militaire dans sa cité lui rapporte 1 pièce d'or."
+            "description": "Le Condottiere peut détruire un quartier en payant son coût de construction moins 1. Chaque quartier Militaire dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Condottiere."
         }
     ],
     "districts": {

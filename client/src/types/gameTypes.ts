@@ -24,6 +24,34 @@ export enum CharacterChoosingStateType {
   DONE,
 }
 
+export enum CharacterType {
+  NONE = 0,
+  ASSASSIN,
+  THIEF,
+  MAGICIAN,
+  KING,
+  BISHOP,
+  MERCHANT,
+  ARCHITECT,
+  WARLORD,
+}
+
+export enum ClientTurnState {
+  INITIAL = 0,
+  TAKE_RESOURCES,
+  CHOOSE_CARD,
+  CHOOSE_ACTION,
+  ASSASSIN_KILL,
+  THIEF_ROB,
+  MAGICIAN_EXCHANGE_HAND,
+  MAGICIAN_DISCARD_CARDS,
+  MERCHANT_TAKE_1_GOLD,
+  ARCHITECT_DRAW_2_CARDS,
+  WARLORD_DESTROY_DISTRICT,
+  BUILD_DISTRICT,
+  DONE,
+}
+
 export type ClientGameState = {
   progress: GameProgress
   players: Map<string, {
@@ -44,15 +72,21 @@ export type ClientGameState = {
       }[]
     }>
     gamePhase: GamePhase
+    turnState: ClientTurnState
     playerOrder: string[],
     currentPlayer: number,
+    currentPlayerExtraData: {
+      districtsToBuild: number
+      canTakeEarnings: boolean
+      canDoSpecialAction: boolean
+    }
     crown: string
     characters: {
       state: {
         type: CharacterChoosingStateType
         player: number
       }
-      current: number
+      current: CharacterType
       callable: {
         id: number
         killed: boolean
@@ -71,7 +105,24 @@ export type GameSetupData = {
 
 export enum MoveType {
   AUTO = 0,
+
   CHOOSE_CHARACTER,
+
+  TAKE_GOLD,
+  DRAW_CARDS,
+
+  ASSASSIN_KILL,
+  THIEF_ROB,
+  MAGICIAN_EXCHANGE_HAND,
+  MAGICIAN_DISCARD_CARDS,
+  TAKE_GOLD_EARNINGS,
+  MERCHANT_TAKE_1_GOLD,
+  ARCHITECT_DRAW_2_CARDS,
+  WARLORD_DESTROY_DISTRICT,
+
+  DECLINE,
+  BUILD_DISTRICT,
+  FINISH_TURN,
 }
 
 export interface Move {

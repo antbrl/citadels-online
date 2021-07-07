@@ -47,50 +47,90 @@
                     "put_aside_face_up": "{0} must choose a character to put aside face up.",
                     "put_aside_face_down": "{0} must choose a character to put aside face down.",
                     "choose_character": "{0} must choose a character.",
-                    "done": "Characters have been chosen. The call is going to start."
+                    "done": "Characters have been chosen."
+                },
+                "actions": {
+                    "initial": "The call is going to start.",
+                    "take_resources": "Choose to take gold or draw cards.",
+                    "choose_card": "Choose the card to keep.",
+                    "choose_action": "Choose an action to carry out.",
+                    "assassin_kill": "Choose a character to kill.",
+                    "thief_rob": "Choose a character to rob.",
+                    "magician_exchange_hand": "Choose a player with whom you will exchange hands.",
+                    "magician_discard_cards": "Choose cards you wish to discard.",
+                    "merchant_take_1_gold": "Take an extra gold coin?",
+                    "architect_draw_2_cards": "Draw 2 extra cards?",
+                    "warlord_destroy_district": "Choose a district to destroy.",
+                    "build_district": "Choose a district to build.",
+                    "done": "End of turn!"
                 },
                 "errors": {
                     "invalid_state": "Error: invalid game state."
                 }
+            },
+            "actions": {
+                "accept": "Accept",
+                "decline": "Decline",
+                "confirm": "Confirm",
+                "cancel": "Cancel",
+                "take_gold": "Take 2 coins",
+                "draw_cards": "Draw 2 cards",
+                "assassin_kill": "Kill character",
+                "thief_rob": "Rob character",
+                "magician_exchange_hand": "Exchange hand",
+                "magician_discard_cards": "Exchange cards",
+                "take_gold_earnings": "Collect earnings",
+                "warlord_destroy_district": "Destroy district",
+                "build_district": "Build district",
+                "finish_turn": "Finish turn"
             }
         }
     },
     "characters": [
         {
             "name": "",
-            "description": "Unknown character"
+            "description": "Unknown character",
+            "turn": ""
         },
         {
             "name": "Assassin",
-            "description": "Call a character you wish to kill. The killed character skips their turn."
+            "description": "Call a character you wish to kill. The killed character skips their turn.",
+            "turn": "The Assassin is called."
         },
         {
             "name": "Thief",
-            "description": "Call a character you wish to rob. When the robbed character is revealed, you take all his gold."
+            "description": "Call a character you wish to rob. When the robbed character is revealed, you take all his gold.",
+            "turn": "The Thief is called."
         },
         {
             "name": "Magician",
-            "description": "Either exchange hands of cards with another player or discard any number of cards to gain an equal number of cards."
+            "description": "Either exchange hands of cards with another player or discard any number of cards to gain an equal number of cards.",
+            "turn": "The Magician is called."
         },
         {
             "name": "King",
-            "description": "Take the crown. Gain 1 gold for each of your Noble districts."
+            "description": "Take the crown. Gain 1 gold for each of your Noble districts.",
+            "turn": "The King is called."
         },
         {
             "name": "Bishop",
-            "description": "The Warlord cannot use its ability on your districts. Gain 1 gold for each of your Religious districts."
+            "description": "The Warlord cannot use its ability on your districts. Gain 1 gold for each of your Religious districts.",
+            "turn": "The Bishop is called."
         },
         {
             "name": "Merchant",
-            "description": "Gain 1 extra gold. Gain 1 gold for each of your Trade districts."
+            "description": "Gain 1 extra gold. Gain 1 gold for each of your Trade districts.",
+            "turn": "The Merchant is called."
         },
         {
             "name": "Architect",
-            "description": "Gain 2 extra cards. You can build up to 3 districts."
+            "description": "Gain 2 extra cards. You can build up to 3 districts.",
+            "turn": "The Architect is called."
         },
         {
             "name": "Warlord",
-            "description": "Destroy 1 district by paying 1 fewer gold than its cost. Gain 1 gold for each of your Military districts."
+            "description": "Destroy 1 district by paying 1 fewer gold than its cost. Gain 1 gold for each of your Military districts.",
+            "turn": "The Warlord is called."
         }
     ],
     "districts": {

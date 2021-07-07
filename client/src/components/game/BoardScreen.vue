@@ -52,8 +52,8 @@
       v-for="(action, i) in statusBar.actions"
       :key="i"
       type="button"
-      class="btn btn-primary ml-2 font-weight-bold"
-      :value="$t(action.title)"
+      class="btn btn-light ml-2 font-weight-bold"
+      :value="$t(`ui.game.actions.${action.title}`)"
       @click="sendMove(action.move)"
     >
   </div>
@@ -121,8 +121,12 @@ export default defineComponent({
         this.startingGame = false;
       }
     },
-    sendMove(move: Move) {
-      alert(move.type, move.data);
+    async sendMove(move: Move) {
+      try {
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
     },
   },
   beforeUnmount() {

@@ -49,7 +49,7 @@ export default defineComponent({
   font-size: 2em;
   height: .8em;
   position: relative;
-  bottom: .65em;
+  bottom: .8em;
   text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
 }
 

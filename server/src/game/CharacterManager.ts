@@ -48,11 +48,13 @@ export enum TurnState {
 
   MERCHANT_RESOURCES,
   MERCHANT_CHOOSE_CARD,
+  MERCHANT_TAKE_1_GOLD,
   MERCHANT_ACTIONS,
   MERCHANT_BUILD,
 
   ARCHITECT_RESOURCES,
   ARCHITECT_CHOOSE_CARD,
+  ARCHITECT_DRAW_2_CARDS,
   ARCHITECT_ACTIONS,
   ARCHITECT_BUILD,
 
@@ -62,6 +64,22 @@ export enum TurnState {
   WARLORD_DESTROY_DISTRICT,
   WARLORD_BUILD,
 
+  DONE,
+}
+
+export enum ClientTurnState {
+  INITIAL = 0,
+  TAKE_RESOURCES,
+  CHOOSE_CARD,
+  CHOOSE_ACTION,
+  ASSASSIN_KILL,
+  THIEF_ROB,
+  MAGICIAN_EXCHANGE_HAND,
+  MAGICIAN_DISCARD_CARDS,
+  MERCHANT_TAKE_1_GOLD,
+  ARCHITECT_DRAW_2_CARDS,
+  WARLORD_DESTROY_DISTRICT,
+  BUILD_DISTRICT,
   DONE,
 }
 
@@ -215,11 +233,13 @@ export default class CharacterManager {
         return CharacterType.BISHOP;
       case TurnState.MERCHANT_RESOURCES:
       case TurnState.MERCHANT_CHOOSE_CARD:
+      case TurnState.MERCHANT_TAKE_1_GOLD:
       case TurnState.MERCHANT_ACTIONS:
       case TurnState.MERCHANT_BUILD:
         return CharacterType.MERCHANT;
       case TurnState.ARCHITECT_RESOURCES:
       case TurnState.ARCHITECT_CHOOSE_CARD:
+      case TurnState.ARCHITECT_DRAW_2_CARDS:
       case TurnState.ARCHITECT_ACTIONS:
       case TurnState.ARCHITECT_BUILD:
         return CharacterType.ARCHITECT;
@@ -251,6 +271,65 @@ export default class CharacterManager {
     }
 
     return PlayerPosition.SPECTATOR;
+  }
+
+  getClientTurnState(): ClientTurnState {
+    switch (this.turnState) {
+      case TurnState.ASSASSIN_RESOURCES:
+      case TurnState.THIEF_RESOURCES:
+      case TurnState.MAGICIAN_RESOURCES:
+      case TurnState.KING_RESOURCES:
+      case TurnState.BISHOP_RESOURCES:
+      case TurnState.MERCHANT_RESOURCES:
+      case TurnState.ARCHITECT_RESOURCES:
+      case TurnState.WARLORD_RESOURCES:
+        return ClientTurnState.TAKE_RESOURCES;
+      case TurnState.ASSASSIN_CHOOSE_CARD:
+      case TurnState.THIEF_CHOOSE_CARD:
+      case TurnState.MAGICIAN_CHOOSE_CARD:
+      case TurnState.KING_CHOOSE_CARD:
+      case TurnState.BISHOP_CHOOSE_CARD:
+      case TurnState.MERCHANT_CHOOSE_CARD:
+      case TurnState.ARCHITECT_CHOOSE_CARD:
+      case TurnState.WARLORD_CHOOSE_CARD:
+        return ClientTurnState.CHOOSE_CARD;
+      case TurnState.ASSASSIN_ACTIONS:
+      case TurnState.THIEF_ACTIONS:
+      case TurnState.MAGICIAN_ACTIONS:
+      case TurnState.KING_ACTIONS:
+      case TurnState.BISHOP_ACTIONS:
+      case TurnState.MERCHANT_ACTIONS:
+      case TurnState.ARCHITECT_ACTIONS:
+      case TurnState.WARLORD_ACTIONS:
+        return ClientTurnState.CHOOSE_ACTION;
+      case TurnState.ASSASSIN_KILL:
+        return ClientTurnState.ASSASSIN_KILL;
+      case TurnState.THIEF_ROB:
+        return ClientTurnState.THIEF_ROB;
+      case TurnState.MAGICIAN_EXCHANGE_HAND:
+        return ClientTurnState.MAGICIAN_EXCHANGE_HAND;
+      case TurnState.MAGICIAN_DISCARD_CARDS:
+        return ClientTurnState.MAGICIAN_DISCARD_CARDS;
+      case TurnState.MERCHANT_TAKE_1_GOLD:
+        return ClientTurnState.MERCHANT_TAKE_1_GOLD;
+      case TurnState.ARCHITECT_DRAW_2_CARDS:
+        return ClientTurnState.ARCHITECT_DRAW_2_CARDS;
+      case TurnState.WARLORD_DESTROY_DISTRICT:
+        return ClientTurnState.WARLORD_DESTROY_DISTRICT;
+      case TurnState.ASSASSIN_BUILD:
+      case TurnState.THIEF_BUILD:
+      case TurnState.MAGICIAN_BUILD:
+      case TurnState.KING_BUILD:
+      case TurnState.BISHOP_BUILD:
+      case TurnState.MERCHANT_BUILD:
+      case TurnState.ARCHITECT_BUILD:
+      case TurnState.WARLORD_BUILD:
+        return ClientTurnState.BUILD_DISTRICT;
+      case TurnState.DONE:
+        return ClientTurnState.DONE;
+      default:
+        return ClientTurnState.INITIAL;
+    }
   }
 
   exportPlayerCharacters(pos: PlayerPosition, dest: PlayerPosition) {

@@ -1,6 +1,6 @@
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState, { GamePhase } from './BoardState';
-import { CharacterType, TurnState } from './CharacterManager';
+import { CharacterType, ClientTurnState, TurnState } from './CharacterManager';
 import { CharacterChoosingStateType as CCST } from './ChoosingState';
 import GameSetupData from './GameSetupData';
 import Move, { MoveType } from './Move';
@@ -174,62 +174,25 @@ export default class GameState implements Subject {
             }
 
             // player actions
-            switch (cm.turnState) {
-              case TurnState.ASSASSIN_RESOURCES:
-              case TurnState.THIEF_RESOURCES:
-              case TurnState.MAGICIAN_RESOURCES:
-              case TurnState.KING_RESOURCES:
-              case TurnState.BISHOP_RESOURCES:
-              case TurnState.MERCHANT_RESOURCES:
-              case TurnState.ARCHITECT_RESOURCES:
-              case TurnState.WARLORD_RESOURCES:
+            switch (cm.getClientTurnState()) {
+              case ClientTurnState.TAKE_RESOURCES:
                 return this.gatherResources(move);
-
-              case TurnState.ASSASSIN_CHOOSE_CARD:
-              case TurnState.THIEF_CHOOSE_CARD:
-              case TurnState.MAGICIAN_CHOOSE_CARD:
-              case TurnState.KING_CHOOSE_CARD:
-              case TurnState.BISHOP_CHOOSE_CARD:
-              case TurnState.MERCHANT_CHOOSE_CARD:
-              case TurnState.ARCHITECT_CHOOSE_CARD:
-              case TurnState.WARLORD_CHOOSE_CARD:
+              case ClientTurnState.CHOOSE_CARD:
                 return this.chooseDistrictCard(move);
-
-              case TurnState.ASSASSIN_BUILD:
-              case TurnState.THIEF_BUILD:
-              case TurnState.MAGICIAN_BUILD:
-              case TurnState.KING_BUILD:
-              case TurnState.BISHOP_BUILD:
-              case TurnState.MERCHANT_BUILD:
-              case TurnState.ARCHITECT_BUILD:
-              case TurnState.WARLORD_BUILD:
+              case ClientTurnState.BUILD_DISTRICT:
                 return this.buildDistrict(move);
-
-              case TurnState.ASSASSIN_ACTIONS:
-              case TurnState.THIEF_ACTIONS:
-              case TurnState.MAGICIAN_ACTIONS:
-              case TurnState.KING_ACTIONS:
-              case TurnState.BISHOP_ACTIONS:
-              case TurnState.MERCHANT_ACTIONS:
-              case TurnState.ARCHITECT_ACTIONS:
-              case TurnState.WARLORD_ACTIONS:
+              case ClientTurnState.CHOOSE_ACTION:
                 return this.executeAction(move);
-
-              case TurnState.ASSASSIN_KILL:
+              case ClientTurnState.ASSASSIN_KILL:
                 return this.killCharacter(move);
-
-              case TurnState.THIEF_ROB:
+              case ClientTurnState.THIEF_ROB:
                 return this.robCharacter(move);
-
-              case TurnState.MAGICIAN_EXCHANGE_HAND:
+              case ClientTurnState.MAGICIAN_EXCHANGE_HAND:
                 return this.exchangeHand(move);
-
-              case TurnState.MAGICIAN_DISCARD_CARDS:
+              case ClientTurnState.MAGICIAN_DISCARD_CARDS:
                 return this.discardCards(move);
-
-              case TurnState.WARLORD_DESTROY_DISTRICT:
+              case ClientTurnState.WARLORD_DESTROY_DISTRICT:
                 return this.destroyDistrict(move);
-
               default:
                 break;
             }
@@ -263,7 +226,7 @@ export default class GameState implements Subject {
         cm.turnState += 2;
         break;
 
-      case MoveType.DRAW_CARD:
+      case MoveType.DRAW_CARDS:
         player.tmpHand = this.board.districtsDeck.drawCards(2);
         // go to card selection step
         cm.turnState += 1;
@@ -277,7 +240,7 @@ export default class GameState implements Subject {
   }
 
   private chooseDistrictCard(move: Move): boolean {
-    if (move.type !== MoveType.DRAW_CARD) return false;
+    if (move.type !== MoveType.DRAW_CARDS) return false;
 
     if (!this.board) return false;
     const cm = this.board.characterManager;
@@ -295,8 +258,8 @@ export default class GameState implements Subject {
     this.board.districtsDeck.discardCards(player.tmpHand);
     player.tmpHand = [];
 
-    // go to actions step
-    cm.jumpToActionsState();
+    // go to actions (or special action) step
+    cm.turnState += 1;
 
     return true;
   }

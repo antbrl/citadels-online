@@ -4,7 +4,7 @@ export enum MoveType {
   CHOOSE_CHARACTER,
 
   TAKE_GOLD,
-  DRAW_CARD,
+  DRAW_CARDS,
 
   ASSASSIN_KILL,
   THIEF_ROB,

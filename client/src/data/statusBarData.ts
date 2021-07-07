@@ -28,14 +28,14 @@ export function getStatusBarData(state: ClientGameState): StatusBarData {
   const isCurrentPlayerSelf = currentPlayer === state.self;
   const currentPlayerName = state.players.get(currentPlayer)?.username ?? '';
 
-  if (state.board.turnPhase === GamePhase.INITIAL) {
+  if (state.board.gamePhase === GamePhase.INITIAL) {
     return {
       type: 'NORMAL',
       message: 'ui.game.messages.welcome',
     };
   }
 
-  if (state.board.turnPhase === GamePhase.CHOOSE_CHARACTERS) {
+  if (state.board.gamePhase === GamePhase.CHOOSE_CHARACTERS) {
     const message = MESSAGES_CHOOSE_CHARACTERS[
       state.board.characters.state.type as keyof typeof MESSAGES_CHOOSE_CHARACTERS
     ];

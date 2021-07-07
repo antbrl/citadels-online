@@ -43,7 +43,7 @@ export type ClientGameState = {
         id: number
       }[]
     }>
-    turnPhase: GamePhase
+    gamePhase: GamePhase
     playerOrder: string[],
     currentPlayer: number,
     crown: string

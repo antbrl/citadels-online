@@ -128,7 +128,7 @@ export default class CharacterManager {
     this.robbedCharacter = CharacterType.NONE;
     this.districtsToBuild = [1, 1, 1, 1, 1, 1, 3, 1];
     this.canTakeEarnings = [false, false, false, true, true, true, false, true];
-    this.canDoSpecialAction = [false, false, false, false, false, true, true, true];
+    this.canDoSpecialAction = [true, true, true, false, false, true, true, true];
   }
 
   jumpToCharacter(character: CharacterType) {
@@ -145,7 +145,8 @@ export default class CharacterManager {
   }
 
   jumpToNextCharacter() {
-    this.jumpToCharacter(this.getCurrentCharacter() + 1);
+    const nextCharacter = this.getCurrentCharacter() + 1;
+    this.jumpToCharacter(nextCharacter + (this.killedCharacter === nextCharacter ? 1 : 0));
   }
 
   jumpToBuildState() {

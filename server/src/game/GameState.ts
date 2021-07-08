@@ -1,6 +1,8 @@
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState, { GamePhase } from './BoardState';
-import { CharacterType, ClientTurnState, TurnState } from './CharacterManager';
+import {
+  CharacterPosition, CharacterType, ClientTurnState, TurnState,
+} from './CharacterManager';
 import { CharacterChoosingStateType as CCST } from './ChoosingState';
 import GameSetupData from './GameSetupData';
 import Move, { MoveType } from './Move';
@@ -172,6 +174,9 @@ export default class GameState implements Subject {
                 if (!cm.isCharacterPlayable(cm.getCurrentCharacter())) {
                   setTimeout(() => {
                     cm.jumpToNextCharacter();
+                    if (cm.getCurrentCharacter() === cm.robbedCharacter) {
+                      this.moveRobbedGold();
+                    }
                     this.step();
                     this.notify();
                   }, 3000);
@@ -452,6 +457,9 @@ export default class GameState implements Subject {
       case CharacterType.MERCHANT:
       case CharacterType.ARCHITECT:
       case CharacterType.WARLORD:
+        // check that robbed character is not killed
+        if (character === cm.killedCharacter) return false;
+
         cm.robbedCharacter = character;
         cm.canDoSpecialAction[CharacterType.THIEF] = false;
         cm.jumpToActionsState();
@@ -460,6 +468,25 @@ export default class GameState implements Subject {
       default:
         return false;
     }
+  }
+
+  private moveRobbedGold() {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+
+    const thiefPlayer = this.board.players.get(
+      this.board.playerOrder[cm.characters[CharacterType.THIEF] - CharacterPosition.PLAYER_1],
+    );
+    if (thiefPlayer === undefined) return false;
+    const robbedPlayer = this.board.players.get(this.board.getCurrentPlayerId());
+    if (robbedPlayer === undefined) return false;
+
+    if (thiefPlayer !== robbedPlayer) {
+      thiefPlayer.stash += robbedPlayer.stash;
+      robbedPlayer.stash = 0;
+    }
+
+    return true;
   }
 
   private exchangeHand(move: Move) {

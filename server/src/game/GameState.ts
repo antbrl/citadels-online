@@ -567,7 +567,7 @@ export default class GameState implements Subject {
     if (otherPlayer === undefined) return false;
 
     // check that the current character can destroy
-    if (cm.districtsToBuild[cm.getCurrentCharacter()] < 1) {
+    if (!cm.canDoSpecialAction[CharacterType.WARLORD]) {
       return false;
     }
 

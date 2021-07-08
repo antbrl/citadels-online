@@ -41,13 +41,13 @@
       <CharactersList :characters="charactersList.aside" />
     </div>
   </div>
-  <div class="card-footer bg-dark border-top border-secondary h5 p-2 m-0 d-flex">
-    <!-- status message -->
-    <div class="flex-fill badge badge-lg py-3" :class="{
-      'badge-secondary': statusBar.type === 'NORMAL',
-      'badge-primary': statusBar.type === 'HIGHLIGHTED',
-      'badge-danger': statusBar.type === 'ERROR',
+  <div class="card-footer border-top border-secondary h5 p-2 m-0 d-flex" :class="{
+      'bg-secondary': statusBar.type === 'NORMAL',
+      'bg-primary': statusBar.type === 'HIGHLIGHTED',
+      'bg-danger': statusBar.type === 'ERROR',
     }">
+    <!-- status message -->
+    <div class="flex-fill badge badge-lg py-3 text-light">
       {{ $t(statusBar.message, statusBar.args) }}
     </div>
     <!-- actions -->

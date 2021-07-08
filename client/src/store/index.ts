@@ -58,6 +58,13 @@ export const store = createStore<State>({
         ...state.gameState?.board.characters,
       };
     },
+    currentPlayerId(state) {
+      if (state.gameState === undefined) return undefined;
+      return state.gameState.board.playerOrder[state.gameState.board.currentPlayer];
+    },
+    isCurrentPlayerSelf(state, getters) {
+      return state.gameState !== undefined && state.gameState.self === getters.currentPlayerId;
+    },
   },
 
   mutations: {

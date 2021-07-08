@@ -24,6 +24,8 @@
           :tmp-hand="selfBoard.tmpHand"
           :stash="selfBoard.stash"
           :crown="selfBoard.crown"
+          :city="selfBoard.city"
+          :buildMode="buildMode"
         />
       </div>
     </div>
@@ -69,7 +71,7 @@ import { store } from '../../store';
 import CharactersList from './elements/CharactersList.vue';
 import PlayerCity from './elements/PlayerCity.vue';
 import PlayerHand from './elements/PlayerHand.vue';
-import { Move } from '../../types/gameTypes';
+import { ClientTurnState, Move } from '../../types/gameTypes';
 import { getStatusBarData } from '../../data/statusBarData';
 
 export default defineComponent({
@@ -86,6 +88,7 @@ export default defineComponent({
       'gameSetupData',
       'gameState',
       'charactersList',
+      'isCurrentPlayerSelf',
     ]),
     self() {
       return this.gameState.self;
@@ -105,6 +108,10 @@ export default defineComponent({
     },
     statusBar() {
       return getStatusBarData(this.gameState);
+    },
+    buildMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.BUILD_DISTRICT;
     },
   },
   methods: {

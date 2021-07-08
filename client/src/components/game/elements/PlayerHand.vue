@@ -7,7 +7,9 @@
     :key="i"
     :district-id="id"
     class="mr-2"
-    :disabled="showTmpHand"
+    @click="chooseCardBuild(id)"
+    :disabled="showTmpHand || (buildMode && !canBuild(id))"
+    :selectable="canBuild(id)"
   />
   <div
     v-if="showTmpHand"
@@ -56,6 +58,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    city: {
+      type: Array,
+      required: true,
+    },
+    buildMode: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     showTmpHand() {
@@ -63,9 +73,23 @@ export default defineComponent({
     },
   },
   methods: {
+    canBuild(name: string): boolean {
+      if (!this.buildMode) return false;
+      return !this.city.includes(name) && store.getters.getDistrictFromId(name).cost <= this.stash;
+    },
     async chooseCard(name: string) {
-      const move: Move = { type: MoveType.DRAW_CARDS, data: name };
       try {
+        const move: Move = { type: MoveType.DRAW_CARDS, data: name };
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
+    },
+    async chooseCardBuild(name: string) {
+      if (!this.canBuild(name)) return;
+
+      try {
+        const move: Move = { type: MoveType.BUILD_DISTRICT, data: name };
         await store.dispatch('sendMove', move);
       } catch (error) {
         console.log('error when sending move', error);

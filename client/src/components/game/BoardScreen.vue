@@ -94,15 +94,15 @@ export default defineComponent({
       return this.gameState.self;
     },
     otherPlayersBoards() {
-      return this.gameState.board.players.filter((player) => player[0] !== this.self)
-        .map((board) => ([board[0], {
-          ...board[1],
-          crown: this.gameState.board.crown === board[0],
+      return [...this.gameState.board.players].filter(([player]) => player !== this.self)
+        .map(([player, board]) => ([player, {
+          ...board,
+          crown: this.gameState.board.crown === player,
         }]));
     },
     selfBoard() {
       return {
-        ...this.gameState.board.players.filter((player) => player[0] === this.self)[0][1],
+        ...this.gameState.board.players.get(this.self),
         crown: this.gameState.board.crown === this.self,
       };
     },

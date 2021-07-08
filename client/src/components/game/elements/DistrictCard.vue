@@ -1,6 +1,6 @@
 <template>
 <div
-  class="district-card"
+  class="district-card flex-shrink-0"
   :class="{
     'cursor-pointer': !disabled && selectable,
     'opacity-3': disabled,
@@ -121,8 +121,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .district-card {
-  height: 10em;
-  width: 7em;
+  height: 10rem;
+  width: 7rem;
 }
 
 .coin {

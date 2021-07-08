@@ -21,7 +21,7 @@
         v-for="id, i in board.city"
         :key="i"
         :district-id="id"
-        class="pr-2"
+        class="mr-2"
       />
     </div>
   </div>

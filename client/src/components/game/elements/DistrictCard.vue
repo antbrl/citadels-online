@@ -1,9 +1,15 @@
 <template>
-<div>
+<div
+  class="district-card"
+  :class="{
+    'cursor-pointer': !disabled && selectable,
+    'opacity-3': disabled,
+  }"
+>
   <!-- face up -->
   <div
     v-if="data"
-    class="district-card card text-light shadow-sm overflow-hidden d-flex flex-column p-1"
+    class="card h-100 text-light shadow-sm overflow-hidden d-flex flex-column p-1"
     :class="`bg-${color}`"
     v-tooltip
     data-placement="top"
@@ -68,6 +74,14 @@ export default defineComponent({
     districtId: {
       type: String,
       required: true,
+    },
+    selectable: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

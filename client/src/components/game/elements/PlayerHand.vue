@@ -7,10 +7,11 @@
     :key="i"
     :district-id="id"
     class="mr-2"
+    :disabled="showTmpHand"
   />
   <div
     v-if="showTmpHand"
-    class="bg-light d-flex justify-content-start pl-2 py-2 my-n2 cursor-pointer"
+    class="bg-light d-flex justify-content-start pl-2 py-2 my-n2"
   >
     <DistrictCard
       v-for="id, i in tmpHand"
@@ -18,6 +19,7 @@
       :district-id="id"
       class="mr-2"
       @click="chooseCard(id)"
+      :selectable="showTmpHand"
     />
   </div>
   <div

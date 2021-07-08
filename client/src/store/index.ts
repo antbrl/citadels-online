@@ -68,7 +68,7 @@ export const store = createStore<State>({
     },
     getDistrictDestroyPrice(state, getters) {
       return (playerId: string, districtId: string) => {
-        if (districtId === 'dungeon') return -1;
+        if (districtId === 'keep') return -1;
 
         if (state.gameState === undefined) return -1;
         const player = state.gameState.board.players.get(playerId);

@@ -41,6 +41,8 @@
         :title="$t('ui.game.characters')"
         :characters="charactersList.callable"
         :current="charactersList.current"
+        :kill-mode="killMode"
+        :rob-mode="robMode"
       />
       <CharactersList :characters="charactersList.aside" />
     </div>
@@ -120,6 +122,14 @@ export default defineComponent({
     destroyMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.WARLORD_DESTROY_DISTRICT;
+    },
+    killMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.ASSASSIN_KILL;
+    },
+    robMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.THIEF_ROB;
     },
   },
   methods: {

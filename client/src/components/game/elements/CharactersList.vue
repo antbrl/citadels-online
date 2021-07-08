@@ -5,13 +5,13 @@
   </div>
   <ul class="list-group list-group-flush text-dark shadow-sm">
     <li
-      v-for="(character, i) in characters" :key="i"
+      v-for="(character, i) in processedCharacters" :key="i"
       class="list-group-item list-group-item-dark p-2 d-flex justify-content-between"
       :class="{
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,
         'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
-          character.id === current && current !== 0,
+          character.id === current && current !== 0 && !(killMode || robMode),
         'bg-light': character.id > current && !character.killed,
         'bg-white text-dark cursor-pointer': character.selectable,
       }"
@@ -67,6 +67,23 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+    killMode: {
+      type: Boolean,
+      default: false,
+    },
+    robMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    processedCharacters() {
+      return this.characters.map((character) => ({
+        selectable: (this.killMode && character.id > 1)
+          || (this.robMode && character.id > 2 && !character.killed),
+        ...character,
+      }));
+    },
   },
   methods: {
     bgColor(character: number) {
@@ -98,7 +115,17 @@ export default defineComponent({
       }
     },
     async selectCharacter(index: number) {
-      const move: Move = { type: MoveType.CHOOSE_CHARACTER, data: index };
+      if (!this.processedCharacters[index].selectable) return;
+
+      let moveType = MoveType.CHOOSE_CHARACTER;
+
+      if (this.killMode) {
+        moveType = MoveType.ASSASSIN_KILL;
+      } else if (this.robMode) {
+        moveType = MoveType.THIEF_ROB;
+      }
+
+      const move: Move = { type: moveType, data: index };
       await store.dispatch('sendMove', move);
     },
   },

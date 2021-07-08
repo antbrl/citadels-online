@@ -22,6 +22,9 @@
         :key="i"
         :district-id="id"
         class="mr-2"
+        @click="chooseCardDestroy(id)"
+        :disabled="destroyMode && !canDestroy(id)"
+        :selectable="canDestroy(id)"
       />
     </div>
   </div>
@@ -31,6 +34,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
+import { store } from '../../../store';
+import { Move, MoveType } from '../../../types/gameTypes';
 import CharactersList from './CharactersList.vue';
 import DistrictCard from './DistrictCard.vue';
 
@@ -48,6 +53,14 @@ export default defineComponent({
     board: {
       required: true,
     },
+    destroyMode: {
+      type: Boolean,
+      default: false,
+    },
+    stash: {
+      type: Number,
+      default: 0,
+    },
   },
   computed: {
     ...mapGetters([
@@ -58,6 +71,29 @@ export default defineComponent({
     },
     hasCrown() {
       return this.board.crown || false;
+    },
+  },
+  methods: {
+    canDestroy(name: string): boolean {
+      if (!this.destroyMode) return false;
+      const cost = store.getters.getDistrictDestroyPrice(this.playerId, name);
+      return cost >= 0 && cost <= this.stash;
+    },
+    async chooseCardDestroy(name: string) {
+      if (!this.canDestroy(name)) return;
+
+      try {
+        const move: Move = {
+          type: MoveType.WARLORD_DESTROY_DISTRICT,
+          data: {
+            player: store.getters.getPlayerPosition(this.playerId),
+            card: name,
+          },
+        };
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
     },
   },
 });

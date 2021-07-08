@@ -2,6 +2,7 @@ import { Socket } from 'socket.io-client';
 import { createStore } from 'vuex';
 import socket from '../socket';
 import {
+  CharacterType,
   ClientGameState, GameProgress, GameSetupData, Move, PlayerRole,
 } from '../types/gameTypes';
 import districts from '../data/districts.json';
@@ -64,6 +65,30 @@ export const store = createStore<State>({
     },
     isCurrentPlayerSelf(state, getters) {
       return state.gameState !== undefined && state.gameState.self === getters.currentPlayerId;
+    },
+    getDistrictDestroyPrice(state, getters) {
+      return (playerId: string, districtId: string) => {
+        if (districtId === 'dungeon') return -1;
+
+        if (state.gameState === undefined) return -1;
+        const player = state.gameState.board.players.get(playerId);
+        if (player === undefined) return -1;
+
+        const isBishopDead = state.gameState.board.characters.callable.find(
+          ({ id }) => id === CharacterType.BISHOP,
+        )?.killed ?? false;
+        const isPlayerBishop = player.characters.some(({ id }) => id === CharacterType.BISHOP);
+        if (!isBishopDead && isPlayerBishop) return -1;
+
+        const discount = (
+          player.city.includes('great_wall') && districtId !== 'great_wall'
+        ) ? 0 : 1;
+
+        return Math.max(getters.getDistrictFromId(districtId)?.cost - discount, 0);
+      };
+    },
+    getPlayerPosition(state) {
+      return (playerId: string) => state.gameState?.board.playerOrder.indexOf(playerId);
     },
   },
 

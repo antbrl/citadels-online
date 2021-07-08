@@ -11,6 +11,8 @@
           <PlayerCity
             :player-id="id"
             :board="board"
+            :destroy-mode="destroyMode"
+            :stash="selfBoard.stash"
           />
         </div>
       </div>
@@ -18,6 +20,8 @@
         <PlayerCity
           :player-id="self"
           :board="selfBoard"
+          :destroy-mode="destroyMode"
+          :stash="selfBoard.stash"
         />
         <PlayerHand
           :hand="selfBoard.hand"
@@ -25,7 +29,7 @@
           :stash="selfBoard.stash"
           :crown="selfBoard.crown"
           :city="selfBoard.city"
-          :buildMode="buildMode"
+          :build-mode="buildMode"
         />
       </div>
     </div>
@@ -112,6 +116,10 @@ export default defineComponent({
     buildMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.BUILD_DISTRICT;
+    },
+    destroyMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.WARLORD_DESTROY_DISTRICT;
     },
   },
   methods: {

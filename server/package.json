@@ -4,7 +4,8 @@
   "description": "Online Citadels board game (server)",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc && node dist/index.js"
+    "start": "tsc && node dist/index.js",
+    "start:debug": "tsc && node --inspect dist/index.js"
   },
   "repository": "https://github.com/antbrl/citadels-server",
   "author": "Antoine Brûlé",

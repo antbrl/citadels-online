@@ -599,7 +599,7 @@ export default class GameState implements Subject {
     }
 
     // check that card can be destroyed
-    if (data.card === 'dungeon' || !otherPlayer.hasCardInCity(data.card)) {
+    if (data.card === 'keep' || !otherPlayer.hasCardInCity(data.card)) {
       return false;
     }
 

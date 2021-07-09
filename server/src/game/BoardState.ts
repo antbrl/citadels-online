@@ -60,7 +60,6 @@ export default class BoardState {
       playerOrder: this.playerOrder,
       currentPlayer: this.getCurrentPlayerPosition(),
       currentPlayerExtraData: this.characterManager.exportCurrentPlayerExtraData(),
-      crown: this.playerOrder[0],
       characters: this.characterManager.exportCharactersList(destPlayerPos),
     };
   }

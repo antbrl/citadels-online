@@ -1,6 +1,6 @@
 <template>
 <div v-if="characters.length > 0" class="card bg-dark">
-  <div v-if="title" class="card-header bg-secondary text-light text-center">
+  <div v-if="title" class="card-header bg-secondary text-light text-center px-0">
     {{ title }}
   </div>
   <ul class="list-group list-group-flush text-dark shadow-sm">

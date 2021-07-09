@@ -9,8 +9,6 @@
           <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
           <span class="badge badge-pill badge-secondary p-2">{{ board.hand.length }} 🃏</span>
         </p>
-      </div>
-      <div>
         <CharactersList :characters="board.characters" />
       </div>
     </div>

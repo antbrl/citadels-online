@@ -607,8 +607,9 @@ export default class GameState implements Subject {
     }
 
     // check that victim is not an alive bishop
-    const isOtherPlayerBishop = cm.exportPlayerCharacters(data.player, PlayerPosition.SPECTATOR)
-      .some((character) => character.id === CharacterType.BISHOP);
+    const isOtherPlayerBishop = (
+      cm.characters[CharacterType.BISHOP] === data.player - CharacterPosition.PLAYER_1
+    );
     if (isOtherPlayerBishop && cm.killedCharacter !== CharacterType.BISHOP) {
       return false;
     }

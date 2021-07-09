@@ -7,7 +7,16 @@
         <p class="text-center">
           <span v-if="hasCrown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
           <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
-          <span class="badge badge-pill badge-secondary p-2">{{ board.hand.length }} 🃏</span>
+          <span
+            class="badge badge-pill p-2"
+            :class="{
+              'badge-secondary': !exchangeHandMode,
+              'badge-primary cursor-pointer': exchangeHandMode,
+            }"
+            @click="exchangeHand()"
+            v-tooltip
+            :title="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
+          >{{ board.hand.length }} 🃏</span>
         </p>
         <CharactersList :characters="board.characters" />
       </div>
@@ -55,6 +64,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    exchangeHandMode: {
+      type: Boolean,
+      default: false,
+    },
     stash: {
       type: Number,
       default: 0,
@@ -87,6 +100,19 @@ export default defineComponent({
             player: store.getters.getPlayerPosition(this.playerId),
             card: name,
           },
+        };
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
+    },
+    async exchangeHand() {
+      if (!this.exchangeHandMode) return;
+
+      try {
+        const move: Move = {
+          type: MoveType.MAGICIAN_EXCHANGE_HAND,
+          data: store.getters.getPlayerPosition(this.playerId),
         };
         await store.dispatch('sendMove', move);
       } catch (error) {

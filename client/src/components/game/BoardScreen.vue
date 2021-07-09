@@ -13,6 +13,7 @@
             :board="board"
             :destroy-mode="destroyMode"
             :stash="selfBoard.stash"
+            :exchange-hand-mode="exchangeHandMode"
           />
         </div>
       </div>
@@ -130,6 +131,10 @@ export default defineComponent({
     robMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.THIEF_ROB;
+    },
+    exchangeHandMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.MAGICIAN_EXCHANGE_HAND;
     },
   },
   methods: {

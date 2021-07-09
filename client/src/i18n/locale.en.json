@@ -78,6 +78,7 @@
                 "assassin_kill": "Kill character",
                 "thief_rob": "Rob character",
                 "magician_exchange_hand": "Exchange hand",
+                "choose_hand": "Choose this hand",
                 "magician_discard_cards": "Exchange cards",
                 "take_gold_earnings": "Collect earnings",
                 "warlord_destroy_district": "Destroy district",

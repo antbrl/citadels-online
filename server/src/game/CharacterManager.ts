@@ -334,11 +334,22 @@ export default class CharacterManager {
   }
 
   exportPlayerCharacters(pos: PlayerPosition, dest: PlayerPosition) {
-    // can see cards if player is spectator or if cards are their own
-    const canSee = dest === PlayerPosition.SPECTATOR || dest === pos;
+    // can see all cards if player is spectator, if cards are their own, or if turn phase has ended
+    const canSee = dest === PlayerPosition.SPECTATOR
+      || dest === pos
+      || this.turnState === TurnState.DONE;
     const characterPos = pos + CharacterPosition.PLAYER_1 as CharacterPosition;
-    return this.getCharactersAtPosition(characterPos).map((characterType) => ({
-      id: canSee ? characterType + 1 : 0,
+    const currentCharacter = this.getCurrentCharacter();
+
+    // characters are sorted so that unknown characters are at the end of the list
+    return this.getCharactersAtPosition(characterPos).map((id) => (
+      (
+        canSee || (id <= currentCharacter && id !== this.killedCharacter)
+      ) ? id : CharacterType.CHARACTER_COUNT
+    )).sort().map((id) => ({
+      id: (id === CharacterType.CHARACTER_COUNT ? CharacterType.NONE : id) + 1,
+      killed: id !== CharacterType.NONE && id === this.killedCharacter,
+      robbed: id !== CharacterType.NONE && id === this.robbedCharacter,
     }));
   }
 

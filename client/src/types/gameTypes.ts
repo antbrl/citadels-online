@@ -97,6 +97,9 @@ export type ClientGameState = {
       }[]
     }
   }
+  settings: {
+    completeCitySize: number
+  }
 }
 
 export type GameSetupData = {

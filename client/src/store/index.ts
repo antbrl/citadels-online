@@ -74,6 +74,8 @@ export const store = createStore<State>({
         const player = state.gameState.board.players.get(playerId);
         if (player === undefined) return -1;
 
+        if (player.city.length >= state.gameState.settings.completeCitySize) return -1;
+
         const isBishopDead = state.gameState.board.characters.callable.find(
           ({ id }) => id === CharacterType.BISHOP,
         )?.killed ?? false;

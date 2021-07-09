@@ -30,6 +30,7 @@ export default {
             ...data.board,
             players: new Map(data.board?.players),
           },
+          settings: data.settings,
         };
         resolve(gameState);
       });

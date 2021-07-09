@@ -47,6 +47,7 @@ socket.on('update game state', (data) => {
       ...data.board,
       players: new Map(data.board?.players),
     },
+    settings: data.settings,
   };
   store.commit('setGameState', newGameState);
 });

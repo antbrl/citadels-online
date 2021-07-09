@@ -168,7 +168,7 @@ export default class GameState implements Subject {
                     this.finishTurnPhase();
                     this.step();
                     this.notify();
-                  }, 3000);
+                  }, 10000);
                   return true;
                 }
                 if (!cm.isCharacterPlayable(cm.getCurrentCharacter())) {

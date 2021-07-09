@@ -52,6 +52,9 @@ export default class GameState implements Subject {
       players: Array.from(this.players),
       self: playerId,
       board: this.board?.exportForPlayer(playerId),
+      settings: {
+        completeCitySize: this.completeCitySize,
+      },
     };
   }
 

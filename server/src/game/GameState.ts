@@ -187,6 +187,9 @@ export default class GameState implements Subject {
                 return this.decline();
               case MoveType.FINISH_TURN:
                 cm.jumpToNextCharacter();
+                if (cm.getCurrentCharacter() === cm.robbedCharacter) {
+                  this.moveRobbedGold();
+                }
                 return true;
 
               default:

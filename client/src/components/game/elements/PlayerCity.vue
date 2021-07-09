@@ -5,7 +5,7 @@
       <div class="bg-dark p-1 flex-fill rounded">
         <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
-          <span v-if="hasCrown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
+          <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
           <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
           <span
             class="badge badge-pill p-2"
@@ -79,9 +79,6 @@ export default defineComponent({
     ]),
     username() {
       return this.getPlayerFromId(this.playerId)?.username;
-    },
-    hasCrown() {
-      return this.board.crown || false;
     },
   },
   methods: {

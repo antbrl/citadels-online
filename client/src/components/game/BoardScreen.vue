@@ -25,11 +25,7 @@
           :stash="selfBoard.stash"
         />
         <PlayerHand
-          :hand="selfBoard.hand"
-          :tmp-hand="selfBoard.tmpHand"
-          :stash="selfBoard.stash"
-          :crown="selfBoard.crown"
-          :city="selfBoard.city"
+          :board="selfBoard"
           :build-mode="buildMode"
         />
       </div>
@@ -104,13 +100,13 @@ export default defineComponent({
       return [...this.gameState.board.players].filter(([player]) => player !== this.self)
         .map(([player, board]) => ([player, {
           ...board,
-          crown: this.gameState.board.crown === player,
+          crown: this.gameState.board.playerOrder[0] === player,
         }]));
     },
     selfBoard() {
       return {
         ...this.gameState.board.players.get(this.self),
-        crown: this.gameState.board.crown === this.self,
+        crown: this.gameState.board.playerOrder[0] === this.self,
       };
     },
     statusBar() {

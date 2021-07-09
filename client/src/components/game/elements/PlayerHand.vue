@@ -1,9 +1,9 @@
 <template>
 <div class="py-2 d-flex justify-content-start align-items-end overflow-auto">
-  <div v-if="crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">👑</div>
+  <div v-if="board.crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">👑</div>
   <div class="mr-auto"></div>
   <DistrictCard
-    v-for="id, i in hand"
+    v-for="id, i in board.hand"
     :key="i"
     :district-id="id"
     class="mr-2"
@@ -16,7 +16,7 @@
     class="bg-light d-flex justify-content-start pl-2 py-2 my-n2"
   >
     <DistrictCard
-      v-for="id, i in tmpHand"
+      v-for="id, i in board.tmpHand"
       :key="i"
       :district-id="id"
       class="mr-2"
@@ -26,7 +26,7 @@
   </div>
   <div
     class="stash d-flex flex-column-reverse flex-wrap-reverse justify-content-start ml-auto"
-  ><span v-for="i in stash" :key="i" class="coin">🪙</span></div>
+  ><span v-for="i in board.stash" :key="i" class="coin">🪙</span></div>
 </div>
 </template>
 
@@ -42,24 +42,7 @@ export default defineComponent({
     DistrictCard,
   },
   props: {
-    hand: {
-      type: Array,
-      required: true,
-    },
-    tmpHand: {
-      type: Array,
-      required: true,
-    },
-    stash: {
-      type: Number,
-      required: true,
-    },
-    crown: {
-      type: Boolean,
-      default: false,
-    },
-    city: {
-      type: Array,
+    board: {
       required: true,
     },
     buildMode: {
@@ -69,13 +52,14 @@ export default defineComponent({
   },
   computed: {
     showTmpHand() {
-      return this.tmpHand.length > 0;
+      return this.board.tmpHand.length > 0;
     },
   },
   methods: {
     canBuild(name: string): boolean {
       if (!this.buildMode) return false;
-      return !this.city.includes(name) && store.getters.getDistrictFromId(name).cost <= this.stash;
+      return !this.board.city.includes(name)
+        && store.getters.getDistrictFromId(name).cost <= this.board.stash;
     },
     async chooseCard(name: string) {
       try {

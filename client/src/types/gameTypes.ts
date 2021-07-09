@@ -80,7 +80,6 @@ export type ClientGameState = {
       canTakeEarnings: boolean
       canDoSpecialAction: boolean
     }
-    crown: string
     characters: {
       state: {
         type: CharacterChoosingStateType

@@ -66,7 +66,7 @@ export default class PlayerBoardState {
 
   computeDestroyCost(card: string): number {
     const discount = (this.hasCardInCity('great_wall') && card !== 'great_wall') ? 0 : 1;
-    return ALL_DISTRICTS.get(card)?.card.cost ?? 0 - discount;
+    return (ALL_DISTRICTS.get(card)?.card.cost ?? discount) - discount;
   }
 
   destroyDistrict(card: string) {

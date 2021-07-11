@@ -41,7 +41,7 @@ export default class BoardState {
 
   exportForPlayer(destPlayerId: string) {
     // whether the player can see all hands
-    const destPlayerPos = Array.from(this.players.keys()).indexOf(destPlayerId) as PlayerPosition;
+    const destPlayerPos = this.playerOrder.indexOf(destPlayerId) as PlayerPosition;
     const seesAll = destPlayerPos === PlayerPosition.SPECTATOR;
 
     return {

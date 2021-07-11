@@ -180,6 +180,10 @@ export default class GameState implements Subject {
                     if (cm.getCurrentCharacter() === cm.robbedCharacter) {
                       this.moveRobbedGold();
                     }
+                    if (cm.getCurrentCharacter() === CharacterType.KING
+                        && cm.killedCharacter !== CharacterType.KING) {
+                      this.giveCrownToKing();
+                    }
                     this.step();
                     this.notify();
                   }, 3000);
@@ -192,6 +196,10 @@ export default class GameState implements Subject {
                 cm.jumpToNextCharacter();
                 if (cm.getCurrentCharacter() === cm.robbedCharacter) {
                   this.moveRobbedGold();
+                }
+                if (cm.getCurrentCharacter() === CharacterType.KING
+                    && cm.killedCharacter !== CharacterType.KING) {
+                  this.giveCrownToKing();
                 }
                 return true;
 
@@ -246,6 +254,8 @@ export default class GameState implements Subject {
   private finishTurnPhase(): boolean {
     if (!this.board) return false;
     const cm = this.board.characterManager;
+
+    this.giveCrownToKing();
 
     const isEndOfGame = Array.from(this.board.players.values()).some(
       (player) => player.city.length >= this.completeCitySize,
@@ -636,6 +646,34 @@ export default class GameState implements Subject {
     cm.canDoSpecialAction[CharacterType.WARLORD] = false;
     cm.jumpToActionsState();
     return true;
+  }
+
+  private giveCrownToKing() {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+
+    // get king position
+    const position = cm.characters[CharacterType.KING];
+    switch (position) {
+      case CharacterPosition.PLAYER_2:
+      case CharacterPosition.PLAYER_3:
+      case CharacterPosition.PLAYER_4:
+      case CharacterPosition.PLAYER_5:
+      case CharacterPosition.PLAYER_6:
+      case CharacterPosition.PLAYER_7:
+      {
+        // get player at position
+        const playerPos = position - CharacterPosition.PLAYER_1;
+        // shift player order
+        this.board.playerOrder.push(...this.board.playerOrder.splice(0, playerPos));
+        // shift character position
+        cm.shiftPlayerPosition(playerPos);
+        return true;
+      }
+
+      default:
+        return false;
+    }
   }
 
   attach(observer: Observer): void {

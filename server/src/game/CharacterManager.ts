@@ -97,6 +97,9 @@ export enum CharacterPosition {
 }
 
 export default class CharacterManager {
+  // player count between 2 and 7
+  playerCount: number;
+
   // characters position on board, indexed by CharacterType
   characters!: Array<CharacterPosition>;
 
@@ -116,6 +119,7 @@ export default class CharacterManager {
   canDoSpecialAction!: boolean[];
 
   constructor(playerCount: number) {
+    this.playerCount = playerCount;
     this.choosingState = new CharacterChoosingState(playerCount);
     this.reset();
   }
@@ -521,5 +525,25 @@ export default class CharacterManager {
     }
 
     return true;
+  }
+
+  shiftPlayerPosition(amount: number) {
+    const offset = CharacterPosition.PLAYER_1;
+    this.characters.forEach((character, i) => {
+      switch (character) {
+        case CharacterPosition.PLAYER_1:
+        case CharacterPosition.PLAYER_2:
+        case CharacterPosition.PLAYER_3:
+        case CharacterPosition.PLAYER_4:
+        case CharacterPosition.PLAYER_5:
+        case CharacterPosition.PLAYER_6:
+        case CharacterPosition.PLAYER_7:
+          this.characters[i] = ((character - offset + amount) % this.playerCount) + offset;
+          break;
+
+        default:
+          break;
+      }
+    });
   }
 }

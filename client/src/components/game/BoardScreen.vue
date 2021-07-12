@@ -27,6 +27,7 @@
         <PlayerHand
           :board="selfBoard"
           :build-mode="buildMode"
+          :discard-cards-mode="discardCardsMode"
         />
       </div>
     </div>
@@ -131,6 +132,10 @@ export default defineComponent({
     exchangeHandMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.MAGICIAN_EXCHANGE_HAND;
+    },
+    discardCardsMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.MAGICIAN_DISCARD_CARDS;
     },
   },
   methods: {

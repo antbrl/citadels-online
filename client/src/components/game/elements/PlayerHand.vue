@@ -7,9 +7,9 @@
     :key="i"
     :district-id="id"
     class="mr-2"
-    @click="chooseCardBuild(id)"
     :disabled="showTmpHand || (buildMode && !canBuild(id))"
-    :selectable="canBuild(id)"
+    :selectable="canBuild(id) || discardCardsMode"
+    v-model:selected="selectedCards[i]"
   />
   <div
     v-if="showTmpHand"
@@ -49,6 +49,15 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    discardCardsMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      selectedCards: [] as boolean[],
+    };
   },
   computed: {
     showTmpHand() {
@@ -78,6 +87,35 @@ export default defineComponent({
       } catch (error) {
         console.log('error when sending move', error);
       }
+    },
+  },
+  watch: {
+    board: {
+      handler(newBoard, oldBoard) {
+        if (newBoard.hand !== oldBoard.hand) {
+          this.selectedCards = [];
+        }
+      },
+      deep: true,
+    },
+    selectedCards: {
+      handler(val) {
+        const cards: string[] = [];
+        val.forEach((isSelected, index) => {
+          if (isSelected) {
+            const card = this.board.hand[index];
+            if (card !== undefined) cards.push(card);
+          }
+        });
+
+        store.commit('setSelectedCards', { cards });
+
+        if (this.buildMode && cards.length > 0) {
+          this.chooseCardBuild(cards[0]);
+          this.selectedCards = [];
+        }
+      },
+      deep: true,
     },
   },
 });

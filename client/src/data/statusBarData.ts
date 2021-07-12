@@ -10,6 +10,8 @@ import {
   CharacterType,
 } from '../types/gameTypes';
 
+import { store } from '../store';
+
 const INVALID_STATE: StatusBarData = {
   type: 'ERROR',
   message: 'ui.game.messages.errors.invalid_state',
@@ -98,9 +100,12 @@ function getActions(
     case ClientTurnState.ASSASSIN_KILL:
     case ClientTurnState.THIEF_ROB:
     case ClientTurnState.MAGICIAN_EXCHANGE_HAND:
-    case ClientTurnState.MAGICIAN_DISCARD_CARDS:
     case ClientTurnState.WARLORD_DESTROY_DISTRICT:
     case ClientTurnState.BUILD_DISTRICT:
+      actions.push({ title: 'cancel', move: { type: MoveType.DECLINE } });
+      break;
+    case ClientTurnState.MAGICIAN_DISCARD_CARDS:
+      actions.push({ title: 'confirm', move: { type: MoveType.MAGICIAN_DISCARD_CARDS, data: store.getters.selectedCards } });
       actions.push({ title: 'cancel', move: { type: MoveType.DECLINE } });
       break;
     case ClientTurnState.MERCHANT_TAKE_1_GOLD:

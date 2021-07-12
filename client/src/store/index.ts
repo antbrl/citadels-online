@@ -12,6 +12,7 @@ export interface State {
   socket: Socket
   gameState: ClientGameState | undefined
   gameSetupData: GameSetupData
+  selectedCards: string[]
 }
 
 export const store = createStore<State>({
@@ -21,6 +22,7 @@ export const store = createStore<State>({
     gameSetupData: {
       players: [],
     },
+    selectedCards: [],
   },
 
   getters: {
@@ -92,6 +94,9 @@ export const store = createStore<State>({
     getPlayerPosition(state) {
       return (playerId: string) => state.gameState?.board.playerOrder.indexOf(playerId);
     },
+    selectedCards(state) {
+      return state.selectedCards;
+    },
   },
 
   mutations: {
@@ -128,6 +133,9 @@ export const store = createStore<State>({
       state.gameSetupData.players = Array.from(state.gameState?.players.values() || [])
         .filter((player) => player.role === PlayerRole.PLAYER)
         .map((player) => player.id);
+    },
+    setSelectedCards(state, { cards }) {
+      state.selectedCards = cards;
     },
   },
 

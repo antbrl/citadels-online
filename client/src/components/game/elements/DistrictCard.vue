@@ -1,10 +1,12 @@
 <template>
 <div
-  class="district-card flex-shrink-0"
+  class="district-card flex-shrink-0 rounded"
   :class="{
     'cursor-pointer': !disabled && selectable,
     'opacity-3': disabled,
+    'district-card--selected': selected,
   }"
+  @click="toggleSelected()"
 >
   <!-- face up -->
   <div
@@ -83,7 +85,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    selected: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ['update:selected'],
   computed: {
     ...mapGetters([
       'getDistrictFromId',
@@ -116,6 +123,11 @@ export default defineComponent({
       return `districts.${this.districtId}.description`;
     },
   },
+  methods: {
+    toggleSelected() {
+      this.$emit('update:selected', !this.selected && this.selectable);
+    },
+  },
 });
 </script>
 
@@ -123,6 +135,12 @@ export default defineComponent({
 .district-card {
   height: 10rem;
   width: 7rem;
+
+  &--selected {
+    background: white;
+    box-shadow: 0 0 0 3px white;
+    filter: contrast(0.9) brightness(1.1);
+  }
 }
 
 .coin {

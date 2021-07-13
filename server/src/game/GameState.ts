@@ -326,9 +326,23 @@ export default class GameState implements Subject {
       case MoveType.DRAW_CARDS:
       {
         const hasObservatory = player.city.includes('observatory');
-        player.tmpHand = this.board.districtsDeck.drawCards(hasObservatory ? 3 : 2);
-        // go to card selection step
-        cm.turnState += 1;
+        const hasLibrary = player.city.includes('library');
+
+        // draw cards
+        const cards = this.board.districtsDeck.drawCards(hasObservatory ? 3 : 2);
+
+        if (hasLibrary) {
+          // drawn cards go straight to hand
+          player.addCardsToHand(cards);
+          // go to actions (or special action) step
+          cm.turnState += 2;
+        } else {
+          // put drawn cards in selection space
+          player.tmpHand = cards;
+          // go to card selection step
+          cm.turnState += 1;
+        }
+
         break;
       }
 

@@ -231,6 +231,8 @@ export default class GameState implements Subject {
                 return this.drawTwoCards(move);
               case ClientTurnState.WARLORD_DESTROY_DISTRICT:
                 return this.destroyDistrict(move);
+              case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
+                return this.recoverFromGraveyard(move);
               default:
                 break;
             }
@@ -256,6 +258,12 @@ export default class GameState implements Subject {
     const cm = this.board.characterManager;
 
     this.giveCrownToKing();
+
+    // clean graveyard
+    if (this.board.graveyard !== undefined) {
+      this.board.districtsDeck.discardCards([this.board.graveyard]);
+      this.board.graveyard = undefined;
+    }
 
     const isEndOfGame = Array.from(this.board.players.values()).some(
       (player) => player.city.length >= this.completeCitySize,
@@ -291,6 +299,7 @@ export default class GameState implements Subject {
       case ClientTurnState.ARCHITECT_DRAW_2_CARDS:
       case ClientTurnState.WARLORD_DESTROY_DISTRICT:
       case ClientTurnState.BUILD_DISTRICT:
+      case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
         cm.jumpToActionsState();
         break;
 
@@ -651,13 +660,89 @@ export default class GameState implements Subject {
       return false;
     }
 
-    // destroy district
+    // destroy district (move to graveyard)
     player.stash -= cost;
     otherPlayer.destroyDistrict(data.card);
-    this.board.districtsDeck.discardCards([data.card]);
+    this.board.graveyard = data.card;
 
     cm.canDoSpecialAction[CharacterType.WARLORD] = false;
+
+    // special state for graveyard
+    if (this.canRecoverFromGraveyard()) {
+      cm.turnState = TurnState.GRAVEYARD_RECOVER_DISTRICT;
+    } else {
+      cm.jumpToActionsState();
+    }
+
+    return true;
+  }
+
+  private canRecoverFromGraveyard() {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+
+    // get player with graveyard
+    const playerBoardEntry = [...this.board.players].find((p) => p[1].city.includes('graveyard'));
+
+    // check that this player exists
+    if (playerBoardEntry === undefined) {
+      return false;
+    }
+
+    const [playerId, playerBoard] = playerBoardEntry;
+
+    // check that this player has at least 1 gold
+    if (playerBoard.stash < 1) {
+      return false;
+    }
+
+    // check that this player is not a warlord
+    if (cm.characters[CharacterType.WARLORD]
+        === this.board.playerOrder.indexOf(playerId) + CharacterPosition.PLAYER_1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private recoverFromGraveyard(move: Move) {
+    if (move.type !== MoveType.GRAVEYARD_RECOVER_DISTRICT) return false;
+
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+    const player = this.board.players.get(this.board.getCurrentPlayerId());
+    if (player === undefined) return false;
+
+    // check that graveyard is not empty
+    if (this.board.graveyard === undefined) {
+      return false;
+    }
+
+    // check that player has graveyard
+    if (!player.city.includes('graveyard')) {
+      return false;
+    }
+
+    // check that player has at least 1 gold
+    if (player.stash < 1) {
+      return false;
+    }
+
+    // check that player is not a warlord
+    if (cm.characters[CharacterType.WARLORD]
+        === this.board.getCurrentPlayerPosition() + CharacterPosition.PLAYER_1) {
+      return false;
+    }
+
+    // take 1 gold from stash
+    player.stash -= 1;
+
+    // take card from graveyard
+    player.addCardsToHand([this.board.graveyard]);
+    this.board.graveyard = undefined;
+
     cm.jumpToActionsState();
+
     return true;
   }
 

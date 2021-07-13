@@ -1,4 +1,4 @@
-import CharacterManager from './CharacterManager';
+import CharacterManager, { TurnState } from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
 import { PlayerPosition } from './Player';
 import PlayerBoardState from './PlayerBoardState';
@@ -24,6 +24,9 @@ export default class BoardState {
 
   // district cards deck
   districtsDeck: DistrictsDeck;
+
+  // graveyard (1 card)
+  graveyard: string | undefined;
 
   constructor(players: string[]) {
     this.players = new Map();
@@ -61,6 +64,7 @@ export default class BoardState {
       currentPlayer: this.getCurrentPlayerPosition(),
       currentPlayerExtraData: this.characterManager.exportCurrentPlayerExtraData(),
       characters: this.characterManager.exportCharactersList(destPlayerPos),
+      graveyard: this.graveyard,
     };
   }
 
@@ -70,6 +74,13 @@ export default class BoardState {
       case GamePhase.CHOOSE_CHARACTERS:
         return this.characterManager.choosingState.getState().player;
       case GamePhase.DO_ACTIONS:
+        if (this.characterManager.turnState === TurnState.GRAVEYARD_RECOVER_DISTRICT) {
+          // get player with graveyard
+          const playerBoardEntry = [...this.players].find((p) => p[1].city.includes('graveyard'));
+          if (playerBoardEntry !== undefined) {
+            return this.playerOrder.indexOf(playerBoardEntry[0]);
+          }
+        }
         return this.characterManager.getCurrentPlayerPosition();
 
       default:

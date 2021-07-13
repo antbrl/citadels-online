@@ -64,6 +64,8 @@ export enum TurnState {
   WARLORD_DESTROY_DISTRICT,
   WARLORD_BUILD,
 
+  GRAVEYARD_RECOVER_DISTRICT,
+
   DONE,
 }
 
@@ -79,6 +81,7 @@ export enum ClientTurnState {
   MERCHANT_TAKE_1_GOLD,
   ARCHITECT_DRAW_2_CARDS,
   WARLORD_DESTROY_DISTRICT,
+  GRAVEYARD_RECOVER_DISTRICT,
   BUILD_DISTRICT,
   DONE,
 }
@@ -253,6 +256,7 @@ export default class CharacterManager {
       case TurnState.WARLORD_ACTIONS:
       case TurnState.WARLORD_DESTROY_DISTRICT:
       case TurnState.WARLORD_BUILD:
+      case TurnState.GRAVEYARD_RECOVER_DISTRICT:
         return CharacterType.WARLORD;
       default:
         return CharacterType.NONE;
@@ -321,6 +325,8 @@ export default class CharacterManager {
         return ClientTurnState.ARCHITECT_DRAW_2_CARDS;
       case TurnState.WARLORD_DESTROY_DISTRICT:
         return ClientTurnState.WARLORD_DESTROY_DISTRICT;
+      case TurnState.GRAVEYARD_RECOVER_DISTRICT:
+        return ClientTurnState.GRAVEYARD_RECOVER_DISTRICT;
       case TurnState.ASSASSIN_BUILD:
       case TurnState.THIEF_BUILD:
       case TurnState.MAGICIAN_BUILD:

@@ -262,6 +262,7 @@ export default class GameState implements Subject {
     );
 
     if (isEndOfGame) {
+      this.computeScores();
       this.progress = GameProgress.FINISHED;
     } else {
       this.board.gamePhase = GamePhase.CHOOSE_CHARACTERS;
@@ -269,6 +270,12 @@ export default class GameState implements Subject {
     }
 
     return true;
+  }
+
+  private computeScores() {
+    this.board?.players.forEach((player) => {
+      player.computeScore(this.completeCitySize);
+    });
   }
 
   private decline(): boolean {
@@ -364,6 +371,12 @@ export default class GameState implements Subject {
     }
 
     cm.districtsToBuild[cm.getCurrentCharacter()] -= 1;
+
+    // mark first complete city
+    if (player.city.length >= this.completeCitySize
+        && ![...this.board.players.values()].some((p) => p.firstToCompleteCity)) {
+      player.firstToCompleteCity = true;
+    }
 
     // go to actions step
     cm.jumpToActionsState();

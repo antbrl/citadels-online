@@ -48,6 +48,7 @@ export enum ClientTurnState {
   MERCHANT_TAKE_1_GOLD,
   ARCHITECT_DRAW_2_CARDS,
   WARLORD_DESTROY_DISTRICT,
+  GRAVEYARD_RECOVER_DISTRICT,
   BUILD_DISTRICT,
   DONE,
 }
@@ -105,6 +106,7 @@ export type ClientGameState = {
         id: number
       }[]
     }
+    graveyard: string | undefined
   }
   settings: {
     completeCitySize: number
@@ -131,6 +133,8 @@ export enum MoveType {
   MERCHANT_TAKE_1_GOLD,
   ARCHITECT_DRAW_2_CARDS,
   WARLORD_DESTROY_DISTRICT,
+
+  GRAVEYARD_RECOVER_DISTRICT,
 
   DECLINE,
   BUILD_DISTRICT,

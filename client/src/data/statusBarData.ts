@@ -42,6 +42,7 @@ const MESSAGES_DO_ACTIONS = {
   [ClientTurnState.MERCHANT_TAKE_1_GOLD]: 'merchant_take_1_gold',
   [ClientTurnState.ARCHITECT_DRAW_2_CARDS]: 'architect_draw_2_cards',
   [ClientTurnState.WARLORD_DESTROY_DISTRICT]: 'warlord_destroy_district',
+  [ClientTurnState.GRAVEYARD_RECOVER_DISTRICT]: 'graveyard_recover_district',
   [ClientTurnState.BUILD_DISTRICT]: 'build_district',
   [ClientTurnState.DONE]: 'done',
 };
@@ -121,6 +122,10 @@ function getActions(
       actions.push({ title: 'accept', move: { type: MoveType.ARCHITECT_DRAW_2_CARDS } });
       actions.push({ title: 'decline', move: { type: MoveType.DECLINE } });
       break;
+    case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
+      actions.push({ title: 'graveyard_recover_district', move: { type: MoveType.GRAVEYARD_RECOVER_DISTRICT } });
+      actions.push({ title: 'decline', move: { type: MoveType.DECLINE } });
+      break;
     default:
   }
   return actions;
@@ -159,14 +164,22 @@ export function getStatusBarData(state: ClientGameState): StatusBarData {
         case GamePhase.DO_ACTIONS:
         {
           const currentCharacter = state.board.characters.current;
-          if (!isCurrentPlayerSelf && currentCharacter !== CharacterType.NONE) {
-            return {
-              type: 'NORMAL',
-              message: `characters.${currentCharacter}.turn`,
-            };
+          if (!isCurrentPlayerSelf) {
+            if (state.board.turnState === ClientTurnState.GRAVEYARD_RECOVER_DISTRICT) {
+              return {
+                type: 'NORMAL',
+                message: 'ui.game.messages.actions.graveyard_recover_district_others',
+              };
+            }
+            if (!isCurrentPlayerSelf && currentCharacter !== CharacterType.NONE) {
+              return {
+                type: 'NORMAL',
+                message: `characters.${currentCharacter}.turn`,
+              };
+            }
           }
           const message = MESSAGES_DO_ACTIONS[
-        state.board.turnState as keyof typeof MESSAGES_DO_ACTIONS
+            state.board.turnState as keyof typeof MESSAGES_DO_ACTIONS
           ];
           if (message !== undefined) {
             return {

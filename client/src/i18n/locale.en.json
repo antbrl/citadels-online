@@ -61,6 +61,8 @@
                     "merchant_take_1_gold": "Take an extra gold coin?",
                     "architect_draw_2_cards": "Draw 2 extra cards?",
                     "warlord_destroy_district": "Choose a district to destroy.",
+                    "graveyard_recover_district": "Recover destroyed district from the graveyard for 1 gold?",
+                    "graveyard_recover_district_others": "The player owning the graveyard must choose whether to recover the destroyed district.",
                     "build_district": "Choose a district to build.",
                     "done": "End of turn!"
                 },
@@ -83,6 +85,7 @@
                 "magician_discard_cards": "Exchange cards",
                 "take_gold_earnings": "Collect earnings",
                 "warlord_destroy_district": "Destroy district",
+                "graveyard_recover_district": "Recover district",
                 "build_district": "Build district",
                 "finish_turn": "Finish turn"
             }

@@ -43,6 +43,18 @@
         :kill-mode="killMode"
         :rob-mode="robMode"
       />
+      <div
+        v-if="gameProgress === 'IN_GAME' && showGraveyard"
+        class="card bg-secondary flex flex-column"
+      >
+        <div class="card-header text-light text-center px-0">
+          {{ $t('districts.graveyard.name') }}
+        </div>
+        <DistrictCard
+          class="align-self-center my-2"
+          :district-id="gameState.board.graveyard"
+        />
+      </div>
       <CharactersList
         v-if="gameProgress === 'IN_GAME'"
         :characters="charactersList.aside"
@@ -79,11 +91,17 @@ import { store } from '../../store';
 import CharactersList from './elements/CharactersList.vue';
 import PlayerCity from './elements/PlayerCity.vue';
 import PlayerHand from './elements/PlayerHand.vue';
+import DistrictCard from './elements/DistrictCard.vue';
 import { ClientTurnState, Move } from '../../types/gameTypes';
 import { getStatusBarData } from '../../data/statusBarData';
 
 export default defineComponent({
-  components: { CharactersList, PlayerCity, PlayerHand },
+  components: {
+    CharactersList,
+    PlayerCity,
+    PlayerHand,
+    DistrictCard,
+  },
   name: 'LobbyScreen',
   data() {
     return {
@@ -141,6 +159,9 @@ export default defineComponent({
     discardCardsMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.MAGICIAN_DISCARD_CARDS;
+    },
+    showGraveyard() {
+      return this.gameState.board.graveyard !== undefined;
     },
   },
   methods: {

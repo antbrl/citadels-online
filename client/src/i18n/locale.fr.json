@@ -61,6 +61,8 @@
                     "merchant_take_1_gold": "Prendre une pièce d'or supplémentaire ?",
                     "architect_draw_2_cards": "Piocher 2 cartes supplémentaires ?",
                     "warlord_destroy_district": "Choisissez un quartier à détruire.",
+                    "graveyard_recover_district": "Récupérer le quartier détruit du cimetière pour une pièce d'or ?",
+                    "graveyard_recover_district_others": "Le joueur possédant le cimetière doit choisir s'il récupère le quartier détruit.",
                     "build_district": "Choisissez un quartier à construire.",
                     "done": "C'est la fin du tour !"
                 },
@@ -83,6 +85,7 @@
                 "magician_discard_cards": "Échanger des cartes",
                 "take_gold_earnings": "Recevoir les revenus",
                 "warlord_destroy_district": "Détruire un quartier",
+                "graveyard_recover_district": "Récupérer",
                 "build_district": "Construire un quartier",
                 "finish_turn": "Terminer le tour"
             }

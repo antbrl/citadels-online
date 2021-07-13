@@ -64,6 +64,7 @@
                     "build_district": "Choisissez un quartier à construire.",
                     "done": "C'est la fin du tour !"
                 },
+                "end": "Fin de la partie.",
                 "errors": {
                     "invalid_state": "Erreur : l'état de la partie est invalide."
                 }
@@ -85,6 +86,15 @@
                 "build_district": "Construire un quartier",
                 "finish_turn": "Terminer le tour"
             }
+        },
+        "score": {
+            "title": "Score",
+            "base": "Valeur des quartiers",
+            "extra_stash": "Trésor Impérial",
+            "extra_hand": "Salle des Cartes",
+            "extra_district_types": "Tous les types",
+            "extra_complete_city": "Cité complète",
+            "total": "Total"
         }
     },
     "characters": [

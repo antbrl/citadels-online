@@ -1,7 +1,7 @@
 <template>
 <div class="card bg-secondary shadow-sm overflow-hidden">
-  <div class="row no-gutters h-100">
-    <div class="col-2 p-1 text-light d-flex flex-column">
+  <div class="city-container row no-gutters">
+    <div class="col-2 p-1 text-light d-flex flex-column h-100">
       <div class="bg-dark p-1 flex-fill rounded">
         <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
@@ -18,7 +18,7 @@
             :title="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
           >{{ board.hand.length }} 🃏</span>
         </p>
-        <CharactersList :characters="board.characters" />
+        <CharactersList v-if="gameProgress === 'IN_GAME'" :characters="board.characters" />
       </div>
     </div>
     <div class="col py-2 pl-2 bg-secondary d-flex justify-content-start overflow-auto">
@@ -34,6 +34,7 @@
         :selectable="canDestroy(id)"
       />
     </div>
+    <PlayerScore v-if="gameProgress === 'FINISHED'" :score="board.score" />
   </div>
 </div>
 </template>
@@ -45,12 +46,14 @@ import { store } from '../../../store';
 import { Move, MoveType } from '../../../types/gameTypes';
 import CharactersList from './CharactersList.vue';
 import DistrictCard from './DistrictCard.vue';
+import PlayerScore from './PlayerScore.vue';
 
 export default defineComponent({
   name: 'PlayerCity',
   components: {
     DistrictCard,
     CharactersList,
+    PlayerScore,
   },
   props: {
     playerId: {
@@ -76,6 +79,7 @@ export default defineComponent({
   computed: {
     ...mapGetters([
       'getPlayerFromId',
+      'gameProgress',
     ]),
     username() {
       return this.getPlayerFromId(this.playerId)?.username;
@@ -119,3 +123,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.city-container {
+  height: 11rem;
+}
+</style>

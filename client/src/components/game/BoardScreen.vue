@@ -36,13 +36,17 @@
       h-100 d-flex flex-column justify-content-between overflow-auto"
     >
       <CharactersList
+        v-if="gameProgress === 'IN_GAME'"
         :title="$t('ui.game.characters')"
         :characters="charactersList.callable"
         :current="charactersList.current"
         :kill-mode="killMode"
         :rob-mode="robMode"
       />
-      <CharactersList :characters="charactersList.aside" />
+      <CharactersList
+        v-if="gameProgress === 'IN_GAME'"
+        :characters="charactersList.aside"
+      />
     </div>
   </div>
   <div class="card-footer border-top border-secondary h5 p-2 m-0 d-flex" :class="{
@@ -93,6 +97,7 @@ export default defineComponent({
       'gameState',
       'charactersList',
       'isCurrentPlayerSelf',
+      'gameProgress',
     ]),
     self() {
       return this.gameState.self;

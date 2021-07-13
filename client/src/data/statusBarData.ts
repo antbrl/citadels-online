@@ -17,6 +17,11 @@ const INVALID_STATE: StatusBarData = {
   message: 'ui.game.messages.errors.invalid_state',
 };
 
+const END_OF_GAME: StatusBarData = {
+  type: 'NORMAL',
+  message: 'ui.game.messages.end',
+};
+
 const MESSAGES_CHOOSE_CHARACTERS = {
   [CCST.INITIAL]: 'initial',
   [CCST.PUT_ASIDE_FACE_UP]: 'put_aside_face_up',
@@ -122,63 +127,70 @@ function getActions(
 }
 
 export function getStatusBarData(state: ClientGameState): StatusBarData {
-  if (state.progress !== GameProgress.IN_GAME) {
-    return INVALID_STATE;
-  }
-
-  const currentPlayer = state.board.playerOrder[state.board.currentPlayer];
-  const isCurrentPlayerSelf = currentPlayer === state.self;
-  const currentPlayerName = state.players.get(currentPlayer)?.username ?? '';
-
-  switch (state.board.gamePhase) {
-    case GamePhase.INITIAL:
-      return {
-        type: 'NORMAL',
-        message: 'ui.game.messages.welcome',
-      };
-
-    case GamePhase.CHOOSE_CHARACTERS:
+  switch (state.progress) {
+    case GameProgress.IN_GAME:
     {
-      const message = MESSAGES_CHOOSE_CHARACTERS[
+      const currentPlayer = state.board.playerOrder[state.board.currentPlayer];
+      const isCurrentPlayerSelf = currentPlayer === state.self;
+      const currentPlayerName = state.players.get(currentPlayer)?.username ?? '';
+
+      switch (state.board.gamePhase) {
+        case GamePhase.INITIAL:
+          return {
+            type: 'NORMAL',
+            message: 'ui.game.messages.welcome',
+          };
+
+        case GamePhase.CHOOSE_CHARACTERS:
+        {
+          const message = MESSAGES_CHOOSE_CHARACTERS[
       state.board.characters.state.type as keyof typeof MESSAGES_CHOOSE_CHARACTERS
-      ];
-      if (message !== undefined) {
-        return {
-          type: isCurrentPlayerSelf ? 'HIGHLIGHTED' : 'NORMAL',
-          message: `ui.game.messages.choose_characters.${message}`,
-          args: [currentPlayerName],
-        };
+          ];
+          if (message !== undefined) {
+            return {
+              type: isCurrentPlayerSelf ? 'HIGHLIGHTED' : 'NORMAL',
+              message: `ui.game.messages.choose_characters.${message}`,
+              args: [currentPlayerName],
+            };
+          }
+          break;
+        }
+
+        case GamePhase.DO_ACTIONS:
+        {
+          const currentCharacter = state.board.characters.current;
+          if (!isCurrentPlayerSelf && currentCharacter !== CharacterType.NONE) {
+            return {
+              type: 'NORMAL',
+              message: `characters.${currentCharacter}.turn`,
+            };
+          }
+          const message = MESSAGES_DO_ACTIONS[
+        state.board.turnState as keyof typeof MESSAGES_DO_ACTIONS
+          ];
+          if (message !== undefined) {
+            return {
+              type: isCurrentPlayerSelf ? 'HIGHLIGHTED' : 'NORMAL',
+              message: `ui.game.messages.actions.${message}`,
+              actions: getActions(
+                state.board.turnState,
+                state.board.characters.current,
+                state.board.currentPlayerExtraData.districtsToBuild,
+                state.board.currentPlayerExtraData.canTakeEarnings,
+                state.board.currentPlayerExtraData.canDoSpecialAction,
+              ),
+            };
+          }
+          break;
+        }
+
+        default:
       }
-      break;
+      return INVALID_STATE;
     }
 
-    case GamePhase.DO_ACTIONS:
-    {
-      const currentCharacter = state.board.characters.current;
-      if (!isCurrentPlayerSelf && currentCharacter !== CharacterType.NONE) {
-        return {
-          type: 'NORMAL',
-          message: `characters.${currentCharacter}.turn`,
-        };
-      }
-      const message = MESSAGES_DO_ACTIONS[
-        state.board.turnState as keyof typeof MESSAGES_DO_ACTIONS
-      ];
-      if (message !== undefined) {
-        return {
-          type: isCurrentPlayerSelf ? 'HIGHLIGHTED' : 'NORMAL',
-          message: `ui.game.messages.actions.${message}`,
-          actions: getActions(
-            state.board.turnState,
-            state.board.characters.current,
-            state.board.currentPlayerExtraData.districtsToBuild,
-            state.board.currentPlayerExtraData.canTakeEarnings,
-            state.board.currentPlayerExtraData.canDoSpecialAction,
-          ),
-        };
-      }
-      break;
-    }
+    case GameProgress.FINISHED:
+      return END_OF_GAME;
 
     default:
   }

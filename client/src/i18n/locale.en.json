@@ -64,6 +64,7 @@
                     "build_district": "Choose a district to build.",
                     "done": "End of turn!"
                 },
+                "end": "End of game.",
                 "errors": {
                     "invalid_state": "Error: invalid game state."
                 }
@@ -85,6 +86,15 @@
                 "build_district": "Build district",
                 "finish_turn": "Finish turn"
             }
+        },
+        "score": {
+            "title": "Score",
+            "base": "Districts value",
+            "extra_stash": "Imperial Treasury",
+            "extra_hand": "Map Room",
+            "extra_district_types": "All district types",
+            "extra_complete_city": "Complete city",
+            "total": "Total"
         }
     },
     "characters": [

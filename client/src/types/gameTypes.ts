@@ -52,6 +52,15 @@ export enum ClientTurnState {
   DONE,
 }
 
+export interface PlayerScore {
+  base?: number
+  extraPointsStash?: number
+  extraPointsHand?: number
+  extraPointsDistrictTypes?: number
+  extraPointsCompleteCity?: number
+  total?: number
+}
+
 export type ClientGameState = {
   progress: GameProgress
   players: Map<string, {
@@ -70,6 +79,7 @@ export type ClientGameState = {
       characters: {
         id: number
       }[]
+      score: PlayerScore
     }>
     gamePhase: GamePhase
     turnState: ClientTurnState

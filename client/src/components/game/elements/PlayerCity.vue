@@ -2,7 +2,7 @@
 <div class="card bg-secondary shadow-sm overflow-hidden">
   <div class="city-container row no-gutters">
     <div class="col-2 p-1 text-light d-flex flex-column h-100">
-      <div class="bg-dark p-1 flex-fill rounded">
+      <div class="bg-dark p-1 flex-fill rounded d-flex flex-column overflow-auto">
         <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
           <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
@@ -18,6 +18,7 @@
             :title="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
           >{{ board.hand.length }} 🃏</span>
         </p>
+        <div class="flex-fill"></div>
         <CharactersList v-if="gameProgress === 'IN_GAME'" :characters="board.characters" />
       </div>
     </div>

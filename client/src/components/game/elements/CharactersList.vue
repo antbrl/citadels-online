@@ -6,8 +6,9 @@
   <ul class="list-group list-group-flush text-dark shadow-sm">
     <li
       v-for="(character, i) in processedCharacters" :key="i"
-      class="list-group-item list-group-item-dark p-2 d-flex justify-content-between"
+      class="list-group-item p-2 d-flex justify-content-between"
       :class="{
+        'list-group-item-dark': !character.killed,
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,
         'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
@@ -20,28 +21,30 @@
       :title="$t(`characters.${character.id}.description`)"
       @click="selectCharacter(i)"
     >
-      <span>
-        <span
-          v-if="character.id === 0"
-          class="badge badge-pill shadow-sm bg-dark text-light"
-        >?</span>
-        <span
-          v-else
-          class="badge badge-pill shadow-sm"
-          :class="`bg-${bgColor(character.id)} text-${textColor(character.id)}`"
-        >{{ character.id }}</span>
-        <span class="badge">{{ $t(`characters.${character.id}.name`) }}</span>
-      </span>
-      <span>
-        <span
-          v-if="character.killed"
-          class="badge badge-pill badge-danger p-1 shadow-sm"
-        >💀</span>
-        <span
-          v-else-if="character.robbed"
-          class="badge badge-pill badge-dark p-1 shadow-sm"
-        >💰</span>
-      </span>
+      <!-- unknown character id -->
+      <span
+        v-if="character.id === 0"
+        class="badge badge-pill shadow-sm bg-dark text-light"
+      >?</span>
+      <!-- character id -->
+      <span
+        v-else
+        class="badge badge-pill shadow-sm"
+        :class="`bg-${bgColor(character.id)} text-${textColor(character.id)}`"
+      >{{ character.id }}</span>
+      <!-- character name -->
+      <span
+        class="badge text-truncate flex-fill text-left"
+      >{{ $t(`characters.${character.id}.name`) }}</span>
+      <!-- character state (killed or robbed) -->
+      <span
+        v-if="character.killed"
+        class="badge badge-pill badge-danger p-1 shadow-sm"
+      >💀</span>
+      <span
+        v-else-if="character.robbed"
+        class="badge badge-pill badge-dark p-1 shadow-sm"
+      >💰</span>
     </li>
   </ul>
 </div>

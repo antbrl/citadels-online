@@ -324,10 +324,13 @@ export default class GameState implements Subject {
         break;
 
       case MoveType.DRAW_CARDS:
-        player.tmpHand = this.board.districtsDeck.drawCards(2);
+      {
+        const hasObservatory = player.city.includes('observatory');
+        player.tmpHand = this.board.districtsDeck.drawCards(hasObservatory ? 3 : 2);
         // go to card selection step
         cm.turnState += 1;
         break;
+      }
 
       default:
         return false;

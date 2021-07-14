@@ -28,6 +28,7 @@ const MESSAGES_CHOOSE_CHARACTERS = {
   [CCST.INITIAL]: 'initial',
   [CCST.PUT_ASIDE_FACE_UP]: 'put_aside_face_up',
   [CCST.PUT_ASIDE_FACE_DOWN]: 'put_aside_face_down',
+  [CCST.PUT_ASIDE_FACE_DOWN_UP]: 'put_aside_face_down',
   [CCST.CHOOSE_CHARACTER]: 'choose_character',
   [CCST.DONE]: 'done',
 };

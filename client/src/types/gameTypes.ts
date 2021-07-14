@@ -19,6 +19,7 @@ export enum CharacterChoosingStateType {
   INITIAL = 0,
   PUT_ASIDE_FACE_UP,
   PUT_ASIDE_FACE_DOWN,
+  PUT_ASIDE_FACE_DOWN_UP,
   CHOOSE_CHARACTER,
   GET_ASIDE_FACE_DOWN,
   DONE,

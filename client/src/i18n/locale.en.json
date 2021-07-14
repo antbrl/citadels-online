@@ -63,6 +63,7 @@
                     "warlord_destroy_district": "Choose a district to destroy.",
                     "graveyard_recover_district": "Recover destroyed district from the graveyard for 1 gold?",
                     "graveyard_recover_district_others": "The player owning the graveyard must choose whether to recover the destroyed district.",
+                    "laboratory_discard_card": "Choose the card to discard to gain 2 gold.",
                     "build_district": "Choose a district to build.",
                     "done": "End of turn!"
                 },
@@ -78,6 +79,7 @@
                 "cancel": "Cancel",
                 "take_gold": "Take 2 coins",
                 "draw_cards": "Draw 2 cards",
+                "draw_cards_3": "Draw 3 cards",
                 "assassin_kill": "Kill character",
                 "thief_rob": "Rob character",
                 "magician_exchange_hand": "Exchange hand",
@@ -86,6 +88,8 @@
                 "take_gold_earnings": "Collect earnings",
                 "warlord_destroy_district": "Destroy district",
                 "graveyard_recover_district": "Recover district",
+                "smithy_draw_cards": "Use smithy",
+                "laboratory_discard_card": "Use laboratory",
                 "build_district": "Build district",
                 "finish_turn": "Finish turn"
             }

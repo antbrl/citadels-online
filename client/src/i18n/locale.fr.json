@@ -63,6 +63,7 @@
                     "warlord_destroy_district": "Choisissez un quartier à détruire.",
                     "graveyard_recover_district": "Récupérer le quartier détruit du cimetière pour une pièce d'or ?",
                     "graveyard_recover_district_others": "Le joueur possédant le cimetière doit choisir s'il récupère le quartier détruit.",
+                    "laboratory_discard_card": "Choisissez la carte à défausser pour recevoir 2 pièces d'or.",
                     "build_district": "Choisissez un quartier à construire.",
                     "done": "C'est la fin du tour !"
                 },
@@ -78,6 +79,7 @@
                 "cancel": "Annuler",
                 "take_gold": "Prendre 2 pièces",
                 "draw_cards": "Piocher 2 cartes",
+                "draw_cards_3": "Piocher 3 cartes",
                 "assassin_kill": "Tuer un personnage",
                 "thief_rob": "Voler un personnage",
                 "magician_exchange_hand": "Échanger la main",
@@ -86,6 +88,8 @@
                 "take_gold_earnings": "Recevoir les revenus",
                 "warlord_destroy_district": "Détruire un quartier",
                 "graveyard_recover_district": "Récupérer",
+                "smithy_draw_cards": "Utiliser la forge",
+                "laboratory_discard_card": "Utiliser le laboratoire",
                 "build_district": "Construire un quartier",
                 "finish_turn": "Terminer le tour"
             }

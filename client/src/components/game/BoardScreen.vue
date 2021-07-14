@@ -28,6 +28,7 @@
           :board="selfBoard"
           :build-mode="buildMode"
           :discard-cards-mode="discardCardsMode"
+          :laboratory-mode="laboratoryMode"
         />
       </div>
     </div>
@@ -159,6 +160,10 @@ export default defineComponent({
     discardCardsMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.MAGICIAN_DISCARD_CARDS;
+    },
+    laboratoryMode() {
+      return this.isCurrentPlayerSelf
+      && this.gameState.board.turnState === ClientTurnState.LABORATORY_DISCARD_CARD;
     },
     showGraveyard() {
       return this.gameState.board.graveyard !== undefined;

@@ -8,7 +8,7 @@
     :district-id="id"
     class="mr-2"
     :disabled="showTmpHand || (buildMode && !canBuild(id))"
-    :selectable="canBuild(id) || discardCardsMode"
+    :selectable="canBuild(id) || discardCardsMode || laboratoryMode"
     v-model:selected="selectedCards[i]"
   />
   <div
@@ -53,6 +53,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    laboratoryMode: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -88,6 +92,14 @@ export default defineComponent({
         console.log('error when sending move', error);
       }
     },
+    async chooseCardLaboratory(name: string) {
+      try {
+        const move: Move = { type: MoveType.LABORATORY_DISCARD_CARD, data: name };
+        await store.dispatch('sendMove', move);
+      } catch (error) {
+        console.log('error when sending move', error);
+      }
+    },
   },
   watch: {
     board: {
@@ -110,9 +122,14 @@ export default defineComponent({
 
         store.commit('setSelectedCards', { cards });
 
-        if (this.buildMode && cards.length > 0) {
-          this.chooseCardBuild(cards[0]);
-          this.selectedCards = [];
+        if (cards.length > 0) {
+          if (this.buildMode) {
+            this.chooseCardBuild(cards[0]);
+            this.selectedCards = [];
+          } else if (this.laboratoryMode) {
+            this.chooseCardLaboratory(cards[0]);
+            this.selectedCards = [];
+          }
         }
       },
       deep: true,

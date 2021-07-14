@@ -8,6 +8,8 @@ import {
   Action,
   MoveType,
   CharacterType,
+  PlayerBoard,
+  PlayerExtraData,
 } from '../types/gameTypes';
 
 import { store } from '../store';
@@ -43,6 +45,7 @@ const MESSAGES_DO_ACTIONS = {
   [ClientTurnState.ARCHITECT_DRAW_2_CARDS]: 'architect_draw_2_cards',
   [ClientTurnState.WARLORD_DESTROY_DISTRICT]: 'warlord_destroy_district',
   [ClientTurnState.GRAVEYARD_RECOVER_DISTRICT]: 'graveyard_recover_district',
+  [ClientTurnState.LABORATORY_DISCARD_CARD]: 'laboratory_discard_card',
   [ClientTurnState.BUILD_DISTRICT]: 'build_district',
   [ClientTurnState.DONE]: 'done',
 };
@@ -50,21 +53,42 @@ const MESSAGES_DO_ACTIONS = {
 function getActions(
   turnState: ClientTurnState,
   character: CharacterType,
-  districtsToBuild: number,
-  canTakeEarnings: boolean,
-  canDoSpecialAction: boolean,
+  extraData: PlayerExtraData,
+  player: PlayerBoard,
 ) {
   const actions: Action[] = [];
+
+  switch (turnState) {
+    case ClientTurnState.TAKE_RESOURCES:
+    case ClientTurnState.CHOOSE_ACTION:
+      if (!extraData.hasUsedLaboratory
+      && player.city.includes('laboratory')
+      && player.hand.length >= 1
+      ) {
+        actions.push({ title: 'laboratory_discard_card', move: { type: MoveType.LABORATORY_DISCARD_CARD } });
+      }
+      if (!extraData.hasUsedSmithy && player.city.includes('smithy') && player.stash >= 2) {
+        actions.push({ title: 'smithy_draw_cards', move: { type: MoveType.SMITHY_DRAW_CARDS } });
+      }
+      break;
+
+    default:
+      break;
+  }
+
   switch (turnState) {
     case ClientTurnState.TAKE_RESOURCES:
       actions.push({ title: 'take_gold', move: { type: MoveType.TAKE_GOLD } });
-      actions.push({ title: 'draw_cards', move: { type: MoveType.DRAW_CARDS } });
+      actions.push({
+        title: player.city.includes('observatory') ? 'draw_cards_3' : 'draw_cards',
+        move: { type: MoveType.DRAW_CARDS },
+      });
       break;
     case ClientTurnState.CHOOSE_ACTION:
-      if (canTakeEarnings) {
+      if (extraData.canTakeEarnings) {
         actions.push({ title: 'take_gold_earnings', move: { type: MoveType.TAKE_GOLD_EARNINGS } });
       }
-      if (canDoSpecialAction) {
+      if (extraData.canDoSpecialAction) {
         switch (character) {
           case CharacterType.ASSASSIN:
             actions.push({
@@ -98,7 +122,7 @@ function getActions(
             break;
         }
       }
-      if (districtsToBuild > 0) {
+      if (extraData.districtsToBuild > 0) {
         actions.push({ title: 'build_district', move: { type: MoveType.BUILD_DISTRICT } });
       }
       actions.push({ title: 'finish_turn', move: { type: MoveType.FINISH_TURN } });
@@ -125,6 +149,9 @@ function getActions(
     case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
       actions.push({ title: 'graveyard_recover_district', move: { type: MoveType.GRAVEYARD_RECOVER_DISTRICT } });
       actions.push({ title: 'decline', move: { type: MoveType.DECLINE } });
+      break;
+    case ClientTurnState.LABORATORY_DISCARD_CARD:
+      actions.push({ title: 'cancel', move: { type: MoveType.DECLINE } });
       break;
     default:
   }
@@ -182,16 +209,16 @@ export function getStatusBarData(state: ClientGameState): StatusBarData {
             state.board.turnState as keyof typeof MESSAGES_DO_ACTIONS
           ];
           if (message !== undefined) {
+            const player = state.board.players.get(currentPlayer);
             return {
               type: isCurrentPlayerSelf ? 'HIGHLIGHTED' : 'NORMAL',
               message: `ui.game.messages.actions.${message}`,
-              actions: getActions(
+              actions: player !== undefined ? getActions(
                 state.board.turnState,
                 state.board.characters.current,
-                state.board.currentPlayerExtraData.districtsToBuild,
-                state.board.currentPlayerExtraData.canTakeEarnings,
-                state.board.currentPlayerExtraData.canDoSpecialAction,
-              ),
+                state.board.currentPlayerExtraData,
+                player,
+              ) : [],
             };
           }
           break;

@@ -49,6 +49,7 @@ export enum ClientTurnState {
   ARCHITECT_DRAW_2_CARDS,
   WARLORD_DESTROY_DISTRICT,
   GRAVEYARD_RECOVER_DISTRICT,
+  LABORATORY_DISCARD_CARD,
   BUILD_DISTRICT,
   DONE,
 }
@@ -62,6 +63,24 @@ export interface PlayerScore {
   total?: number
 }
 
+export type PlayerBoard = {
+  stash: number
+  hand: (string | null)[]
+  city: string[]
+  characters: {
+    id: number
+  }[]
+  score: PlayerScore
+}
+
+export type PlayerExtraData = {
+  districtsToBuild: number
+  canTakeEarnings: boolean
+  canDoSpecialAction: boolean
+  hasUsedLaboratory: boolean
+  hasUsedSmithy: boolean
+}
+
 export type ClientGameState = {
   progress: GameProgress
   players: Map<string, {
@@ -73,24 +92,12 @@ export type ClientGameState = {
   }>
   self: string
   board: {
-    players: Map<string, {
-      stash: number
-      hand: (string | null)[]
-      city: string[]
-      characters: {
-        id: number
-      }[]
-      score: PlayerScore
-    }>
+    players: Map<string, PlayerBoard>
     gamePhase: GamePhase
     turnState: ClientTurnState
     playerOrder: string[],
     currentPlayer: number,
-    currentPlayerExtraData: {
-      districtsToBuild: number
-      canTakeEarnings: boolean
-      canDoSpecialAction: boolean
-    }
+    currentPlayerExtraData: PlayerExtraData
     characters: {
       state: {
         type: CharacterChoosingStateType
@@ -135,6 +142,8 @@ export enum MoveType {
   WARLORD_DESTROY_DISTRICT,
 
   GRAVEYARD_RECOVER_DISTRICT,
+  SMITHY_DRAW_CARDS,
+  LABORATORY_DISCARD_CARD,
 
   DECLINE,
   BUILD_DISTRICT,

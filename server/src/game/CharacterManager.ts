@@ -82,6 +82,7 @@ export enum ClientTurnState {
   ARCHITECT_DRAW_2_CARDS,
   WARLORD_DESTROY_DISTRICT,
   GRAVEYARD_RECOVER_DISTRICT,
+  LABORATORY_DISCARD_CARD,
   BUILD_DISTRICT,
   DONE,
 }
@@ -120,6 +121,9 @@ export default class CharacterManager {
   districtsToBuild!: number[];
   canTakeEarnings!: boolean[];
   canDoSpecialAction!: boolean[];
+  isUsingLaboratory!: boolean;
+  hasUsedLaboratory!: boolean;
+  hasUsedSmithy!: boolean;
 
   constructor(playerCount: number) {
     this.playerCount = playerCount;
@@ -136,6 +140,9 @@ export default class CharacterManager {
     this.districtsToBuild = [1, 1, 1, 1, 1, 1, 3, 1];
     this.canTakeEarnings = [false, false, false, true, true, true, false, true];
     this.canDoSpecialAction = [true, true, true, false, false, true, true, true];
+    this.isUsingLaboratory = false;
+    this.hasUsedLaboratory = false;
+    this.hasUsedSmithy = false;
   }
 
   jumpToCharacter(character: CharacterType) {
@@ -149,6 +156,8 @@ export default class CharacterManager {
       TurnState.ARCHITECT_RESOURCES,
       TurnState.WARLORD_RESOURCES,
     ][character] ?? TurnState.DONE;
+    this.hasUsedLaboratory = false;
+    this.hasUsedSmithy = false;
   }
 
   jumpToNextCharacter() {
@@ -283,6 +292,9 @@ export default class CharacterManager {
   }
 
   getClientTurnState(): ClientTurnState {
+    if (this.isUsingLaboratory) {
+      return ClientTurnState.LABORATORY_DISCARD_CARD;
+    }
     switch (this.turnState) {
       case TurnState.ASSASSIN_RESOURCES:
       case TurnState.THIEF_RESOURCES:
@@ -369,6 +381,8 @@ export default class CharacterManager {
       districtsToBuild: this.districtsToBuild[character],
       canTakeEarnings: this.canTakeEarnings[character],
       canDoSpecialAction: this.canDoSpecialAction[character],
+      hasUsedLaboratory: this.hasUsedLaboratory,
+      hasUsedSmithy: this.hasUsedSmithy,
     };
   }
 

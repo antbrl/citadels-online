@@ -192,6 +192,9 @@ export default class GameState implements Subject {
                 return false;
               case MoveType.DECLINE:
                 return this.decline();
+              case MoveType.SMITHY_DRAW_CARDS:
+              case MoveType.LABORATORY_DISCARD_CARD:
+                return this.doSpecialAction(move);
               case MoveType.FINISH_TURN:
                 cm.jumpToNextCharacter();
                 if (cm.getCurrentCharacter() === cm.robbedCharacter) {
@@ -290,6 +293,11 @@ export default class GameState implements Subject {
     if (!this.board) return false;
     const cm = this.board.characterManager;
 
+    if (cm.isUsingLaboratory) {
+      cm.isUsingLaboratory = false;
+      return true;
+    }
+
     switch (cm.getClientTurnState()) {
       case ClientTurnState.ASSASSIN_KILL:
       case ClientTurnState.THIEF_ROB:
@@ -302,6 +310,81 @@ export default class GameState implements Subject {
       case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
         cm.jumpToActionsState();
         break;
+
+      default:
+        return false;
+    }
+
+    return true;
+  }
+
+  private doSpecialAction(move: Move): boolean {
+    if (!this.board) return false;
+    const cm = this.board.characterManager;
+    const player = this.board.players.get(this.board.getCurrentPlayerId());
+    if (player === undefined) return false;
+
+    switch (cm.getClientTurnState()) {
+      case ClientTurnState.TAKE_RESOURCES:
+      case ClientTurnState.CHOOSE_ACTION:
+        switch (move.type) {
+          case MoveType.SMITHY_DRAW_CARDS:
+            // check that player has not already used smithy
+            if (cm.hasUsedSmithy) {
+              return false;
+            }
+
+            // check that player has smithy
+            if (!player.city.includes('smithy')) {
+              return false;
+            }
+
+            // check that player has enough gold
+            if (player.stash < 2) {
+              return false;
+            }
+
+            // draw cards
+            player.stash -= 2;
+            player.addCardsToHand(this.board.districtsDeck.drawCards(3));
+            cm.hasUsedSmithy = true;
+            break;
+
+          case MoveType.LABORATORY_DISCARD_CARD:
+            // check that player can use laboratory
+            if (cm.hasUsedLaboratory || !player.city.includes('laboratory')) {
+              return false;
+            }
+
+            // go into laboratory mode
+            cm.isUsingLaboratory = true;
+            break;
+
+          default:
+            return false;
+        }
+        break;
+
+      case ClientTurnState.LABORATORY_DISCARD_CARD:
+      {
+        if (move.type !== MoveType.LABORATORY_DISCARD_CARD) {
+          return false;
+        }
+
+        if (!cm.isUsingLaboratory) {
+          return false;
+        }
+
+        const card = move.data;
+        if (player.takeCardFromHand(card) === null) {
+          return false;
+        }
+        this.board.districtsDeck.discardCards(card);
+        player.stash += 2;
+        cm.isUsingLaboratory = false;
+        cm.hasUsedLaboratory = true;
+        break;
+      }
 
       default:
         return false;

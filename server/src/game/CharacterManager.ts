@@ -397,6 +397,7 @@ export default class CharacterManager {
       case CCST.PUT_ASIDE_FACE_DOWN:
         characters = this.exportListPutAside(dest);
         break;
+      case CCST.PUT_ASIDE_FACE_DOWN_UP:
       case CCST.CHOOSE_CHARACTER:
         characters = this.exportListChooseCard(dest);
         break;
@@ -504,6 +505,7 @@ export default class CharacterManager {
         break;
 
       case CCST.PUT_ASIDE_FACE_DOWN:
+      case CCST.PUT_ASIDE_FACE_DOWN_UP:
         this.characters[characters[index]] = CharacterPosition.ASIDE_FACE_DOWN;
         break;
 

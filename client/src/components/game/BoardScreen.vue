@@ -78,7 +78,7 @@
       type="button"
       class="btn btn-light ml-2 font-weight-bold"
       :value="$t(`ui.game.actions.${action.title}`)"
-      @click="sendMove(action.move)"
+      @click="sendMove(action.move, $event.target)"
     >
   </div>
 </div>
@@ -184,7 +184,8 @@ export default defineComponent({
         this.startingGame = false;
       }
     },
-    async sendMove(move: Move) {
+    async sendMove(move: Move, target: HTMLElement) {
+      target.blur();
       try {
         await store.dispatch('sendMove', move);
       } catch (error) {

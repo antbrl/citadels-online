@@ -16,9 +16,8 @@
         'bg-light': character.id > current && !character.killed,
         'bg-white text-dark cursor-pointer': character.selectable,
       }"
-      v-tooltip
+      v-tooltip="$t(`characters.${character.id}.description`)"
       data-placement="left"
-      :title="$t(`characters.${character.id}.description`)"
       @click="selectCharacter(i)"
     >
       <!-- unknown character id -->

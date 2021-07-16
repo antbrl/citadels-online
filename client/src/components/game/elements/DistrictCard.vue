@@ -13,9 +13,8 @@
     v-if="data"
     class="card h-100 text-light shadow-sm overflow-hidden d-flex flex-column p-1"
     :class="`bg-${color}`"
-    v-tooltip
+    v-tooltip="$te(description) ? $t(description) : ''"
     data-placement="top"
-    :title="$te(description) ? $t(description) : ''"
   >
     <!-- cost -->
     <div class="card-header bg-dark p-1 py-2">

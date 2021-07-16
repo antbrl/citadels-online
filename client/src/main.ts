@@ -21,12 +21,14 @@ app.directive('focus', {
 // Bootstrap tooltip directive
 const tooltipOptions = { boundary: 'window' as Boundary };
 app.directive('tooltip', {
-  mounted(el) {
-    $(el).tooltip(tooltipOptions);
+  mounted(el, binding) {
+    const title = binding.value ?? '';
+    $(el).tooltip({ ...tooltipOptions, title });
   },
-  updated(el) {
+  updated(el, binding) {
     $(el).tooltip('dispose');
-    $(el).tooltip(tooltipOptions);
+    const title = binding.value ?? '';
+    $(el).tooltip({ ...tooltipOptions, title });
   },
   unmounted(el) {
     $(el).tooltip('dispose');

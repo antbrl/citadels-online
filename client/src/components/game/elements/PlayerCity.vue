@@ -14,8 +14,7 @@
               'badge-primary cursor-pointer': exchangeHandMode,
             }"
             @click="exchangeHand()"
-            v-tooltip
-            :title="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
+            v-tooltip="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
           >{{ board.hand.length }} 🃏</span>
         </p>
         <div class="flex-fill"></div>

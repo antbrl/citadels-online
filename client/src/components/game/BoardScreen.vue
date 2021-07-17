@@ -62,24 +62,30 @@
       />
     </div>
   </div>
-  <div class="card-footer border-top border-secondary h5 p-2 m-0 d-flex" :class="{
+  <div
+    class="card-footer border-top border-secondary h5 p-2 m-0
+      d-flex flex-wrap align-items-stretch justify-content-center"
+    :class="{
       'bg-secondary': statusBar.type === 'NORMAL',
       'bg-primary': statusBar.type === 'HIGHLIGHTED',
       'bg-danger': statusBar.type === 'ERROR',
-    }">
+    }"
+  >
     <!-- status message -->
     <div class="flex-fill badge badge-lg py-3 text-light">
       {{ $t(statusBar.message, statusBar.args) }}
     </div>
     <!-- actions -->
-    <input
-      v-for="(action, i) in statusBar.actions"
-      :key="i"
-      type="button"
-      class="btn btn-light ml-2 font-weight-bold"
-      :value="$t(`ui.game.actions.${action.title}`)"
-      @click="sendMove(action.move, $event.target)"
-    >
+    <div class="text-center d-flex flex-wrap align-items-stretch justify-content-center m-n1">
+      <input
+        v-for="(action, i) in statusBar.actions"
+        :key="i"
+        type="button"
+        class="btn btn-sm btn-light m-1 font-weight-bold"
+        :value="$t(`ui.game.actions.${action.title}`)"
+        @click="sendMove(action.move, $event.target)"
+      >
+    </div>
   </div>
 </div>
 </template>

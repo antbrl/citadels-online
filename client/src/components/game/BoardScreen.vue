@@ -1,6 +1,6 @@
 <template>
 <div class="card h-100 bg-dark border-dark shadow">
-  <div class="row no-gutters h-100">
+  <div class="row no-gutters h-100 overflow-auto">
     <div class="col-10 h-100 d-flex flex-column">
       <div class="flex-fill bg-dark d-flex flex-column overflow-auto">
         <div

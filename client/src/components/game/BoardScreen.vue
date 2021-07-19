@@ -72,8 +72,14 @@
     }"
   >
     <!-- status message -->
-    <div class="flex-fill badge badge-lg py-3 text-light text-wrap">
-      {{ $t(statusBar.message, statusBar.args) }}
+    <div
+      class="flex-fill badge badge-lg py-3 text-light text-wrap animate-text"
+      ref="statusBarMessage"
+    >
+      <span
+        v-for="c, i in [...$t(statusBar.message, statusBar.args)]"
+        :key="i"
+      >{{ c !== ' ' ? c : '&nbsp;' }}</span>
     </div>
     <!-- actions -->
     <div class="text-center d-flex flex-wrap align-items-stretch justify-content-center m-n1">
@@ -202,5 +208,45 @@ export default defineComponent({
   beforeUnmount() {
     $('#setupConfirmationModal').modal('hide');
   },
+  watch: {
+    statusBar(oldVal, newVal) {
+      if (oldVal.message !== newVal.message) {
+        const el = this.$refs.statusBarMessage;
+        el.classList.remove('animate-text');
+        // eslint-disable-next-line no-void
+        void el.offsetWidth;
+        el.classList.add('animate-text');
+      }
+    },
+  },
 });
 </script>
+
+<style lang="scss" scoped>
+@keyframes animate-text {
+  0% {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  80% {
+    transform: translateY(-0.5rem);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-text {
+  > span {
+    animation: animate-text .5s both;
+    display: inline-block;
+
+    @for $i from 0 to 7 {
+      &:nth-child(#{$i}n) {
+        animation-delay: $i * .05s;
+      }
+    }
+  }
+}
+</style>

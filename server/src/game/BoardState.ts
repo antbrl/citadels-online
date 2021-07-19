@@ -62,7 +62,12 @@ export default class BoardState {
       turnState: this.characterManager.getClientTurnState(),
       playerOrder: this.playerOrder,
       currentPlayer: this.getCurrentPlayerPosition(),
-      currentPlayerExtraData: this.characterManager.exportCurrentPlayerExtraData(),
+      currentPlayerExtraData: {
+        ...this.characterManager.exportCurrentPlayerExtraData(),
+        earningsValue: this.players
+          .get(this.getCurrentPlayerId())
+          ?.computeEarningsForCharacter(this.characterManager.getCurrentCharacter()) ?? 0,
+      },
       characters: this.characterManager.exportCharactersList(destPlayerPos),
       graveyard: this.graveyard,
     };

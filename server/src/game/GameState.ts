@@ -197,6 +197,7 @@ export default class GameState implements Subject {
               case MoveType.LABORATORY_DISCARD_CARD:
                 return this.doSpecialAction(move);
               case MoveType.FINISH_TURN:
+                if (cm.getClientTurnState() !== ClientTurnState.CHOOSE_ACTION) return false;
                 cm.jumpToNextCharacter();
                 if (cm.getCurrentCharacter() === cm.robbedCharacter) {
                   this.moveRobbedGold();
@@ -214,13 +215,12 @@ export default class GameState implements Subject {
             // player actions
             switch (cm.getClientTurnState()) {
               case ClientTurnState.TAKE_RESOURCES:
-                return this.gatherResources(move);
+              case ClientTurnState.CHOOSE_ACTION:
+                return this.executeAction(move);
               case ClientTurnState.CHOOSE_CARD:
                 return this.chooseDistrictCard(move);
               case ClientTurnState.BUILD_DISTRICT:
                 return this.buildDistrict(move);
-              case ClientTurnState.CHOOSE_ACTION:
-                return this.executeAction(move);
               case ClientTurnState.ASSASSIN_KILL:
                 return this.killCharacter(move);
               case ClientTurnState.THIEF_ROB:
@@ -397,14 +397,14 @@ export default class GameState implements Subject {
   private gatherResources(move: Move): boolean {
     if (!this.board) return false;
     const cm = this.board.characterManager;
+    if (cm.hasTakenResources) return false;
     const player = this.board.players.get(this.board.getCurrentPlayerId());
     if (player === undefined) return false;
 
     switch (move.type) {
       case MoveType.TAKE_GOLD:
         player.stash += 2;
-        // go to actions step
-        cm.turnState += 2;
+        cm.hasTakenResources = true;
         break;
 
       case MoveType.DRAW_CARDS:
@@ -418,8 +418,7 @@ export default class GameState implements Subject {
         if (hasLibrary) {
           // drawn cards go straight to hand
           player.addCardsToHand(cards);
-          // go to actions (or special action) step
-          cm.turnState += 2;
+          cm.hasTakenResources = true;
         } else {
           // put drawn cards in selection space
           player.tmpHand = cards;
@@ -456,8 +455,8 @@ export default class GameState implements Subject {
     this.board.districtsDeck.discardCards(player.tmpHand);
     player.tmpHand = [];
 
-    // go to actions (or special action) step
-    cm.turnState += 1;
+    cm.hasTakenResources = true;
+    cm.jumpToActionsState();
 
     return true;
   }
@@ -501,10 +500,19 @@ export default class GameState implements Subject {
     if (player === undefined) return false;
 
     switch (move.type) {
+      // ================
+      // gather resources
+      // ================
+      case MoveType.TAKE_GOLD:
+      case MoveType.DRAW_CARDS:
+        if (cm.getClientTurnState() !== ClientTurnState.TAKE_RESOURCES) return false;
+        return this.gatherResources(move);
+
       // ============
       // change state
       // ============
       case MoveType.BUILD_DISTRICT:
+        if (cm.getClientTurnState() !== ClientTurnState.CHOOSE_ACTION) return false;
         cm.jumpToBuildState();
         break;
       case MoveType.ASSASSIN_KILL:

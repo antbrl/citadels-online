@@ -27,7 +27,6 @@
         },
         "lobby": {
             "title": "Game Setup",
-            "no_settings": "No settings for now.",
             "players": "Players",
             "you": "You",
             "online": "Online",
@@ -36,7 +35,10 @@
             "start_game": "Start Game",
             "wait_message": "Waiting for the manager to start the game.",
             "not_enough_players": "There must be at least 2 players to start the game.",
-            "too_many_players": "Too many players (7 max)."
+            "too_many_players": "Too many players (7 max).",
+            "settings": {
+                "complete_city_size": "Number of districts to complete city"
+            }
         },
         "game": {
             "characters": "Characters",

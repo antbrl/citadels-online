@@ -27,16 +27,18 @@
         },
         "lobby": {
             "title": "Mise en place de la partie",
-            "no_settings": "Pas de paramètres pour le moment.",
             "players": "Joueurs",
             "you": "Vous",
             "online": "En ligne",
             "offline": "Hors ligne",
-            "manager": "Manager",
+            "manager": "Gestionnaire",
             "start_game": "Commencer la partie",
-            "wait_message": "En attente du lancement de la partie par le manager.",
+            "wait_message": "En attente du lancement de la partie par le gestionnaire.",
             "not_enough_players": "Il faut au moins 2 joueurs pour commencer une partie.",
-            "too_many_players": "Trop de joueurs (7 max)."
+            "too_many_players": "Trop de joueurs (7 max).",
+            "settings": {
+                "complete_city_size": "Nombre de quartiers pour constituer une cité"
+            }
         },
         "game": {
             "characters": "Personnages",

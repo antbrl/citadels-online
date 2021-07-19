@@ -124,6 +124,7 @@ export type ClientGameState = {
 
 export type GameSetupData = {
   players: string[]
+  completeCitySize: number
 }
 
 export enum MoveType {

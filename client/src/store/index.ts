@@ -21,6 +21,7 @@ export const store = createStore<State>({
     gameState: undefined,
     gameSetupData: {
       players: [],
+      completeCitySize: 7,
     },
     selectedCards: [],
   },
@@ -129,10 +130,11 @@ export const store = createStore<State>({
         }
       }
     },
-    prepareGameSetupConfirmation(state) {
+    prepareGameSetupConfirmation(state, { completeCitySize }) {
       state.gameSetupData.players = Array.from(state.gameState?.players.values() || [])
         .filter((player) => player.role === PlayerRole.PLAYER)
         .map((player) => player.id);
+      state.gameSetupData.completeCitySize = completeCitySize ?? 7;
     },
     setSelectedCards(state, { cards }) {
       state.selectedCards = cards;

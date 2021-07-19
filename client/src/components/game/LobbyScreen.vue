@@ -17,6 +17,14 @@
         </button>
       </div>
       <div class="modal-body">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>{{ $t('ui.lobby.settings.complete_city_size') }}</td>
+              <td>{{ gameSetupData.completeCitySize }}</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="card">
           <div class="card-header">{{ $t('ui.lobby.players') }}</div>
           <ul class="list-group list-group-flush">
@@ -59,11 +67,19 @@
 </div>
 <div class="card h-100">
   <div class="card-header">{{ $t('ui.lobby.title') }}</div>
-  <div class="row no-gutters h-100">
-    <div class="col p-3">
-      <p class="text-muted">{{ $t('ui.lobby.no_settings') }}</p>
+  <div class="row no-gutters h-100 overflow-auto">
+    <div v-if="isManager" class="col p-3">
+      <div class="form-group">
+        <label for="completeCitySize">
+          {{ $t('ui.lobby.settings.complete_city_size') }}
+        </label>
+        <select class="form-control" id="completeCitySize" v-model="completeCitySize">
+          <option :value="7">7</option>
+          <option :value="8">8</option>
+        </select>
+      </div>
     </div>
-    <div class="col-3 p-3 bg-light">
+    <div class="col p-3 bg-light">
       <PlayersList />
     </div>
   </div>
@@ -93,6 +109,7 @@ export default defineComponent({
   data() {
     return {
       startingGame: false,
+      completeCitySize: 7,
     };
   },
   computed: {
@@ -142,7 +159,8 @@ export default defineComponent({
   },
   methods: {
     showConfirmationModal() {
-      store.commit('prepareGameSetupConfirmation');
+      const settings = { completeCitySize: this.completeCitySize };
+      store.commit('prepareGameSetupConfirmation', settings);
       $('#setupConfirmationModal').modal();
     },
     async startGame() {

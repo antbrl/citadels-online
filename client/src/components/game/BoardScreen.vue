@@ -72,7 +72,7 @@
     }"
   >
     <!-- status message -->
-    <div class="flex-fill badge badge-lg py-3 text-light">
+    <div class="flex-fill badge badge-lg py-3 text-light text-wrap">
       {{ $t(statusBar.message, statusBar.args) }}
     </div>
     <!-- actions -->
@@ -82,7 +82,7 @@
         :key="i"
         type="button"
         class="btn btn-sm btn-light m-1 font-weight-bold"
-        :value="$t(`ui.game.actions.${action.title}`)"
+        :value="$t(`ui.game.actions.${action.title}`, action.args)"
         @click="sendMove(action.move, $event.target)"
       >
     </div>

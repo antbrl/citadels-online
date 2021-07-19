@@ -80,6 +80,7 @@ export type PlayerExtraData = {
   canDoSpecialAction: boolean
   hasUsedLaboratory: boolean
   hasUsedSmithy: boolean
+  earningsValue: number
 }
 
 export type ClientGameState = {
@@ -158,6 +159,7 @@ export interface Move {
 
 export interface Action {
   title: string
+  args?: string[]
   move: Move
 }
 
@@ -165,7 +167,7 @@ export type StatusBarMessageType = 'NORMAL' | 'HIGHLIGHTED' | 'ERROR'
 
 export interface StatusBarData {
   type: StatusBarMessageType
-  message: string,
+  message: string
   args?: string[]
   actions?: Action[]
 }

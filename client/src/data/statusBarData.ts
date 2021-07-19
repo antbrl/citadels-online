@@ -35,7 +35,7 @@ const MESSAGES_CHOOSE_CHARACTERS = {
 
 const MESSAGES_DO_ACTIONS = {
   [ClientTurnState.INITIAL]: 'initial',
-  [ClientTurnState.TAKE_RESOURCES]: 'take_resources',
+  [ClientTurnState.TAKE_RESOURCES]: 'choose_action',
   [ClientTurnState.CHOOSE_CARD]: 'choose_card',
   [ClientTurnState.CHOOSE_ACTION]: 'choose_action',
   [ClientTurnState.ASSASSIN_KILL]: 'assassin_kill',
@@ -79,15 +79,9 @@ function getActions(
 
   switch (turnState) {
     case ClientTurnState.TAKE_RESOURCES:
-      actions.push({ title: 'take_gold', move: { type: MoveType.TAKE_GOLD } });
-      actions.push({
-        title: player.city.includes('observatory') ? 'draw_cards_3' : 'draw_cards',
-        move: { type: MoveType.DRAW_CARDS },
-      });
-      break;
     case ClientTurnState.CHOOSE_ACTION:
-      if (extraData.canTakeEarnings) {
-        actions.push({ title: 'take_gold_earnings', move: { type: MoveType.TAKE_GOLD_EARNINGS } });
+      if (extraData.canTakeEarnings && extraData.earningsValue > 0) {
+        actions.push({ title: 'take_gold_earnings', args: [extraData.earningsValue.toString()], move: { type: MoveType.TAKE_GOLD_EARNINGS } });
       }
       if (extraData.canDoSpecialAction) {
         switch (character) {
@@ -123,10 +117,18 @@ function getActions(
             break;
         }
       }
-      if (extraData.districtsToBuild > 0) {
-        actions.push({ title: 'build_district', move: { type: MoveType.BUILD_DISTRICT } });
+      if (turnState === ClientTurnState.TAKE_RESOURCES) {
+        actions.push({ title: 'take_gold', move: { type: MoveType.TAKE_GOLD } });
+        actions.push({
+          title: player.city.includes('observatory') ? 'draw_cards_3' : 'draw_cards',
+          move: { type: MoveType.DRAW_CARDS },
+        });
+      } else {
+        if (extraData.districtsToBuild > 0) {
+          actions.push({ title: 'build_district', move: { type: MoveType.BUILD_DISTRICT } });
+        }
+        actions.push({ title: 'finish_turn', move: { type: MoveType.FINISH_TURN } });
       }
-      actions.push({ title: 'finish_turn', move: { type: MoveType.FINISH_TURN } });
       break;
     case ClientTurnState.ASSASSIN_KILL:
     case ClientTurnState.THIEF_ROB:

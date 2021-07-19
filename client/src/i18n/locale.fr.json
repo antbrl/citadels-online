@@ -51,7 +51,6 @@
                 },
                 "actions": {
                     "initial": "L'appel va débuter.",
-                    "take_resources": "Choisissez de prendre de l'or ou de piocher des cartes.",
                     "choose_card": "Choisissez la carte à conserver.",
                     "choose_action": "Choisissez une action à effectuer.",
                     "assassin_kill": "Choisissez un personnage à tuer.",
@@ -85,7 +84,7 @@
                 "magician_exchange_hand": "Échanger la main",
                 "choose_hand": "Choisir cette main",
                 "magician_discard_cards": "Échanger des cartes",
-                "take_gold_earnings": "Recevoir les revenus",
+                "take_gold_earnings": "Recevoir les revenus ({0})",
                 "warlord_destroy_district": "Détruire un quartier",
                 "graveyard_recover_district": "Récupérer",
                 "smithy_draw_cards": "Utiliser la forge",

@@ -51,7 +51,6 @@
                 },
                 "actions": {
                     "initial": "The call is going to start.",
-                    "take_resources": "Choose to take gold or draw cards.",
                     "choose_card": "Choose the card to keep.",
                     "choose_action": "Choose an action to carry out.",
                     "assassin_kill": "Choose a character to kill.",
@@ -85,7 +84,7 @@
                 "magician_exchange_hand": "Exchange hand",
                 "choose_hand": "Choose this hand",
                 "magician_discard_cards": "Exchange cards",
-                "take_gold_earnings": "Collect earnings",
+                "take_gold_earnings": "Collect earnings ({0})",
                 "warlord_destroy_district": "Destroy district",
                 "graveyard_recover_district": "Recover district",
                 "smithy_draw_cards": "Use smithy",

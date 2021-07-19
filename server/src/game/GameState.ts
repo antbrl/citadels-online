@@ -69,11 +69,17 @@ export default class GameState implements Subject {
     // number of players must be between 2 and 7
     if (gameSetupData.players.length < 2 || gameSetupData.players.length > 7) return false;
 
+    // settings
+    if (![7, 8].includes(gameSetupData.completeCitySize)) return false;
+
     // all checks pass
     return true;
   }
 
   setupGame(gameSetupData: GameSetupData) {
+    // settings
+    this.completeCitySize = gameSetupData.completeCitySize;
+
     // initialize board
     const players: string[] = [];
     Array.from(this.players.keys()).forEach((playerId) => {

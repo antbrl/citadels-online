@@ -1,0 +1,260 @@
+{
+    "flag": "🇫🇷",
+    "name": "Français",
+    "ui": {
+        "title": "Citadelles",
+        "subtitle1": "Un jeu de Bruno Faidutti",
+        "subtitle2": "Édition Classique",
+        "loading": "Chargement...",
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "close": "Fermer",
+        "unknown_error": "Erreur inconnue.",
+        "about": {
+            "title": "À propos",
+            "text": ""
+        },
+        "homepage": {
+            "intro_text": "Créer un nouveau salon",
+            "create_room": "Créer un salon"
+        },
+        "room": {
+            "username": "Nom d'utilisateur",
+            "connect": "Se connecter",
+            "not_open": "Ce salon n'est pas ouvert pour de nouveaux joueurs.",
+            "error_does_not_exist": "Ce salon n'existe pas.",
+            "error_join": "Erreur en rejoignant le salon : {msg}"
+        },
+        "lobby": {
+            "title": "Mise en place de la partie",
+            "players": "Joueurs",
+            "you": "Vous",
+            "online": "En ligne",
+            "offline": "Hors ligne",
+            "manager": "Gestionnaire",
+            "start_game": "Commencer la partie",
+            "wait_message": "En attente du lancement de la partie par le gestionnaire.",
+            "not_enough_players": "Il faut au moins 2 joueurs pour commencer une partie.",
+            "too_many_players": "Trop de joueurs (7 max).",
+            "settings": {
+                "complete_city_size": "Nombre de quartiers pour constituer une cité"
+            }
+        },
+        "game": {
+            "characters": "Personnages",
+            "messages": {
+                "welcome": "Bienvenue dans Citadelles Édition Classique !",
+                "choose_characters": {
+                    "initial": "Le joueur possédant la Couronne va débuter le choix des personnages.",
+                    "put_aside_face_up": "{0} doit choisir un personnage à mettre de côté face visible.",
+                    "put_aside_face_down": "{0} doit choisir un personnage à mettre de côté face cachée.",
+                    "choose_character": "{0} doit choisir un personnage.",
+                    "done": "Les personnages sont choisis."
+                },
+                "actions": {
+                    "initial": "L'appel va débuter.",
+                    "choose_card": "Choisissez la carte à conserver.",
+                    "choose_action": "Choisissez une action à effectuer.",
+                    "assassin_kill": "Choisissez un personnage à tuer.",
+                    "thief_rob": "Choisissez un personnage à voler.",
+                    "magician_exchange_hand": "Choisissez un joueur avec lequel échanger votre main.",
+                    "magician_discard_cards": "Choisissez les cartes à défausser.",
+                    "merchant_take_1_gold": "Prendre une pièce d'or supplémentaire ?",
+                    "architect_draw_2_cards": "Piocher 2 cartes supplémentaires ?",
+                    "warlord_destroy_district": "Choisissez un quartier à détruire.",
+                    "graveyard_recover_district": "Récupérer le quartier détruit du cimetière pour une pièce d'or ?",
+                    "graveyard_recover_district_others": "Le joueur possédant le cimetière doit choisir s'il récupère le quartier détruit.",
+                    "laboratory_discard_card": "Choisissez la carte à défausser pour recevoir 2 pièces d'or.",
+                    "build_district": "Choisissez un quartier à construire.",
+                    "done": "C'est la fin du tour !"
+                },
+                "end": "Fin de la partie.",
+                "errors": {
+                    "invalid_state": "Erreur : l'état de la partie est invalide."
+                }
+            },
+            "actions": {
+                "accept": "Accepter",
+                "decline": "Refuser",
+                "confirm": "Confirmer",
+                "cancel": "Annuler",
+                "take_gold": "Prendre 2 pièces",
+                "draw_cards": "Piocher 2 cartes",
+                "draw_cards_3": "Piocher 3 cartes",
+                "assassin_kill": "Tuer un personnage",
+                "thief_rob": "Voler un personnage",
+                "magician_exchange_hand": "Échanger la main",
+                "choose_hand": "Choisir cette main",
+                "magician_discard_cards": "Échanger des cartes",
+                "take_gold_earnings": "Recevoir les revenus ({0})",
+                "warlord_destroy_district": "Détruire un quartier",
+                "graveyard_recover_district": "Récupérer",
+                "smithy_draw_cards": "Utiliser la forge",
+                "laboratory_discard_card": "Utiliser le laboratoire",
+                "build_district": "Construire un quartier",
+                "finish_turn": "Terminer le tour"
+            }
+        },
+        "score": {
+            "title": "Score",
+            "base": "Valeur des quartiers",
+            "extra_stash": "Trésor Impérial",
+            "extra_hand": "Salle des Cartes",
+            "extra_district_types": "Tous les types",
+            "extra_complete_city": "Cité complète",
+            "total": "Total"
+        }
+    },
+    "characters": [
+        {
+            "name": "",
+            "description": "Personnage inconnu",
+            "turn": ""
+        },
+        {
+            "name": "Assassin",
+            "description": "L'Assassin peut tuer un personnage de son choix. Celui-ci ne jouera pas durant ce tour.",
+            "turn": "C'est au tour de l'Assassin."
+        },
+        {
+            "name": "Voleur",
+            "description": "Le Voleur peut voler le trésor du personnage de son choix. Il ne peut dépouiller ni l'Assassin, ni sa victime. Quand le personnage détroussé sera révélé, il donnera tout son or au voleur.",
+            "turn": "C'est au tour du Voleur."
+        },
+        {
+            "name": "Magicien",
+            "description": "Au choix - Le Magicien peut échanger la totalité des cartes de sa main avec celles du joueur de son choix. Ou - Le magicien peut échanger des cartes de sa main contre le même nombre de cartes de la pioche.",
+            "turn": "C'est au tour du Magicien."
+        },
+        {
+            "name": "Roi",
+            "description": "Le Roi prend la Couronne, et choisira en premier son personnage lors du prochain tour. Chaque quartier Noble dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Roi."
+        },
+        {
+            "name": "Évêque",
+            "description": "L'Évêque ne peut pas être attaqué par le Condottiere, sauf s'il a été assassiné. Chaque quartier Religieux dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour de l'Évêque."
+        },
+        {
+            "name": "Marchand",
+            "description": "Le Marchand reçoit 1 pièce d'or supplémentaire au début de son tour. Chaque quartier Commerçant dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Marchand."
+        },
+        {
+            "name": "Architecte",
+            "description": "L'Architecte pioche 2 cartes supplémentaires au début de son tour. Il peut bâtir jusqu'à 3 quartiers.",
+            "turn": "C'est au tour de l'Architecte."
+        },
+        {
+            "name": "Condottiere",
+            "description": "Le Condottiere peut détruire un quartier en payant son coût de construction moins 1. Chaque quartier Militaire dans sa cité lui rapporte 1 pièce d'or.",
+            "turn": "C'est au tour du Condottiere."
+        }
+    ],
+    "districts": {
+        "manor": {
+            "name": "Manoir"
+        },
+        "castle": {
+            "name": "Château"
+        },
+        "palace": {
+            "name": "Palais"
+        },
+        "temple": {
+            "name": "Temple"
+        },
+        "church": {
+            "name": "Église"
+        },
+        "monastery": {
+            "name": "Monastère"
+        },
+        "cathedral": {
+            "name": "Cathédrale"
+        },
+        "tavern": {
+            "name": "Taverne"
+        },
+        "market": {
+            "name": "Marché"
+        },
+        "trading_post": {
+            "name": "Échoppe"
+        },
+        "docks": {
+            "name": "Comptoir"
+        },
+        "harbor": {
+            "name": "Port"
+        },
+        "town_hall": {
+            "name": "Hôtel de Ville"
+        },
+        "watchtower": {
+            "name": "Tour de Guet"
+        },
+        "prison": {
+            "name": "Prison"
+        },
+        "barracks": {
+            "name": "Caserne"
+        },
+        "fortress": {
+            "name": "Forteresse"
+        },
+        "dragon_gate": {
+            "name": "Dracoport",
+            "description": "Coûte 6 pièces d'or à bâtir mais vaut 8 points pour le calcul du score."
+        },
+        "university": {
+            "name": "Université",
+            "description": "Coûte 6 pièces d'or à bâtir mais vaut 8 points pour le calcul du score."
+        },
+        "map_room": {
+            "name": "Salle des Cartes",
+            "description": "À la fin de la partie, marquez 1 point supplémentaire pour chaque carte dans votre main."
+        },
+        "imperial_treasury": {
+            "name": "Trésor Impérial",
+            "description": "À la fin de la partie, marquez 1 point supplémentaire pour chaque pièce d'or dans votre trésor."
+        },
+        "haunted_quarter": {
+            "name": "Cour des Miracles",
+            "description": "Pour le calcul du score, la Cour des Miracles est considérée comme un quartier de la couleur de votre choix."
+        },
+        "school_of_magic": {
+            "name": "École de Magie",
+            "description": "Pour la perception des revenus, l'École de Magie est considérée comme un quartier de la couleur de votre choix. Elle vous rapporte donc si vous êtes Roi, Évêque, Marchand ou Condottiere."
+        },
+        "keep": {
+            "name": "Donjon",
+            "description": "Le Donjon ne peut pas être détruit par le Condottiere."
+        },
+        "great_wall": {
+            "name": "Grande Muraille",
+            "description": "Le prix à payer par le Condottiere pour détruire vos autres quartiers est augmenté de 1."
+        },
+        "graveyard": {
+            "name": "Cimetière",
+            "description": "Lorsque le Condottiere détruit un quartier, vous pouvez payer 1 pièce d'or pour le prendre dans votre main. Vous ne pouvez pas le faire si vous êtes vous-même Condottiere."
+        },
+        "observatory": {
+            "name": "Observatoire",
+            "description": "Si vous choisissez de piocher des cartes au début de votre tour, piochez-en 3 au lieu de 2. Choisissez-en une et défaussez les 2 autres."
+        },
+        "library": {
+            "name": "Bibliothèque",
+            "description": "Si vous choisissez de piocher des cartes au début de votre tour, conservez-les toutes."
+        },
+        "laboratory": {
+            "name": "Laboratoire",
+            "description": "Une fois par tour, vous pouvez défausser 1 carte et recevoir 2 pièces d'or."
+        },
+        "smithy": {
+            "name": "Forge",
+            "description": "Une fois par tour, vous pouvez payer 2 pièces d'or pour piocher 3 cartes."
+        }
+    }
+}

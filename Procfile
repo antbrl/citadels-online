@@ -1,1 +1,1 @@
-web: npm run start --prefix server
+web: npm run start:prod --prefix server

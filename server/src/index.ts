@@ -5,12 +5,12 @@ import { initSocket } from './socket/server';
 
 const app = express();
 const http = createServer(app);
-const port = 8081;
+const port = process.env.PORT || 8081;
 
 const io = new Server(http, { path: '/s/' });
 initSocket(io);
 
-app.use(express.static(`${__dirname}/static`));
+app.use(express.static(`../client/dist`));
 
 http.listen(port, () => {
   console.log(`Citadels game server listening on http://localhost:${port}`);

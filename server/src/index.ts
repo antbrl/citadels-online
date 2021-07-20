@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { initSocket } from './socket/server';
+import history from 'connect-history-api-fallback';
 
 const app = express();
 const http = createServer(app);
@@ -10,6 +11,7 @@ const port = process.env.PORT || 8081;
 const io = new Server(http, { path: '/s/' });
 initSocket(io);
 
+app.use(history());
 app.use(express.static(`../client/dist`));
 
 http.listen(port, () => {

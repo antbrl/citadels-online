@@ -1,4 +1,5 @@
 import { Server } from 'socket.io';
+import Debug from 'debug';
 import InMemoryGameStore from '../gameManager/InMemoryGameStore';
 import Player from '../game/Player';
 import Room from '../gameManager/Room';
@@ -7,14 +8,16 @@ import ExtendedSocket from './ExtendedSocket';
 import GameSetupData from '../game/GameSetupData';
 import Move, { MoveType } from '../game/Move';
 
+const debug = Debug('citadels-server');
+
 const gameStore = new InMemoryGameStore();
 
 export function initSocket(io: Server) {
   io.on('connection', (socket: ExtendedSocket) => {
-    console.log(`user '${socket.id}' connected`);
+    debug(`user '${socket.id}' connected`);
 
     socket.on('disconnect', () => {
-      console.log(`user '${socket.id}' disconnected`);
+      debug(`user '${socket.id}' disconnected`);
 
       // emit a message to all players in room to remove this player
       if (socket.roomId && socket.playerId) {
@@ -43,7 +46,7 @@ export function initSocket(io: Server) {
       socket.join(socket.roomId);
       socket.emit('joined room', socket.roomId);
 
-      console.log('created room', socket.roomId, room);
+      debug('created room', socket.roomId);
       callback(socket.roomId);
     });
 
@@ -85,7 +88,7 @@ export function initSocket(io: Server) {
             room.gameState.players.size === 0,
           );
           socket.to(roomId).emit('add player', player);
-          console.log('added player', player);
+          debug('added player', player.id);
         }
 
         // join room
@@ -135,7 +138,7 @@ export function initSocket(io: Server) {
 
       // update game state
       room.gameState.setupGame(gameSetupData);
-      console.log(`game in room ${room.roomId} has been set up`);
+      debug(`game in room ${room.roomId} has been set up`);
 
       // start game
       if (room.gameState.step()) {

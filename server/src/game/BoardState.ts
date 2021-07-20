@@ -36,7 +36,6 @@ export default class BoardState {
     this.districtsDeck = new DistrictsDeck();
 
     // initialize each player hand with 2 gold and 4 district cards
-    console.log('create board state for', players);
     players.forEach((playerId) => {
       this.players.set(playerId, new PlayerBoardState(2, this.districtsDeck.drawCards(4)));
     });

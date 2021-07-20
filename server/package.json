@@ -5,18 +5,20 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "start:debug": "tsc && node --inspect dist/index.js"
+    "start:debug": "tsc && DEBUG=citadels-server node --inspect dist/index.js"
   },
   "repository": "https://github.com/antbrl/citadels-server",
   "author": "Antoine Brûlé",
   "license": "MIT",
   "dependencies": {
+    "debug": "^4.3.2",
     "express": "^4.17.1",
     "nanoid": "^3.1.22",
     "nanoid-dictionary": "^4.2.0",
     "socket.io": "^4.0.0"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.6",
     "@types/express": "^4.17.11",
     "@types/socket.io": "^2.1.13",
     "@typescript-eslint/eslint-plugin": "^4.19.0",

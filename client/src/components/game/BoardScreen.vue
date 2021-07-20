@@ -79,7 +79,7 @@
       <span
         v-for="c, i in [...$t(statusBar.message, statusBar.args)]"
         :key="i"
-      >{{ c !== ' ' ? c : '&nbsp;' }}</span>
+      >{{ c }}</span>
     </div>
     <!-- actions -->
     <div class="text-center d-flex flex-wrap align-items-stretch justify-content-center m-n1">
@@ -225,22 +225,22 @@ export default defineComponent({
 <style lang="scss" scoped>
 @keyframes animate-text {
   0% {
-    transform: translateY(2rem);
+    top: 1rem;
     opacity: 0;
   }
   80% {
-    transform: translateY(-0.5rem);
+    top: -0.1rem;
     opacity: 1;
   }
   100% {
-    transform: translateY(0);
+    top: 0;
     opacity: 1;
   }
 }
 .animate-text {
   > span {
-    animation: animate-text .5s both;
-    display: inline-block;
+    position: relative;
+    animation: animate-text .3s both;
 
     @for $i from 0 to 7 {
       &:nth-child(#{$i}n) {

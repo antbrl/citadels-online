@@ -23,14 +23,13 @@
 <div class="d-flex flex-column h-100">
 <header>
   <div class="container-lg">
-    <div class="row align-items-center">
-      <div class="col-2"></div>
-      <div class="col text-center">
-        <h6>{{ $t('ui.subtitle1') }}</h6>
+    <div class="d-flex flex-wrap align-items-center justify-content-end">
+      <div class="flex-grow-1 text-center pb-1">
+        <!-- <h6>{{ $t('ui.subtitle1') }}</h6> -->
         <h1><a href="/" class="text-reset">{{ $t('ui.title') }}</a></h1>
         <h6>{{ $t('ui.subtitle2') }}</h6>
       </div>
-      <div class="col-2 text-right">
+      <div class="text-right">
         <LocaleSelector class="opacity-4" />
         <a
           class="text-reset text-decoration-none"

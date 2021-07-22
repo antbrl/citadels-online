@@ -6,12 +6,12 @@
   <ul class="list-group list-group-flush text-dark shadow-sm">
     <li
       v-for="(character, i) in processedCharacters" :key="i"
-      class="list-group-item p-2 d-flex justify-content-between"
+      class="list-group-item p-1 d-flex justify-content-between align-items-center"
       :class="{
         'list-group-item-dark': !character.killed,
         'list-group-item-danger': character.killed,
         'bg-secondary text-white-50': character.id < current || character.id === 0,
-        'active bg-white text-dark border border-dark mx-n1 shadow-sm rounded':
+        'active bg-white text-dark border-dark mx-n1 shadow-sm rounded':
           character.id === current && current !== 0 && !(killMode || robMode),
         'bg-light': character.id > current && !character.killed,
         'bg-white text-dark cursor-pointer': character.selectable,
@@ -23,12 +23,12 @@
       <!-- unknown character id -->
       <span
         v-if="character.id === 0"
-        class="badge badge-pill shadow-sm bg-dark text-light"
+        class="badge px-2 py-2 shadow-sm bg-dark text-light"
       >?</span>
       <!-- character id -->
       <span
         v-else
-        class="badge badge-pill shadow-sm"
+        class="badge px-2 py-2 shadow-sm"
         :class="`bg-${bgColor(character.id)} text-${textColor(character.id)}`"
       >{{ character.id }}</span>
       <!-- character name -->

@@ -1,6 +1,8 @@
 <template>
 <div class="py-2 d-flex justify-content-start align-items-end overflow-auto">
-  <div v-if="board.crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">👑</div>
+  <div v-if="board.crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">
+    <emoji emoji="👑"></emoji>
+  </div>
   <div class="mr-auto"></div>
   <DistrictCard
     v-for="id, i in board.hand"
@@ -26,7 +28,7 @@
   </div>
   <div
     class="stash d-flex flex-column-reverse flex-wrap-reverse justify-content-start ml-auto"
-  ><span v-for="i in board.stash" :key="i" class="coin">🪙</span></div>
+  ><emoji v-for="i in board.stash" :key="i" class="coin" emoji="🪙"></emoji></div>
 </div>
 </template>
 

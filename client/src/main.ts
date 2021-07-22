@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import $ from 'jquery';
 import { Boundary } from 'popper.js';
+import twemoji from 'twemoji';
 import router from './router';
 import { store } from './store';
 import App from './App.vue';
@@ -16,6 +17,38 @@ app.directive('focus', {
   mounted(el) {
     el.focus();
   },
+});
+
+app.component('emoji', {
+  data() {
+    return {
+      html: '',
+    };
+  },
+  props: {
+    emoji: {
+      type: String,
+      required: true,
+    },
+  },
+  methods: {
+    updateEmoji() {
+      this.html = twemoji.parse(this.emoji, {
+        base: '/',
+        folder: 'svg',
+        ext: '.svg',
+      });
+    },
+  },
+  mounted() {
+    this.updateEmoji();
+  },
+  watch: {
+    emoji() {
+      this.updateEmoji();
+    },
+  },
+  template: '<span v-html="html"></span>',
 });
 
 // Bootstrap tooltip directive

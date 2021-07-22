@@ -5,8 +5,12 @@
       <div class="bg-dark p-1 flex-fill rounded d-flex flex-column overflow-auto">
         <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
-          <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">👑</span>
-          <span class="badge badge-pill badge-secondary p-2 mr-2">{{ board.stash }} 🪙</span>
+          <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">
+            <emoji emoji="👑"></emoji>
+          </span>
+          <span class="badge badge-pill badge-secondary p-2 mr-2">
+            {{ board.stash }} <emoji emoji="🪙"></emoji>
+          </span>
           <span
             class="badge badge-pill p-2"
             :class="{
@@ -15,7 +19,7 @@
             }"
             @click="exchangeHand()"
             v-tooltip="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
-          >{{ board.hand.length }} 🃏</span>
+          >{{ board.hand.length }} <emoji emoji="🃏"></emoji></span>
         </p>
         <div class="flex-fill"></div>
         <CharactersList v-if="gameProgress === 'IN_GAME'" :characters="board.characters" />

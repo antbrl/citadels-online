@@ -9,4 +9,6 @@ export default defineConfig({
       '/s/': 'http://localhost:8081/s/',
     },
   },
+  define: { 'process.env': {} },
+  resolve: { alias: { vue: 'vue/dist/vue.esm-bundler.js' } },
 });

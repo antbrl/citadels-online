@@ -19,8 +19,8 @@
     <!-- cost -->
     <div class="card-header bg-dark p-1 py-2">
       <div class="badge p-0 d-flex">
-        <span v-for="i in data.cost" :key="i" class="coin">🪙</span>
-        <span v-for="i in data.extra_points" :key="i" class="coin grayscale">🪙</span>
+        <emoji v-for="i in data.cost" :key="i" class="coin" emoji="🪙"></emoji>
+        <emoji v-for="i in data.extra_points" :key="i" class="coin grayscale" emoji="🪙"></emoji>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
       d-flex justify-content-center align-items-center position-relative"
     >
       <div class="h1 m-0">
-        {{ icon }}
+        <emoji :emoji="icon"></emoji>
       </div>
       <div
         v-if="$te(description)"
@@ -41,7 +41,7 @@
 
     <!-- icon and name -->
     <div class="card-footer bg-dark p-0 d-flex align-items-center">
-      <span class="badge pl-1 pr-0 py-2">{{ icon }}</span>
+      <span class="badge pl-1 pr-0 py-2"><emoji :emoji="icon"></emoji></span>
       <span
         class="badge mx-1 py-1 flex-fill text-center text-wrap"
       >{{ $t(name) }}</span>
@@ -59,7 +59,7 @@
     >
       <span
         class="h1 m-0 opacity-2"
-      >🏛️</span>
+      ><emoji emoji="🏛"></emoji>️</span>
     </div>
   </div>
 </div>

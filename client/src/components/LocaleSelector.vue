@@ -2,7 +2,7 @@
 <div class="input-group">
   <div class="input-group-prepend">
     <label class="input-group-text px-2" for="inputGroupLocale">
-      {{ $t('flag', $i18n.locale) }}
+      <emoji :emoji="$t('flag', $i18n.locale)"></emoji>
     </label>
   </div>
   <select class="custom-select" v-model="$i18n.locale" id="inputGroupLocale">

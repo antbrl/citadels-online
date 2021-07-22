@@ -39,11 +39,11 @@
       <span
         v-if="character.killed"
         class="badge badge-pill badge-danger p-1 shadow-sm"
-      >💀</span>
+      ><emoji emoji="💀"></emoji></span>
       <span
         v-else-if="character.robbed"
         class="badge badge-pill badge-dark p-1 shadow-sm"
-      >💰</span>
+      ><emoji emoji="💰"></emoji></span>
     </li>
   </ul>
 </div>

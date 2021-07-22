@@ -1,5 +1,5 @@
 <template>
-<div class="card bg-secondary shadow-sm overflow-hidden">
+<div class="card bg-secondary shadow-sm">
   <div class="city-container row no-gutters">
     <div class="col-2 p-1 text-light d-flex flex-column h-100">
       <div class="bg-dark p-1 flex-fill rounded d-flex flex-column overflow-auto">

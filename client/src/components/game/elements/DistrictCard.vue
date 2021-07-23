@@ -2,7 +2,7 @@
 <div
   class="district-card flex-shrink-0 rounded"
   :class="{
-    'cursor-pointer': !disabled && selectable,
+    'district-card--selectable': !disabled && selectable,
     'opacity-3': disabled,
     'district-card--selected': selected,
   }"
@@ -139,6 +139,14 @@ export default defineComponent({
     background: white;
     box-shadow: 0 0 0 3px white;
     filter: contrast(0.9) brightness(1.1);
+  }
+
+  &--selectable {
+    cursor: pointer;
+
+    &:hover {
+      filter: contrast(0.9) brightness(1.1);
+    }
   }
 }
 

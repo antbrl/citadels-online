@@ -69,12 +69,12 @@ export class CharacterChoosingState {
     { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
     { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
     { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_2 },
     { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_1 },
+    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_2 },
     { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_2 },
+    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_1 },
     { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
     { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
   ];
 

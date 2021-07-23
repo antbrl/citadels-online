@@ -291,8 +291,19 @@ export default class CharacterManager {
       case TurnState.MERCHANT_ACTIONS:
       case TurnState.ARCHITECT_ACTIONS:
       case TurnState.WARLORD_ACTIONS:
-        return this.hasTakenResources
-          ? ClientTurnState.CHOOSE_ACTION : ClientTurnState.TAKE_RESOURCES;
+        if (!this.hasTakenResources) {
+          return ClientTurnState.TAKE_RESOURCES;
+        }
+        if (this.turnState === TurnState.MERCHANT_ACTIONS
+          && this.canDoSpecialAction[CharacterType.MERCHANT]) {
+          return ClientTurnState.MERCHANT_TAKE_1_GOLD;
+        }
+        if (this.turnState === TurnState.ARCHITECT_ACTIONS
+          && this.canDoSpecialAction[CharacterType.ARCHITECT]) {
+          return ClientTurnState.ARCHITECT_DRAW_2_CARDS;
+        }
+        return ClientTurnState.CHOOSE_ACTION;
+
       case TurnState.ASSASSIN_CHOOSE_CARD:
       case TurnState.THIEF_CHOOSE_CARD:
       case TurnState.MAGICIAN_CHOOSE_CARD:

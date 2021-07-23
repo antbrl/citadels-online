@@ -310,18 +310,22 @@ export default class GameState implements Subject {
       case ClientTurnState.THIEF_ROB:
       case ClientTurnState.MAGICIAN_EXCHANGE_HAND:
       case ClientTurnState.MAGICIAN_DISCARD_CARDS:
-      case ClientTurnState.MERCHANT_TAKE_1_GOLD:
-      case ClientTurnState.ARCHITECT_DRAW_2_CARDS:
       case ClientTurnState.WARLORD_DESTROY_DISTRICT:
       case ClientTurnState.BUILD_DISTRICT:
       case ClientTurnState.GRAVEYARD_RECOVER_DISTRICT:
-        cm.jumpToActionsState();
+        break;
+      case ClientTurnState.MERCHANT_TAKE_1_GOLD:
+        cm.canDoSpecialAction[CharacterType.MERCHANT] = false;
+        break;
+      case ClientTurnState.ARCHITECT_DRAW_2_CARDS:
+        cm.canDoSpecialAction[CharacterType.ARCHITECT] = false;
         break;
 
       default:
         return false;
     }
 
+    cm.jumpToActionsState();
     return true;
   }
 

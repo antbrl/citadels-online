@@ -36,6 +36,7 @@
         small
       />
     </div>
+    <div class="flex-fill"></div>
     <PlayerScore v-if="gameProgress === 'FINISHED'" :score="board.score" />
   </div>
 </template>

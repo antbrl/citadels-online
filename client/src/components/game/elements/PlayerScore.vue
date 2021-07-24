@@ -1,6 +1,6 @@
 <template>
-<div class="card bg-dark h-100 col-3">
-  <ul class="list-group list-group-flush text-dark shadow-sm h-100 overflow-auto">
+<div class="card bg-dark">
+  <ul class="list-group list-group-flush text-dark shadow-sm overflow-auto">
     <li
       v-for="line, i in lines" :key="i"
       class="list-group-item list-group-item-dark p-2

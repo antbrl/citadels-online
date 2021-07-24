@@ -1,8 +1,7 @@
 <template>
-<div class="card bg-secondary shadow-sm">
-  <div class="city-container row no-gutters">
-    <div class="col-2 p-1 text-light d-flex flex-column h-100">
-      <div class="bg-dark p-1 flex-fill rounded d-flex flex-column overflow-auto">
+  <div class="w-100 card bg-secondary shadow-sm" style="min-width: 9em;">
+    <div class="p-1 text-light d-flex flex-column">
+      <div class="bg-dark p-1 flex-fill rounded d-flex flex-column">
         <h5><span class="badge w-100">{{ username }}</span></h5>
         <p class="text-center">
           <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">
@@ -21,26 +20,22 @@
             v-tooltip="exchangeHandMode ? $t('ui.game.actions.choose_hand') : ''"
           >{{ board.hand.length }} <emoji emoji="🃏"></emoji></span>
         </p>
-        <div class="flex-fill"></div>
         <CharactersList v-if="gameProgress === 'IN_GAME'" :characters="board.characters" />
       </div>
     </div>
-    <div class="col py-2 pl-2 bg-secondary d-flex justify-content-start overflow-auto">
-      <div v-if="board.city.length === 0" style="height: 10em;"></div>
+    <div class="p-2 bg-secondary d-flex justify-content-center flex-wrap overflow-auto gap-2">
       <DistrictCard
-        v-else
         v-for="id, i in board.city"
         :key="i"
         :district-id="id"
-        class="mr-2"
         @click="chooseCardDestroy(id)"
         :disabled="destroyMode && !canDestroy(id)"
         :selectable="canDestroy(id)"
+        small
       />
     </div>
     <PlayerScore v-if="gameProgress === 'FINISHED'" :score="board.score" />
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -127,9 +122,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.city-container {
-  height: 11rem;
-}
-</style>

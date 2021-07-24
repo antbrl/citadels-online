@@ -35,7 +35,11 @@
 }
 
 img.emoji {
-   height: 1.3em;
-   width: 1.3em;
-   vertical-align: -0.3em;
+  height: 1.3em;
+  width: 1.3em;
+  vertical-align: -0.3em;
+}
+
+@each $size, $length in $spacers {
+  .gap-#{$size} { gap: $length !important; }
 }

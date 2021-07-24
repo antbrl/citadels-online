@@ -2,14 +2,14 @@
 <div class="card h-100 bg-dark border-dark shadow">
   <div class="row no-gutters h-100 overflow-auto">
     <div class="col-10 h-100 d-flex flex-column">
-      <div class="flex-fill bg-dark d-flex flex-column overflow-auto">
+      <div class="flex-fill bg-dark d-flex overflow-auto p-2 gap-2">
         <div
-          class="p-2 mb-n2"
-          v-for="[id, board] in otherPlayersBoards"
-          :key="id"
+          class="col p-0 d-flex"
+          v-for="[playerId, board] in playerBoards"
+          :key="playerId"
         >
           <PlayerCity
-            :player-id="id"
+            :player-id="playerId"
             :board="board"
             :destroy-mode="destroyMode"
             :stash="selfBoard.stash"
@@ -18,12 +18,6 @@
         </div>
       </div>
       <div class="px-2 pt-2 bg-gradient-dark border-top border-secondary">
-        <PlayerCity
-          :player-id="self"
-          :board="selfBoard"
-          :destroy-mode="destroyMode"
-          :stash="selfBoard.stash"
-        />
         <PlayerHand
           :board="selfBoard"
           :build-mode="buildMode"
@@ -134,11 +128,11 @@ export default defineComponent({
     self() {
       return this.gameState.self;
     },
-    otherPlayersBoards() {
-      return [...this.gameState.board.players].filter(([player]) => player !== this.self)
-        .map(([player, board]) => ([player, {
+    playerBoards() {
+      return [...this.gameState.board.players].map(([playerId, board]) => (
+        [playerId, {
           ...board,
-          crown: this.gameState.board.playerOrder[0] === player,
+          crown: this.gameState.board.playerOrder[0] === playerId,
         }]));
     },
     selfBoard() {

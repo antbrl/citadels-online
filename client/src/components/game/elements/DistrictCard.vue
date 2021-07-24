@@ -4,6 +4,7 @@
   :class="{
     'district-card--selectable': !disabled && selectable,
     'district-card--selected': selected,
+    'district-card--small': small,
   }"
   @click="toggleSelected()"
 >
@@ -12,7 +13,7 @@
     v-if="data"
     class="card h-100 bg-black text-light shadow-sm overflow-hidden d-flex flex-column p-1"
     v-tooltip="$te(description) ? $t(description) : ''"
-    data-placement="top"
+    :data-placement="small ? 'right' : 'top'"
   >
 
     <!-- card content -->
@@ -30,7 +31,7 @@
       <!-- body and description -->
       <div class="flex-fill position-relative">
         <div
-          v-if="$te(description)"
+          v-if="!small && $te(description)"
           class="badge badge-light m-1 p-1 position-absolute text-truncate opacity-4"
           style="left: 0; right: 0; bottom: 0;"
         >{{ $t(description) }}</div>
@@ -90,6 +91,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    small: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:selected'],
   computed: {
@@ -141,6 +146,10 @@ export default defineComponent({
 .district-card {
   height: 10rem;
   width: 7rem;
+
+  &--small {
+    height: 4rem;
+  }
 
   &--selected {
     background: white;

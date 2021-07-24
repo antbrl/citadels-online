@@ -34,7 +34,7 @@
 </div>
 <div class="d-flex flex-column h-100">
 <header>
-  <div class="container-lg">
+  <div class="container-fluid">
     <div class="d-flex flex-wrap align-items-center justify-content-end">
       <div class="flex-grow-1 text-center pb-1">
         <!-- <h6>{{ $t('ui.subtitle1') }}</h6> -->
@@ -92,6 +92,5 @@ header {
 
 .body {
   background: wheat;
-  flex-grow: 1;
 }
 </style>

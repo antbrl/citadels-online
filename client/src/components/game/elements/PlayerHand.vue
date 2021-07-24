@@ -1,11 +1,11 @@
 <template>
-<div class="py-2 d-flex justify-content-start align-items-end overflow-auto">
+<div class="d-flex justify-content-start align-items-end overflow-auto">
   <div v-if="board.crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">
     <emoji emoji="👑"></emoji>
   </div>
-  <div class="flex-grow-1 p-2 pt-4 d-flex overflow-hidden">
+  <div class="flex-grow-1 px-2 pb-2 d-flex overflow-hidden">
     <div
-      class="district-card-wrapper"
+      class="district-card-wrapper pt-3"
       v-for="id, i in board.hand"
       :key="i"
     >
@@ -174,7 +174,7 @@ export default defineComponent({
     width: 100%;
 
     .district-card {
-      transform: translatey(-10px);
+      transform: translatey(-0.35rem);
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-<div class="card h-100 bg-dark border-dark shadow">
+<div class="d-flex flex-column h-100 bg-dark border-dark shadow">
   <div class="row no-gutters h-100 overflow-auto">
     <div class="col-10 h-100 d-flex flex-column">
       <div class="flex-fill bg-dark d-flex overflow-auto p-2 gap-2">
@@ -17,7 +17,7 @@
           />
         </div>
       </div>
-      <div class="px-2 pt-2 bg-gradient-dark border-top border-secondary">
+      <div class="px-2 bg-gradient-dark border-top border-secondary">
         <PlayerHand
           :board="selfBoard"
           :build-mode="buildMode"
@@ -58,7 +58,7 @@
     </div>
   </div>
   <div
-    class="card-footer border-top border-secondary h5 p-2 m-0
+    class="border-top border-secondary h5 p-2 m-0
       d-flex flex-wrap align-items-stretch justify-content-center"
     :class="{
       'bg-secondary': statusBar.type === 'NORMAL',

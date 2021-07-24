@@ -1,7 +1,7 @@
 <template>
-<div class="container-lg p-3">
+<div class="container-fluid p-0">
   <transition name="fade" mode="out-in">
-    <div class="h-100" v-if="showLobby">
+    <div class="container-lg h-100 py-4" v-if="showLobby">
       <LobbyScreen />
     </div>
     <div class="h-100" v-else-if="showBoard">

@@ -11,40 +11,43 @@
   <!-- face up -->
   <div
     v-if="data"
-    class="card h-100 text-light shadow-sm overflow-hidden d-flex flex-column p-1"
-    :class="`bg-${color}`"
+    class="card h-100 bg-black text-light shadow-sm overflow-hidden d-flex flex-column p-1"
     v-tooltip="$te(description) ? $t(description) : ''"
     data-placement="top"
   >
-    <!-- cost -->
-    <div class="card-header bg-dark p-1 py-2">
-      <div class="badge p-0 d-flex">
-        <emoji v-for="i in data.cost" :key="i" class="coin" emoji="🪙"></emoji>
-        <emoji v-for="i in data.extra_points" :key="i" class="coin grayscale" emoji="🪙"></emoji>
-      </div>
-    </div>
 
-    <!-- body and description -->
-    <div
-      class="flex-fill bg-dark text-light opacity-2
-      d-flex justify-content-center align-items-center position-relative"
-    >
-      <div class="h1 m-0">
-        <emoji :emoji="icon"></emoji>
-      </div>
-      <div
-        v-if="$te(description)"
-        class="badge badge-light m-1 p-1 position-absolute text-truncate"
-        style="left: 0; right: 0; bottom: 0;"
-      >{{ $t(description) }}</div>
-    </div>
+    <!-- card content -->
+    <div :class="`flex-fill card-picture card-picture--${districtId} d-flex flex-column
+      `">
 
-    <!-- icon and name -->
-    <div class="card-footer bg-dark p-0 d-flex align-items-center">
-      <span class="badge pl-1 pr-0 py-2"><emoji :emoji="icon"></emoji></span>
-      <span
-        class="badge mx-1 py-1 flex-fill text-center text-wrap"
-      >{{ $t(name) }}</span>
+      <!-- cost -->
+      <div class="p-1 gradient-black-transparent">
+        <div class="badge p-0 d-flex">
+          <emoji v-for="i in data.cost" :key="i" class="coin" emoji="🪙"></emoji>
+          <emoji v-for="i in data.extra_points" :key="i" class="coin grayscale" emoji="🪙"></emoji>
+        </div>
+      </div>
+
+      <!-- body and description -->
+      <div class="flex-fill position-relative">
+        <div
+          v-if="$te(description)"
+          class="badge badge-light m-1 p-1 position-absolute text-truncate opacity-4"
+          style="left: 0; right: 0; bottom: 0;"
+        >{{ $t(description) }}</div>
+      </div>
+
+      <!-- icon and name -->
+      <div class="d-flex align-items-center gradient-transparent-black p-0">
+        <span class="badge badge-pill p-1 shadow-sm align-self-end" :class="`bg-${color}`">
+          <span class="badge badge-pill p-1 bg-dark">
+            <emoji :emoji="icon"></emoji>
+          </span>
+        </span>
+        <span
+          class="badge py-1 px-0 flex-fill text-center text-wrap"
+        >{{ $t(name) }}</span>
+      </div>
     </div>
   </div>
 
@@ -131,6 +134,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  $cards: laboratory smithy library observatory graveyard imperial_treasury haunted_quarter map_room
+    school_of_magic docks barracks watchtower monastery fortress cathedral manor tavern market
+    trading_post prison temple castle harbor church dragon_gate great_wall palace university keep
+    town_hall;
+
 .district-card {
   height: 10rem;
   width: 7rem;
@@ -161,5 +169,24 @@ export default defineComponent({
   &:last-child {
     min-width: initial;
   }
+}
+
+.card-picture {
+  background-position: center;
+  background-size: cover;
+
+  @each $card in $cards {
+    &--#{$card} {
+      background-image: url('../../../assets/cards/#{$card}.jpg');
+    }
+  }
+}
+
+.gradient-black-transparent {
+  background: linear-gradient(#000, #0000)
+}
+
+.gradient-transparent-black {
+  background: linear-gradient(#0000, #000)
 }
 </style>

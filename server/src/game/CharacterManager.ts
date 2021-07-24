@@ -550,7 +550,8 @@ export default class CharacterManager {
         case CharacterPosition.PLAYER_5:
         case CharacterPosition.PLAYER_6:
         case CharacterPosition.PLAYER_7:
-          this.characters[i] = ((character - offset + amount) % this.playerCount) + offset;
+          this.characters[i] = ((character - offset + this.playerCount - amount)
+            % this.playerCount) + offset;
           break;
 
         default:

@@ -43,6 +43,7 @@
         :current="charactersList.current"
         :kill-mode="killMode"
         :rob-mode="robMode"
+        :put-aside-mode="putAsideMode"
       />
       <div
         v-if="gameProgress === 'IN_GAME' && showGraveyard"
@@ -105,7 +106,7 @@ import CharactersList from './elements/CharactersList.vue';
 import PlayerCity from './elements/PlayerCity.vue';
 import PlayerHand from './elements/PlayerHand.vue';
 import DistrictCard from './elements/DistrictCard.vue';
-import { ClientTurnState, Move } from '../../types/gameTypes';
+import { CharacterChoosingStateType as CCST, ClientTurnState, Move } from '../../types/gameTypes';
 import { getStatusBarData } from '../../data/statusBarData';
 
 export default defineComponent({
@@ -164,6 +165,17 @@ export default defineComponent({
     robMode() {
       return this.isCurrentPlayerSelf
       && this.gameState.board.turnState === ClientTurnState.THIEF_ROB;
+    },
+    putAsideMode() {
+      if (!this.isCurrentPlayerSelf) return false;
+      switch (this.gameState.board.characters.state.type) {
+        case CCST.PUT_ASIDE_FACE_UP:
+        case CCST.PUT_ASIDE_FACE_DOWN:
+        case CCST.PUT_ASIDE_FACE_DOWN_UP:
+          return true;
+        default:
+          return false;
+      }
     },
     exchangeHandMode() {
       return this.isCurrentPlayerSelf

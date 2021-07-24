@@ -14,7 +14,7 @@
         'active bg-white text-dark border-dark mx-n1 shadow-sm rounded':
           character.id === current && current !== 0 && !(killMode || robMode),
         'bg-light': character.id > current && !character.killed,
-        'bg-white text-dark cursor-pointer': character.selectable,
+        'bg-white text-dark cursor-pointer hover-hint-hitbox': character.selectable,
       }"
       v-tooltip="$t(`characters.${character.id}.description`)"
       data-placement="left"
@@ -44,6 +44,23 @@
         v-else-if="character.robbed"
         class="badge badge-pill badge-dark p-1 shadow-sm"
       ><emoji emoji="💰"></emoji></span>
+      <!-- hover action hint -->
+      <span class="hover-hint">
+        <span
+          v-if="killMode"
+          class="badge badge-pill badge-danger p-1 shadow-sm"
+        ><emoji emoji="💀"></emoji></span>
+        <span
+          v-else-if="robMode"
+          class="badge badge-pill badge-dark p-1 shadow-sm"
+        ><emoji emoji="💰"></emoji></span>
+        <span
+          v-else-if="putAsideMode"
+        ><emoji emoji="⬇️"></emoji></span>
+        <span
+          v-else
+        ><emoji emoji="✅"></emoji></span>
+      </span>
     </li>
   </ul>
 </div>
@@ -74,6 +91,10 @@ export default defineComponent({
       default: false,
     },
     robMode: {
+      type: Boolean,
+      default: false,
+    },
+    putAsideMode: {
       type: Boolean,
       default: false,
     },
@@ -133,3 +154,16 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.hover-hint {
+  display: none;
+
+}
+
+.hover-hint-hitbox:hover {
+  .hover-hint {
+    display: block;
+  }
+}
+</style>

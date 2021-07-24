@@ -129,9 +129,12 @@ export default defineComponent({
       return this.gameState.self;
     },
     playerBoards() {
-      return [...this.gameState.board.players].map(([playerId, board]) => (
+      const players = [...this.gameState.board.playerOrder];
+      const cutOut = players.splice(players.indexOf(this.gameState.self));
+      players.splice(0, 0, ...cutOut);
+      return players.map((playerId) => (
         [playerId, {
-          ...board,
+          ...this.gameState.board.players.get(playerId),
           crown: this.gameState.board.playerOrder[0] === playerId,
         }]));
     },

@@ -152,7 +152,7 @@ export default defineComponent({
 
 .coin {
   min-width: 0;
-  text-shadow: -1px 0 2px rgba(0, 0, 0, .2);
+  filter: drop-shadow(-1px 0 2px rgba(0, 0, 0, .2));
 
   &.grayscale {
     filter: grayscale(1);

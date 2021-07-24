@@ -12,7 +12,9 @@
         "unknown_error": "Unknown error.",
         "about": {
             "title": "About",
-            "text": "Original board game created by <a target='_blank' href='http://faidutti.com'>Bruno Faidutti</a>.<br> Unofficial online version developped by <a target='_blank' href='https://brule.info'>Antoine Brûlé</a>.<br> This implementation of the game is <a target='_blank' href='https://github.com/antbrl/citadels-online'>open source</a>.<br> Emoji CC-BY 4.0 <a target='_blank' href='https://twemoji.twitter.com/'>Twemoji</a>"
+            "text": "Original board game created by <a target='_blank' href='http://faidutti.com'>Bruno Faidutti</a>.<br> Unofficial online version developped by <a target='_blank' href='https://brule.info'>Antoine Brûlé</a>.<br> This implementation of the game is <a target='_blank' href='https://github.com/antbrl/citadels-online'>open source</a>.<br> Emoji CC-BY 4.0 <a target='_blank' href='https://twemoji.twitter.com/'>Twemoji</a>",
+            "picture_credits": "Picture credits",
+            "by": "by"
         },
         "homepage": {
             "intro_text": "Create a new room",

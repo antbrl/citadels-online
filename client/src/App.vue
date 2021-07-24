@@ -16,6 +16,18 @@
       </div>
       <div class="modal-body">
         <p v-html="$t('ui.about.text')"></p>
+        <h6>{{ $t('ui.about.picture_credits') }}</h6>
+        <ul>
+          <li
+            v-for="line, i in credits"
+            :key="i"
+          >
+            <a :href="line[1]" target="_blank">{{ $t(`districts.${line[0]}.name`) }}</a>
+            {{ $t('ui.about.by') }}
+            <a v-if="line[3]" :href="line[3]" target="_blank">{{ line[2] }}</a>
+            <span v-else>{{ line[2] }}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -50,11 +62,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleSelector from './components/LocaleSelector.vue';
+import credits from './data/credits.json';
 
 export default defineComponent({
   name: 'App',
   components: {
     LocaleSelector,
+  },
+  computed: {
+    credits() {
+      return credits;
+    },
   },
 });
 </script>

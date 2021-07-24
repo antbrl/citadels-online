@@ -12,7 +12,9 @@
         "unknown_error": "Erreur inconnue.",
         "about": {
             "title": "À propos",
-            "text": "Jeu de société original créé par <a target='_blank' href='http://faidutti.com'>Bruno Faidutti</a>.<br> Version en ligne non officielle développée par <a target='_blank' href='https://brule.info'>Antoine Brûlé</a>.<br> Cette implémentation du jeu est <a target='_blank' href='https://github.com/antbrl/citadels-online'>open-source</a>.<br> Emoji CC-BY 4.0 <a target='_blank' href='https://twemoji.twitter.com/'>Twemoji</a>"
+            "text": "Jeu de société original créé par <a target='_blank' href='http://faidutti.com'>Bruno Faidutti</a>.<br> Version en ligne non officielle développée par <a target='_blank' href='https://brule.info'>Antoine Brûlé</a>.<br> Cette implémentation du jeu est <a target='_blank' href='https://github.com/antbrl/citadels-online'>open-source</a>.<br> Emoji CC-BY 4.0 <a target='_blank' href='https://twemoji.twitter.com/'>Twemoji</a>",
+            "picture_credits": "Crédits photos",
+            "by": "par"
         },
         "homepage": {
             "intro_text": "Créer un nouveau salon",

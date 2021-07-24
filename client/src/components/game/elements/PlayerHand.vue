@@ -4,18 +4,25 @@
     <emoji emoji="👑"></emoji>
   </div>
   <div class="mr-auto"></div>
-  <DistrictCard
-    v-for="id, i in board.hand"
-    :key="i"
-    :district-id="id"
-    class="mr-2"
-    :disabled="showTmpHand || (buildMode && !canBuild(id))"
-    :selectable="canBuild(id) || discardCardsMode || laboratoryMode"
-    v-model:selected="selectedCards[i]"
-  />
+  <div class="p-2 pt-4 d-flex flex-grow-1 overflow-hidden">
+    <div
+      class="district-card-wrapper"
+      v-for="id, i in board.hand"
+      :key="i"
+    >
+      <div class="district-card">
+        <DistrictCard
+          :district-id="id"
+          :disabled="showTmpHand || (buildMode && !canBuild(id))"
+          :selectable="canBuild(id) || discardCardsMode || laboratoryMode"
+          v-model:selected="selectedCards[i]"
+        />
+      </div>
+    </div>
+  </div>
   <div
     v-if="showTmpHand"
-    class="bg-light d-flex justify-content-start pl-2 py-2 my-n2"
+    class="bg-secondary d-flex justify-content-start pl-2 py-2 my-n2"
   >
     <DistrictCard
       v-for="id, i in board.tmpHand"
@@ -157,5 +164,32 @@ export default defineComponent({
   font-size: 2em;
   min-width: 2.5em;
   text-align: center;
+}
+
+.district-card-wrapper {
+  width: 20px;
+  flex: 1;
+
+  &:hover {
+    width: 100%;
+
+    .district-card {
+      transform: translatey(-10px);
+    }
+  }
+
+  &:hover ~ .card {
+    z-index: 1;
+  }
+
+  &:last-child {
+    width: auto;
+  }
+
+  .district-card {
+    transition: transform .1s linear;
+    margin: auto;
+    box-sizing: border-box;
+  }
 }
 </style>

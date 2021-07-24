@@ -3,7 +3,6 @@
   class="district-card flex-shrink-0 rounded"
   :class="{
     'district-card--selectable': !disabled && selectable,
-    'opacity-3': disabled,
     'district-card--selected': selected,
   }"
   @click="toggleSelected()"
@@ -18,7 +17,7 @@
 
     <!-- card content -->
     <div :class="`flex-fill card-picture card-picture--${districtId} d-flex flex-column
-      `">
+      ${ disabled ? 'opacity-3' : '' }`">
 
       <!-- cost -->
       <div class="p-1 gradient-black-transparent">

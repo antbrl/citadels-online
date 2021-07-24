@@ -3,8 +3,7 @@
   <div v-if="board.crown" class="crown card rounded-pill bg-danger p-3 m-2 shadow-sm">
     <emoji emoji="👑"></emoji>
   </div>
-  <div class="mr-auto"></div>
-  <div class="p-2 pt-4 d-flex flex-grow-1 overflow-hidden">
+  <div class="flex-grow-1 p-2 pt-4 d-flex overflow-hidden">
     <div
       class="district-card-wrapper"
       v-for="id, i in board.hand"
@@ -169,6 +168,7 @@ export default defineComponent({
 .district-card-wrapper {
   width: 20px;
   flex: 1;
+  max-width: 7.5rem;
 
   &:hover {
     width: 100%;

@@ -2,7 +2,9 @@
   <div class="w-100 card bg-secondary shadow-sm" style="min-width: 9em;">
     <div class="p-1 text-light d-flex flex-column">
       <div class="bg-dark p-1 flex-fill rounded d-flex flex-column">
-        <h5><span class="badge w-100">{{ username }}</span></h5>
+        <h5><span class="badge w-100" :class="{ 'bg-primary': isCurrentPlayer }">
+          {{ username }}
+        </span></h5>
         <p class="text-center">
           <span v-if="board.crown" class="badge badge-pill badge-danger p-2 mr-2">
             <emoji emoji="👑"></emoji>
@@ -79,9 +81,13 @@ export default defineComponent({
     ...mapGetters([
       'getPlayerFromId',
       'gameProgress',
+      'currentPlayerId',
     ]),
     username() {
       return this.getPlayerFromId(this.playerId)?.username;
+    },
+    isCurrentPlayer() {
+      return this.currentPlayerId === this.playerId;
     },
   },
   methods: {

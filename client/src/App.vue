@@ -41,7 +41,7 @@
     </div>
   </div>
 </header>
-<div class="body flex-fill overflow-hidden">
+<div class="body flex-fill overflow-auto">
   <router-view></router-view>
 </div>
 </div>

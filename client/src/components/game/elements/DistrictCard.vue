@@ -23,7 +23,7 @@
       <!-- cost -->
       <div :class="{
         'gradient-black-transparent p-1': small,
-        'gradient-transparent-black rotated-cost pt-1': !small,
+        'gradient-transparent-black rotated-cost pt-3': !small,
       }">
         <div class="d-flex">
           <emoji v-for="i in data.cost" :key="i" class="coin" emoji="🪙"></emoji>
@@ -49,7 +49,7 @@
           </span>
         </span>
         <span
-          class="badge p-0 flex-fill text-center text-wrap"
+          class="title flex-fill text-center text-wrap"
         >{{ $t(name) }}</span>
       </div>
     </div>
@@ -206,11 +206,32 @@ export default defineComponent({
   }
 }
 
+.title {
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 3px black, 0 0 6px black;
+}
+
 .gradient-black-transparent {
-  background: linear-gradient(#000, #0000)
+  background: linear-gradient(to top,
+    #00000000 0%,
+    #00000009 30%,
+    #00000022 50%,
+    #00000055 70%,
+    #00000077 80%,
+    #000000bb 100%,
+  );
 }
 
 .gradient-transparent-black {
-  background: linear-gradient(#0000, #000)
+  background: linear-gradient(
+    #00000000 0%,
+    #00000009 30%,
+    #00000022 50%,
+    #00000055 70%,
+    #00000077 80%,
+    #000000bb 100%,
+  );
 }
 </style>

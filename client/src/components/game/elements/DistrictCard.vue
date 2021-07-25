@@ -42,7 +42,7 @@
       </div>
 
       <!-- icon and name -->
-      <div class="z-1 d-flex align-items-center gradient-transparent-black p-0">
+      <div class="z-1 d-flex align-items-center gradient-transparent-black bg-black-alpha p-0">
         <span class="badge badge-pill p-1 shadow-sm align-self-end" :class="`bg-${color}`">
           <span class="badge badge-pill p-1 bg-dark">
             <emoji :emoji="icon"></emoji>
@@ -189,9 +189,14 @@ export default defineComponent({
   transform: rotate(90deg) translateY(-100%);
   transform-origin: top left;
   width: 9.5rem;
+  padding-right: 2rem;
 
   .coin {
     transform: rotate(-90deg);
+
+    &:last-child {
+      min-width: 0;
+    }
   }
 }
 
@@ -214,7 +219,7 @@ export default defineComponent({
 }
 
 .gradient-black-transparent {
-  background: linear-gradient(to top,
+  background-image: linear-gradient(to top,
     #00000000 0%,
     #00000009 30%,
     #00000022 50%,
@@ -225,7 +230,7 @@ export default defineComponent({
 }
 
 .gradient-transparent-black {
-  background: linear-gradient(
+  background-image: linear-gradient(
     #00000000 0%,
     #00000009 30%,
     #00000022 50%,
@@ -233,5 +238,9 @@ export default defineComponent({
     #00000077 80%,
     #000000bb 100%,
   );
+}
+
+.bg-black-alpha {
+  background-color: #0006;
 }
 </style>

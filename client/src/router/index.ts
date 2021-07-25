@@ -7,7 +7,7 @@ import { updateTitle } from '../i18n';
 
 const routes = [
   { path: '/', component: HomeScreen },
-  { path: '/room/:roomId', name: 'join-room', component: RoomScreen },
+  { path: '/room/:roomId', name: 'room', component: RoomScreen },
   { path: '/cards', name: 'cards', component: CardsPreview },
 
   // catch all

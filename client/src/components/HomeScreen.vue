@@ -33,7 +33,7 @@ export default defineComponent({
       try {
         const roomId = await store.dispatch('createRoom');
         console.log(roomId);
-        this.$router.push({ name: 'join-room', params: { roomId } });
+        this.$router.push({ name: 'room', params: { roomId } });
         this.creatingRoom = false;
       } catch (error) {
         console.error('error when creating room', error);

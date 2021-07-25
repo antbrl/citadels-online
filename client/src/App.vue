@@ -33,16 +33,35 @@
   </div>
 </div>
 <div class="d-flex flex-column h-100">
-<header>
+<header v-if="!inGame">
   <div class="container-fluid">
     <div class="d-flex flex-wrap align-items-center justify-content-end">
       <div class="flex-grow-1 text-center pb-1">
-        <!-- <h6>{{ $t('ui.subtitle1') }}</h6> -->
         <h1><a href="/" class="text-reset">{{ $t('ui.title') }}</a></h1>
         <h6>{{ $t('ui.subtitle2') }}</h6>
       </div>
       <div class="text-right">
         <LocaleSelector class="opacity-4" />
+        <a
+          class="text-reset text-decoration-none"
+          href="#"
+          data-toggle="modal"
+          data-target="#aboutModal"
+        >{{ $t('ui.about.title') }}</a>
+      </div>
+    </div>
+  </div>
+</header>
+<header v-else>
+  <div class="container-fluid">
+    <div class="d-flex flex-wrap align-items-center justify-content-end gap-3">
+      <div class="flex-grow-1 text-center pb-1">
+        <h2 class="mt-1"><a href="/" class="text-reset">{{ $t('ui.title') }}</a></h2>
+      </div>
+      <div>
+        <LocaleSelector class="opacity-4" />
+      </div>
+      <div>
         <a
           class="text-reset text-decoration-none"
           href="#"
@@ -73,6 +92,9 @@ export default defineComponent({
     credits() {
       return credits;
     },
+    inGame() {
+      return this.$route.name === 'room';
+    },
   },
 });
 </script>
@@ -84,7 +106,7 @@ header {
   margin: 0;
   padding: 0.5em;
 
-  h1, h6 {
+  h1, h2, h6 {
     padding: 0;
     margin: 0;
   }

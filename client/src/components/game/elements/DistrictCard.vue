@@ -21,31 +21,35 @@
       ${ disabled ? 'opacity-3' : '' }`">
 
       <!-- cost -->
-      <div class="p-1 gradient-black-transparent">
-        <div class="badge p-0 d-flex">
+      <div :class="{
+        'gradient-black-transparent p-1': small,
+        'gradient-transparent-black rotated-cost pt-1': !small,
+      }">
+        <div class="d-flex">
           <emoji v-for="i in data.cost" :key="i" class="coin" emoji="🪙"></emoji>
           <emoji v-for="i in data.extra_points" :key="i" class="coin grayscale" emoji="🪙"></emoji>
         </div>
       </div>
 
       <!-- body and description -->
-      <div class="flex-fill position-relative">
+      <div class="flex-fill"></div>
+      <div v-if="!small" class="px-1" :class="{ 'pl-3': data.extra_points > 0 }">
         <div
-          v-if="!small && $te(description)"
-          class="badge badge-light m-1 p-1 position-absolute text-truncate opacity-4"
+          v-if="$te(description)"
+          class="badge badge-light p-1 w-100 text-truncate opacity-4"
           style="left: 0; right: 0; bottom: 0;"
         >{{ $t(description) }}</div>
       </div>
 
       <!-- icon and name -->
-      <div class="d-flex align-items-center gradient-transparent-black p-0">
+      <div class="z-1 d-flex align-items-center gradient-transparent-black p-0">
         <span class="badge badge-pill p-1 shadow-sm align-self-end" :class="`bg-${color}`">
           <span class="badge badge-pill p-1 bg-dark">
             <emoji :emoji="icon"></emoji>
           </span>
         </span>
         <span
-          class="badge py-1 px-0 flex-fill text-center text-wrap"
+          class="badge p-0 flex-fill text-center text-wrap"
         >{{ $t(name) }}</span>
       </div>
     </div>
@@ -169,6 +173,8 @@ export default defineComponent({
 .coin {
   min-width: 0;
   filter: drop-shadow(-1px 0 2px rgba(0, 0, 0, .2));
+  font-size: 75%;
+  line-height: 1;
 
   &.grayscale {
     filter: grayscale(1);
@@ -176,6 +182,16 @@ export default defineComponent({
 
   &:last-child {
     min-width: initial;
+  }
+}
+
+.rotated-cost {
+  transform: rotate(90deg) translateY(-100%);
+  transform-origin: top left;
+  width: 9.5rem;
+
+  .coin {
+    transform: rotate(-90deg);
   }
 }
 

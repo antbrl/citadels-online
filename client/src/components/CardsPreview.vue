@@ -6,6 +6,14 @@
     :district-id="card"
     class="m-1"
   />
+  <div class="w-100"></div>
+  <DistrictCard
+    v-for="card in cards"
+    :key="card"
+    :district-id="card"
+    class="m-1"
+    small
+  />
 </div>
 </template>
 

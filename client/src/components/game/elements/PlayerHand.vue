@@ -33,8 +33,11 @@
     />
   </div>
   <div
-    class="stash d-flex flex-column-reverse flex-wrap-reverse justify-content-start ml-auto"
-  ><emoji v-for="i in board.stash" :key="i" class="coin" emoji="🪙"></emoji></div>
+    class="stash d-flex flex-column-reverse flex-wrap-reverse justify-content-start"
+    :style="`width: ${2.5 * Math.ceil(board.stash / 5)}rem;`"
+  >
+    <emoji v-for="i in board.stash" :key="i" class="coin" emoji="🪙"></emoji>
+  </div>
 </div>
 </template>
 
@@ -149,6 +152,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .stash {
   height: 9em;
+  margin-top: 2.5em;
 }
 
 .coin {

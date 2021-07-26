@@ -1,6 +1,6 @@
 <template>
 <div
-  class="district-card flex-shrink-0 rounded"
+  class="district-card flex-shrink-0 rounded position-relative z-0"
   :class="{
     'district-card--selectable': !disabled && selectable,
     'district-card--selected': selected,

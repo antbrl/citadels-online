@@ -103,7 +103,6 @@ export const store = createStore<State>({
   mutations: {
     setGameState(state, gameState) {
       state.gameState = gameState;
-      console.log('new game state:', state.gameState);
     },
     resetGameState(state) {
       state.gameState = undefined;

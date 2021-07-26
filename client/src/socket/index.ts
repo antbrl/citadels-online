@@ -37,8 +37,6 @@ socket.on('disconnectPlayer', (playerId) => {
   store.commit('removePlayer', playerId);
 });
 socket.on('update game state', (data) => {
-  console.log('data', data);
-
   const newGameState: ClientGameState = {
     progress: data.progress,
     players: new Map(data.players),

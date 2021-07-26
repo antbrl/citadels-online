@@ -32,7 +32,6 @@ export default defineComponent({
       this.creatingRoom = true;
       try {
         const roomId = await store.dispatch('createRoom');
-        console.log(roomId);
         this.$router.push({ name: 'room', params: { roomId } });
         this.creatingRoom = false;
       } catch (error) {

@@ -20,8 +20,11 @@ export default {
   },
 
   joinRoom(socket: Socket, roomId: string, playerId: string, username: string) {
-    return new Promise<ClientGameState>((resolve) => {
+    return new Promise<ClientGameState>((resolve, reject) => {
       socket.emit('join room', roomId, playerId, username, (data: any) => {
+        if (data === null) {
+          return reject(Error('game state is null'));
+        }
         const gameState: ClientGameState = {
           progress: data.progress,
           players: new Map(data.players),
@@ -32,7 +35,7 @@ export default {
           },
           settings: data.settings,
         };
-        resolve(gameState);
+        return resolve(gameState);
       });
     });
   },

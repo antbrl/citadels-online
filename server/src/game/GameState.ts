@@ -39,8 +39,14 @@ export default class GameState implements Subject {
     return this.players.get(playerId);
   }
 
-  addPlayer(id: string, username: string, manager = false, online = true) {
-    const player = new Player(id, username, manager, online);
+  addPlayer(
+    id: string,
+    username: string,
+    manager = false,
+    online = true,
+    role = PlayerRole.PLAYER,
+  ) {
+    const player = new Player(id, username, manager, online, role);
     this.players.set(id, player);
     return player;
   }

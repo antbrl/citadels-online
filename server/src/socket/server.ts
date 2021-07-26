@@ -77,7 +77,7 @@ export function initSocket(io: Server) {
             callback(null);
             return;
           }
-        } else {
+        } else if (room.getRoomInfo().status === 'open') {
           socket.playerId = genPlayerId();
           player = room.gameState.addPlayer(
             // player id
@@ -89,6 +89,9 @@ export function initSocket(io: Server) {
           );
           socket.to(roomId).emit('add player', player);
           debug('added player', player.id);
+        } else {
+          callback(null);
+          return;
         }
 
         // join room

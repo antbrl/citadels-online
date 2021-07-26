@@ -1,25 +1,26 @@
 import { Server } from 'socket.io';
-import GameState from '../game/GameState';
+import GameState, { GameProgress } from '../game/GameState';
 import ExtendedSocket from '../socket/ExtendedSocket';
 import { Observer } from '../utils/observerPattern';
 
 export default class Room implements Observer {
   roomId: string;
   gameState: GameState;
-  status: string;
   io: Server;
 
   constructor(roomId: string, io: Server) {
     this.roomId = roomId;
     this.gameState = new GameState();
-    this.status = 'open';
     this.io = io;
 
     this.gameState.attach(this);
   }
 
   getRoomInfo() {
-    return { status: this.status };
+    if (this.gameState.progress === GameProgress.IN_LOBBY) {
+      return { status: 'open' };
+    }
+    return { status: 'closed' };
   }
 
   update(): void {

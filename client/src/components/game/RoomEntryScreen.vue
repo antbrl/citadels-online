@@ -5,9 +5,9 @@
       <LoadingSpinner />
     </div>
     <div v-else-if="error">
-      {{ errorMessage }}
+      {{ $t(errorMessage, { msg: errorReason }) }}
     </div>
-    <div v-else-if="open">
+    <div v-else-if="askForUsername">
       <form @submit.prevent="joinRoom" autocomplete="off">
         <div class="form-group">
           <label for="username">{{ $t('ui.room.username') }}</label>
@@ -25,7 +25,7 @@
       </form>
     </div>
     <div v-else>
-      {{ $t('ui.room.not_open') }}
+      {{ $t('ui.unknown_error') }}
     </div>
   </transition>
 </div>
@@ -47,6 +47,8 @@ export default defineComponent({
       open: false,
       error: false,
       errorMessage: undefined,
+      errorReason: undefined,
+      askForUsername: false,
     };
   },
   computed: {
@@ -70,18 +72,28 @@ export default defineComponent({
           case 'open':
             this.open = true;
             break;
+          case 'closed':
+            this.open = false;
+            break;
           case 'not found':
-            this.errorMessage = this.$t('ui.room.error_does_not_exist');
+            this.errorMessage = 'ui.room.error_does_not_exist';
             this.error = true;
             break;
           default:
             console.log('get room info error:', roomInfo);
-            this.errorMessage = this.$t('ui.unknown_error');
+            this.errorMessage = 'ui.unknown_error';
             this.error = true;
         }
-        if (!this.error && this.open && localStorage.getItem(this.roomId)) {
+        if (this.error) {
+          this.loading = false;
+        } else if (localStorage.getItem(this.roomId)) {
           this.joinRoom();
+        } else if (this.open) {
+          this.askForUsername = true;
+          this.loading = false;
         } else {
+          this.errorMessage = 'ui.room.not_open';
+          this.error = true;
           this.loading = false;
         }
       } catch (error) {
@@ -91,10 +103,15 @@ export default defineComponent({
     joinRoom() {
       this.loading = true;
       const playerId = localStorage.getItem(this.roomId);
-      store.dispatch('joinRoom', { roomId: this.roomId, playerId, username: this.username }).catch((reason) => {
-        this.loading = false;
-        this.error = true;
-        this.errorMessage = this.$t('ui.room.error_join', { msg: reason });
+      store.dispatch('joinRoom', { roomId: this.roomId, playerId, username: this.username }).catch((reason: Error) => {
+        if (reason.message === 'game state is null') {
+          this.getRoomInfo(this.roomId);
+        } else {
+          this.loading = false;
+          this.error = true;
+          this.errorMessage = 'ui.room.error_join';
+          this.errorReason = reason.message;
+        }
       });
     },
   },

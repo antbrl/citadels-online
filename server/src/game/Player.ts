@@ -21,12 +21,18 @@ export default class Player {
   online: boolean;
   role: PlayerRole;
 
-  constructor(id: string, username: string, manager: boolean, online: boolean) {
+  constructor(
+    id: string,
+    username: string,
+    manager: boolean,
+    online: boolean,
+    role: PlayerRole,
+  ) {
     this.id = id;
     this.username = username;
     this.manager = manager;
     this.online = online;
-    this.role = PlayerRole.PLAYER;
+    this.role = role;
   }
 
   toString() {

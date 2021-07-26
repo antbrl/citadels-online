@@ -23,7 +23,7 @@
         "room": {
             "username": "Nom d'utilisateur",
             "connect": "Se connecter",
-            "not_open": "Ce salon n'est pas ouvert pour de nouveaux joueurs.",
+            "not_open": "Ce salon n'est pas ouvert à de nouveaux joueurs.",
             "error_does_not_exist": "Ce salon n'existe pas.",
             "error_join": "Erreur en rejoignant le salon : {msg}"
         },

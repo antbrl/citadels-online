@@ -1,4 +1,4 @@
-import districtsJson from '../data/districts.json';
+import { districts } from 'citadels-common';
 import { CharacterType } from './CharacterManager';
 
 export enum DistrictType {
@@ -41,14 +41,14 @@ export default class DistrictCard {
 type DistrictsMap = Map<string, { card: DistrictCard, count: number }>;
 
 // create districts Map from JSON
-export const ALL_DISTRICTS = Object.keys(districtsJson).reduce(
+export const ALL_DISTRICTS = Object.keys(districts).reduce(
   (res: DistrictsMap, districtId) => {
     const data = {
       // default values
       count: 1,
       extraPoints: 0,
       // actual values
-      ...districtsJson[districtId as keyof typeof districtsJson],
+      ...districts[districtId as keyof typeof districts],
     };
     return res.set(districtId, {
       card: new DistrictCard(districtId, data.type, data.cost, data.extraPoints),

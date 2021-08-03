@@ -4,6 +4,9 @@
       "path": ".."
     },
     {
+      "path": "../common"
+    },
+    {
       "path": "../client"
     },
     {
@@ -15,6 +18,7 @@
       "node_modules/": true,
       "client/": true,
       "server/": true,
+      "common/": true,
     },
   }
 }

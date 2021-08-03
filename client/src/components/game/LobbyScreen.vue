@@ -99,9 +99,9 @@
 import { defineComponent } from 'vue';
 import $ from 'jquery';
 import { mapGetters } from 'vuex';
+import { PlayerRole } from 'citadels-common';
 import PlayersList from './elements/PlayersList.vue';
 import { store } from '../../store';
-import { PlayerRole } from '../../types/gameTypes';
 
 export default defineComponent({
   components: { PlayersList },

@@ -1,17 +1,8 @@
+import { CharacterChoosingStateType as CCST } from 'citadels-common';
 import { PlayerPosition } from './Player';
 
-export enum CharacterChoosingStateType {
-  INITIAL = 0,
-  PUT_ASIDE_FACE_UP,
-  PUT_ASIDE_FACE_DOWN,
-  PUT_ASIDE_FACE_DOWN_UP,
-  CHOOSE_CHARACTER,
-  GET_ASIDE_FACE_DOWN,
-  DONE,
-}
-
 export type CharacterChoosingStateData = {
-  type: CharacterChoosingStateType,
+  type: CCST,
   player: PlayerPosition
 };
 
@@ -53,7 +44,7 @@ export class CharacterChoosingState {
   }
 
   step() {
-    if (this.getState().type !== CharacterChoosingStateType.DONE
+    if (this.getState().type !== CCST.DONE
       && this.stateNumber < this.states.length - 1) {
       this.stateNumber += 1;
     } else {
@@ -66,82 +57,82 @@ export class CharacterChoosingState {
   }
 
   private static choosingStates2P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN_UP, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 
   private static choosingStates3P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 
   private static choosingStates4P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 
   private static choosingStates5P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_UP, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 
   private static choosingStates6P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_6 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_6 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 
   private static choosingStates7P: CharacterChoosingStateArray = [
-    { type: CharacterChoosingStateType.INITIAL, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_6 },
-    { type: CharacterChoosingStateType.GET_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_7 },
-    { type: CharacterChoosingStateType.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
-    { type: CharacterChoosingStateType.DONE, player: PlayerPosition.SPECTATOR },
+    { type: CCST.INITIAL, player: PlayerPosition.SPECTATOR },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_1 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_2 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_3 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_4 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_5 },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_6 },
+    { type: CCST.GET_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.CHOOSE_CHARACTER, player: PlayerPosition.PLAYER_7 },
+    { type: CCST.PUT_ASIDE_FACE_DOWN, player: PlayerPosition.SPECTATOR },
+    { type: CCST.DONE, player: PlayerPosition.SPECTATOR },
   ];
 }

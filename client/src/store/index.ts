@@ -1,11 +1,16 @@
 import { Socket } from 'socket.io-client';
 import { createStore } from 'vuex';
-import socket from '../socket';
 import {
   CharacterType,
-  ClientGameState, GameProgress, GameSetupData, Move, PlayerRole,
-} from '../types/gameTypes';
-import districts from '../data/districts.json';
+  ClientGameState,
+  GameProgress,
+  GameSetupData,
+  Move,
+  PlayerRole,
+  districts,
+} from 'citadels-common';
+import socket from '../socket';
+
 import api from '../api';
 
 export interface State {

@@ -95,12 +95,12 @@
 import { defineComponent } from 'vue';
 import $ from 'jquery';
 import { mapGetters } from 'vuex';
+import { CharacterChoosingStateType as CCST, ClientTurnState, Move } from 'citadels-common';
 import { store } from '../../store';
 import CharactersList from './elements/CharactersList.vue';
 import PlayerCity from './elements/PlayerCity.vue';
 import PlayerHand from './elements/PlayerHand.vue';
 import DistrictCard from './elements/DistrictCard.vue';
-import { CharacterChoosingStateType as CCST, ClientTurnState, Move } from '../../types/gameTypes';
 import { getStatusBarData } from '../../data/statusBarData';
 
 export default defineComponent({

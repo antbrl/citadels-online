@@ -1,7 +1,4 @@
-export interface SerializedGameSetupData {
-  players: string[]
-  completeCitySize: number
-}
+import { GameSetupData as SerializedGameSetupData } from 'citadels-common';
 
 export default class GameSetupData {
   players: string[];

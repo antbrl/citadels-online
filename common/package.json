@@ -1,0 +1,20 @@
+{
+  "name": "citadels-common",
+  "version": "0.0.1",
+  "description": "Online Citadels board game (common)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": "https://github.com/antbrl/citadels-online",
+  "author": "Antoine Brûlé",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "eslint-config-airbnb-typescript": "^12.3.1"
+  }
+}

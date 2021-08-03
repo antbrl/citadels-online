@@ -1,18 +1,18 @@
-import { Observer, Subject } from '../utils/observerPattern';
-import BoardState, { GamePhase } from './BoardState';
 import {
-  CharacterPosition, CharacterType, ClientTurnState, TurnState,
-} from './CharacterManager';
-import { CharacterChoosingStateType as CCST } from './ChoosingState';
-import GameSetupData from './GameSetupData';
-import Move, { MoveType } from './Move';
-import Player, { PlayerPosition, PlayerRole } from './Player';
+  Move,
+  MoveType,
+  ClientTurnState,
+  GameProgress,
+  PlayerRole,
+  GamePhase,
+  CharacterChoosingStateType as CCST,
+} from 'citadels-common';
+import { Observer, Subject } from '../utils/observerPattern';
+import BoardState from './BoardState';
+import { CharacterPosition, CharacterType, TurnState } from './CharacterManager';
 
-export enum GameProgress {
-  IN_LOBBY = 1,
-  IN_GAME,
-  FINISHED,
-}
+import GameSetupData from './GameSetupData';
+import Player, { PlayerPosition } from './Player';
 
 export default class GameState implements Subject {
   progress: GameProgress;

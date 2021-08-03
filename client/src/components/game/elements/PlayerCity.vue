@@ -44,8 +44,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
+import { Move, MoveType } from 'citadels-common';
 import { store } from '../../../store';
-import { Move, MoveType } from '../../../types/gameTypes';
 import CharactersList from './CharactersList.vue';
 import DistrictCard from './DistrictCard.vue';
 import PlayerScore from './PlayerScore.vue';

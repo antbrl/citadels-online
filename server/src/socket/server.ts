@@ -1,12 +1,12 @@
 import { Server } from 'socket.io';
 import Debug from 'debug';
+import { Move, MoveType } from 'citadels-common';
 import InMemoryGameStore from '../gameManager/InMemoryGameStore';
 import Player from '../game/Player';
 import Room from '../gameManager/Room';
 import { genPlayerId, genRoomId } from '../utils/idGenerator';
 import ExtendedSocket from './ExtendedSocket';
 import GameSetupData from '../game/GameSetupData';
-import Move, { MoveType } from '../game/Move';
 
 const debug = Debug('citadels-server');
 

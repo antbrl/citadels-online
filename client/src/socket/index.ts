@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
+import { ClientGameState } from 'citadels-common';
 import { store } from '../store';
-import { ClientGameState } from '../types/gameTypes';
 
 const socket = io('/', {
   path: '/s/',

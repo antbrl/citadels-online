@@ -1,13 +1,8 @@
+import { GamePhase } from 'citadels-common';
 import CharacterManager, { TurnState } from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
 import { PlayerPosition } from './Player';
 import PlayerBoardState from './PlayerBoardState';
-
-export enum GamePhase {
-  INITIAL = 0,
-  CHOOSE_CHARACTERS,
-  DO_ACTIONS,
-}
 
 export default class BoardState {
   // player city, hand and stash

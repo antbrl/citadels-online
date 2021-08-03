@@ -1,14 +1,6 @@
+import { PlayerBoard, PlayerScore } from 'citadels-common';
 import { CharacterType } from './CharacterManager';
 import DistrictCard, { ALL_DISTRICTS } from './DistrictCard';
-
-export interface PlayerScore {
-  base?: number
-  extraPointsStash?: number
-  extraPointsHand?: number
-  extraPointsDistrictTypes?: number
-  extraPointsCompleteCity?: number
-  total?: number
-}
 
 export default class PlayerBoardState {
   // amount of gold coins
@@ -89,13 +81,16 @@ export default class PlayerBoardState {
     }
   }
 
-  exportForPlayer(canSeeHand: boolean) {
+  exportForPlayer(canSeeHand: boolean): PlayerBoard {
     return {
       stash: this.stash,
       hand: canSeeHand ? this.hand : Array(this.hand.length).fill(null),
-      city: this.city,
       tmpHand: canSeeHand ? this.tmpHand : Array(this.tmpHand.length).fill(null),
+      city: this.city,
       score: this.score,
+
+      // characters are not known from this scope
+      characters: [],
     };
   }
 

@@ -10,5 +10,10 @@ export default defineConfig({
     },
   },
   define: { 'process.env': {} },
-  resolve: { alias: { vue: 'vue/dist/vue.esm-bundler.js' } },
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm-bundler.js',
+      'citadels-common': 'citadels-common/src/index.ts',
+    },
+  },
 });

@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
+import { ClientGameState, GameSetupData } from 'citadels-common';
 import { RoomInfoResponse, StartGameReponse } from '../types/apiTypes';
-import { ClientGameState, GameSetupData } from '../types/gameTypes';
 
 export default {
   createRoom(socket: Socket) {

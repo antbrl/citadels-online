@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
-import GameState, { GameProgress } from '../game/GameState';
+import { GameProgress } from 'citadels-common';
+import GameState from '../game/GameState';
 import ExtendedSocket from '../socket/ExtendedSocket';
 import { Observer } from '../utils/observerPattern';
 

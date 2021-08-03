@@ -68,7 +68,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Move, MoveType } from '../../../types/gameTypes';
+import { Move, MoveType } from 'citadels-common';
 import { store } from '../../../store';
 
 export default defineComponent({

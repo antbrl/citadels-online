@@ -2,14 +2,17 @@ import {
   CharacterChoosingStateType as CCST,
   ClientGameState,
   GameProgress,
-  StatusBarData,
   GamePhase,
   ClientTurnState,
-  Action,
   MoveType,
   CharacterType,
   PlayerBoard,
   PlayerExtraData,
+} from 'citadels-common';
+
+import {
+  StatusBarData,
+  Action,
 } from '../types/gameTypes';
 
 import { store } from '../store';

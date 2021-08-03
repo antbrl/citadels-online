@@ -1,7 +1,4 @@
-export enum PlayerRole {
-  SPECTATOR = 1,
-  PLAYER,
-}
+import { PlayerRole } from 'citadels-common';
 
 export enum PlayerPosition {
   SPECTATOR = -1,

@@ -43,8 +43,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Move, MoveType } from 'citadels-common';
 import { store } from '../../../store';
-import { Move, MoveType } from '../../../types/gameTypes';
 import DistrictCard from './DistrictCard.vue';
 
 export default defineComponent({

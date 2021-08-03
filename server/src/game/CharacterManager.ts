@@ -1,4 +1,5 @@
-import { CharacterChoosingStateType as CCST, CharacterChoosingState } from './ChoosingState';
+import { ClientTurnState, CharacterChoosingStateType as CCST } from 'citadels-common';
+import { CharacterChoosingState } from './ChoosingState';
 import { PlayerPosition } from './Player';
 
 export enum CharacterType {
@@ -58,24 +59,6 @@ export enum TurnState {
 
   GRAVEYARD_RECOVER_DISTRICT,
 
-  DONE,
-}
-
-export enum ClientTurnState {
-  INITIAL = 0,
-  TAKE_RESOURCES,
-  CHOOSE_CARD,
-  CHOOSE_ACTION,
-  ASSASSIN_KILL,
-  THIEF_ROB,
-  MAGICIAN_EXCHANGE_HAND,
-  MAGICIAN_DISCARD_CARDS,
-  MERCHANT_TAKE_1_GOLD,
-  ARCHITECT_DRAW_2_CARDS,
-  WARLORD_DESTROY_DISTRICT,
-  GRAVEYARD_RECOVER_DISTRICT,
-  LABORATORY_DISCARD_CARD,
-  BUILD_DISTRICT,
   DONE,
 }
 

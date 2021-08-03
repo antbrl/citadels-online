@@ -1,10 +1,10 @@
-import { GameSetupData as SerializedGameSetupData } from 'citadels-common';
+import { GameSetupData as SerializedGameSetupData, PlayerId } from 'citadels-common';
 
 export default class GameSetupData {
-  players: string[];
+  players: PlayerId[];
   completeCitySize: number;
 
-  constructor(players: string[], completeCitySize: number) {
+  constructor(players: PlayerId[], completeCitySize: number) {
     this.players = players;
     this.completeCitySize = completeCitySize;
   }

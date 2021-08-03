@@ -1,14 +1,14 @@
-import { PlayerRole } from 'citadels-common';
+import { PlayerId, PlayerRole } from 'citadels-common';
 
 export default class Player {
-  id: string;
+  id: PlayerId;
   username: string;
   manager: boolean;
   online: boolean;
   role: PlayerRole;
 
   constructor(
-    id: string,
+    id: PlayerId,
     username: string,
     manager: boolean,
     online: boolean,

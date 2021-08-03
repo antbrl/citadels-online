@@ -7,6 +7,7 @@ import {
   GamePhase,
   CharacterChoosingStateType as CCST,
   PlayerPosition,
+  PlayerId,
 } from 'citadels-common';
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState from './BoardState';
@@ -17,7 +18,7 @@ import Player from './Player';
 
 export default class GameState implements Subject {
   progress: GameProgress;
-  players: Map<string, Player>;
+  players: Map<PlayerId, Player>;
   board: BoardState | undefined;
   completeCitySize: number;
   observers: Observer[];
@@ -30,18 +31,18 @@ export default class GameState implements Subject {
     this.observers = [];
   }
 
-  containsPlayer(playerId: string | undefined) {
+  containsPlayer(playerId: PlayerId | undefined) {
     if (playerId === undefined) { return false; }
     return this.players.has(playerId);
   }
 
-  getPlayer(playerId: string | undefined) {
+  getPlayer(playerId: PlayerId | undefined) {
     if (playerId === undefined) { return undefined; }
     return this.players.get(playerId);
   }
 
   addPlayer(
-    id: string,
+    id: PlayerId,
     username: string,
     manager = false,
     online = true,
@@ -52,7 +53,7 @@ export default class GameState implements Subject {
     return player;
   }
 
-  getStateFromPlayer(playerId: string | undefined) {
+  getStateFromPlayer(playerId: PlayerId | undefined) {
     if (playerId === undefined) { return undefined; }
     return {
       progress: this.progress,
@@ -88,7 +89,7 @@ export default class GameState implements Subject {
     this.completeCitySize = gameSetupData.completeCitySize;
 
     // initialize board
-    const players: string[] = [];
+    const players: PlayerId[] = [];
     Array.from(this.players.keys()).forEach((playerId) => {
       const player = this.players.get(playerId);
       if (player) {

@@ -8,6 +8,7 @@ import {
   Move,
   PlayerRole,
   districts,
+  PlayerId,
 } from 'citadels-common';
 import socket from '../socket';
 
@@ -57,7 +58,7 @@ export const store = createStore<State>({
       return state.gameSetupData;
     },
     getPlayerFromId(state) {
-      return (playerId: string) => state.gameState?.players.get(playerId);
+      return (playerId: PlayerId) => state.gameState?.players.get(playerId);
     },
     getDistrictFromId() {
       return (districtId: string) => districts[districtId as keyof typeof districts];
@@ -75,7 +76,7 @@ export const store = createStore<State>({
       return state.gameState !== undefined && state.gameState.self === getters.currentPlayerId;
     },
     getDistrictDestroyPrice(state, getters) {
-      return (playerId: string, districtId: string) => {
+      return (playerId: PlayerId, districtId: string) => {
         if (districtId === 'keep') return -1;
 
         if (state.gameState === undefined) return -1;
@@ -98,7 +99,7 @@ export const store = createStore<State>({
       };
     },
     getPlayerPosition(state) {
-      return (playerId: string) => state.gameState?.board.playerOrder.indexOf(playerId);
+      return (playerId: PlayerId) => state.gameState?.board.playerOrder.indexOf(playerId);
     },
     selectedCards(state) {
       return state.selectedCards;

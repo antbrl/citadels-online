@@ -2,6 +2,8 @@ import districtsJson from './districts.json';
 
 export const districts = districtsJson;
 
+export type PlayerId = string;
+
 export enum GameProgress {
   IN_LOBBY = 1,
   IN_GAME,
@@ -101,19 +103,19 @@ export type PlayerExtraData = {
 
 export type ClientGameState = {
   progress: GameProgress
-  players: Map<string, {
-    id: string
+  players: Map<PlayerId, {
+    id: PlayerId
     username: string
     manager: boolean
     online: boolean
     role: PlayerRole
   }>
-  self: string
+  self: PlayerId
   board: {
-    players: Map<string, PlayerBoard>
+    players: Map<PlayerId, PlayerBoard>
     gamePhase: GamePhase
     turnState: ClientTurnState
-    playerOrder: string[],
+    playerOrder: PlayerId[],
     currentPlayer: PlayerPosition,
     currentPlayerExtraData: PlayerExtraData
     characters: {
@@ -139,7 +141,7 @@ export type ClientGameState = {
 };
 
 export type GameSetupData = {
-  players: string[]
+  players: PlayerId[]
   completeCitySize: number
 };
 

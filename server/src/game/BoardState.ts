@@ -1,14 +1,14 @@
-import { GamePhase, PlayerPosition } from 'citadels-common';
+import { GamePhase, PlayerId, PlayerPosition } from 'citadels-common';
 import CharacterManager, { TurnState } from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
 import PlayerBoardState from './PlayerBoardState';
 
 export default class BoardState {
   // player city, hand and stash
-  players: Map<string, PlayerBoardState>;
+  players: Map<PlayerId, PlayerBoardState>;
 
   // player order, first player has the crown
-  playerOrder: Array<string>;
+  playerOrder: Array<PlayerId>;
 
   // character manager
   characterManager: CharacterManager;
@@ -22,7 +22,7 @@ export default class BoardState {
   // graveyard (1 card)
   graveyard: string | undefined;
 
-  constructor(players: string[]) {
+  constructor(players: PlayerId[]) {
     this.players = new Map();
     this.playerOrder = [...players];
     this.characterManager = new CharacterManager(players.length);
@@ -35,7 +35,7 @@ export default class BoardState {
     });
   }
 
-  exportForPlayer(destPlayerId: string) {
+  exportForPlayer(destPlayerId: PlayerId) {
     // whether the player can see all hands
     const destPlayerPos = this.playerOrder.indexOf(destPlayerId) as PlayerPosition;
     const seesAll = destPlayerPos === PlayerPosition.SPECTATOR;

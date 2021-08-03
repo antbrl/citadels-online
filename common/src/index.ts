@@ -3,6 +3,7 @@ import districtsJson from './districts.json';
 export const districts = districtsJson;
 
 export type PlayerId = string;
+export type RoomId = string;
 
 export enum GameProgress {
   IN_LOBBY = 1,

@@ -1,17 +1,19 @@
 import { Socket } from 'socket.io-client';
-import { ClientGameState, GameSetupData } from 'citadels-common';
+import {
+  ClientGameState, GameSetupData, PlayerId, RoomId,
+} from 'citadels-common';
 import { RoomInfoResponse, StartGameReponse } from '../types/apiTypes';
 
 export default {
   createRoom(socket: Socket) {
-    return new Promise<string>((resolve) => {
-      socket.emit('create room', (data: string) => {
+    return new Promise<RoomId>((resolve) => {
+      socket.emit('create room', (data: RoomId) => {
         resolve(data);
       });
     });
   },
 
-  getRoomInfo(socket: Socket, roomId: string) {
+  getRoomInfo(socket: Socket, roomId: RoomId) {
     return new Promise<RoomInfoResponse>((resolve) => {
       socket.emit('get room info', roomId, (data: RoomInfoResponse) => {
         resolve(data);
@@ -19,7 +21,7 @@ export default {
     });
   },
 
-  joinRoom(socket: Socket, roomId: string, playerId: string, username: string) {
+  joinRoom(socket: Socket, roomId: RoomId, playerId: PlayerId, username: string) {
     return new Promise<ClientGameState>((resolve, reject) => {
       socket.emit('join room', roomId, playerId, username, (data: any) => {
         if (data === null) {

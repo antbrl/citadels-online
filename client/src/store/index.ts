@@ -9,6 +9,7 @@ import {
   PlayerRole,
   districts,
   PlayerId,
+  RoomId,
 } from 'citadels-common';
 import socket from '../socket';
 
@@ -157,7 +158,7 @@ export const store = createStore<State>({
       return api.createRoom(state.socket);
     },
 
-    async getRoomInfo({ state, dispatch }, roomId: string) {
+    async getRoomInfo({ state, dispatch }, roomId: RoomId) {
       await dispatch('connect');
       return api.getRoomInfo(state.socket, roomId);
     },

@@ -1,11 +1,12 @@
+import { RoomId } from 'citadels-common';
 import Room from './Room';
 
 export default abstract class GameStore {
-  abstract findRoom(roomId: string): Room | undefined;
+  abstract findRoom(roomId: RoomId): Room | undefined;
 
-  abstract saveRoom(roomId: string, room: Room): void;
+  abstract saveRoom(roomId: RoomId, room: Room): void;
 
-  abstract hasRoom(roomId: string): boolean;
+  abstract hasRoom(roomId: RoomId): boolean;
 
   abstract findAllRooms(): Room[];
 }

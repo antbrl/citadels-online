@@ -34,6 +34,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
+import { RoomId } from 'citadels-common';
 import { store } from '../../store';
 import LoadingSpinner from './elements/LoadingSpinner.vue';
 
@@ -63,7 +64,7 @@ export default defineComponent({
     ...mapActions([
       'connect',
     ]),
-    async getRoomInfo(roomId: string) {
+    async getRoomInfo(roomId: RoomId) {
       try {
         this.loading = true;
         this.open = false;

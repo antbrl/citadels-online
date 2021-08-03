@@ -1,6 +1,8 @@
 import { Server } from 'socket.io';
 import Debug from 'debug';
-import { Move, MoveType, PlayerId } from 'citadels-common';
+import {
+  Move, MoveType, PlayerId, RoomId,
+} from 'citadels-common';
 import InMemoryGameStore from '../gameManager/InMemoryGameStore';
 import Player from '../game/Player';
 import Room from '../gameManager/Room';
@@ -60,7 +62,7 @@ export function initSocket(io: Server) {
       }
     });
 
-    socket.on('join room', (roomId: string, playerId: PlayerId, username: string, callback) => {
+    socket.on('join room', (roomId: RoomId, playerId: PlayerId, username: string, callback) => {
       // get room info
       const room = gameStore.findRoom(roomId);
       let player: Player | undefined;

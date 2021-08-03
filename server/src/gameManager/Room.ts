@@ -1,15 +1,15 @@
 import { Server } from 'socket.io';
-import { GameProgress } from 'citadels-common';
+import { GameProgress, RoomId } from 'citadels-common';
 import GameState from '../game/GameState';
 import ExtendedSocket from '../socket/ExtendedSocket';
 import { Observer } from '../utils/observerPattern';
 
 export default class Room implements Observer {
-  roomId: string;
+  roomId: RoomId;
   gameState: GameState;
   io: Server;
 
-  constructor(roomId: string, io: Server) {
+  constructor(roomId: RoomId, io: Server) {
     this.roomId = roomId;
     this.gameState = new GameState();
     this.io = io;

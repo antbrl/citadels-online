@@ -1,6 +1,5 @@
-import { ClientTurnState, CharacterChoosingStateType as CCST } from 'citadels-common';
+import { ClientTurnState, CharacterChoosingStateType as CCST, PlayerPosition } from 'citadels-common';
 import { CharacterChoosingState } from './ChoosingState';
-import { PlayerPosition } from './Player';
 
 export enum CharacterType {
   NONE = -1,

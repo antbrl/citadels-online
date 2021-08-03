@@ -1,5 +1,4 @@
-import { CharacterChoosingStateType as CCST } from 'citadels-common';
-import { PlayerPosition } from './Player';
+import { CharacterChoosingStateType as CCST, PlayerPosition } from 'citadels-common';
 
 export type CharacterChoosingStateData = {
   type: CCST,

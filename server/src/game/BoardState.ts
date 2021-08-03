@@ -1,7 +1,6 @@
-import { GamePhase } from 'citadels-common';
+import { GamePhase, PlayerPosition } from 'citadels-common';
 import CharacterManager, { TurnState } from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
-import { PlayerPosition } from './Player';
 import PlayerBoardState from './PlayerBoardState';
 
 export default class BoardState {

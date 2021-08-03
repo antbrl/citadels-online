@@ -6,13 +6,14 @@ import {
   PlayerRole,
   GamePhase,
   CharacterChoosingStateType as CCST,
+  PlayerPosition,
 } from 'citadels-common';
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState from './BoardState';
 import { CharacterPosition, CharacterType, TurnState } from './CharacterManager';
 
 import GameSetupData from './GameSetupData';
-import Player, { PlayerPosition } from './Player';
+import Player from './Player';
 
 export default class GameState implements Subject {
   progress: GameProgress;

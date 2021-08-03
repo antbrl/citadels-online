@@ -41,6 +41,17 @@ export enum CharacterType {
   WARLORD,
 }
 
+export enum PlayerPosition {
+  SPECTATOR = -1,
+  PLAYER_1,
+  PLAYER_2,
+  PLAYER_3,
+  PLAYER_4,
+  PLAYER_5,
+  PLAYER_6,
+  PLAYER_7,
+}
+
 export enum ClientTurnState {
   INITIAL = 0,
   TAKE_RESOURCES,
@@ -75,7 +86,7 @@ export type PlayerBoard = {
   city: string[]
   score: PlayerScore
   characters: {
-    id: number
+    id: CharacterType
   }[]
 };
 
@@ -103,21 +114,21 @@ export type ClientGameState = {
     gamePhase: GamePhase
     turnState: ClientTurnState
     playerOrder: string[],
-    currentPlayer: number,
+    currentPlayer: PlayerPosition,
     currentPlayerExtraData: PlayerExtraData
     characters: {
       state: {
         type: CharacterChoosingStateType
-        player: number
+        player: PlayerPosition
       }
       current: CharacterType
       callable: {
-        id: number
+        id: CharacterType
         killed: boolean
         robbed: boolean
       }[]
       aside: {
-        id: number
+        id: CharacterType
       }[]
     }
     graveyard: string | undefined

@@ -1,4 +1,4 @@
-import { districts } from 'citadels-common';
+import { DistrictId, districts } from 'citadels-common';
 import { CharacterType } from './CharacterManager';
 
 export enum DistrictType {
@@ -10,12 +10,12 @@ export enum DistrictType {
 }
 
 export default class DistrictCard {
-  id: string;
+  id: DistrictId;
   type: DistrictType;
   cost: number;
   extraPoints: number;
 
-  constructor(id: string, type: DistrictType, cost: number, extraPoints: number) {
+  constructor(id: DistrictId, type: DistrictType, cost: number, extraPoints: number) {
     this.id = id;
     this.type = type;
     this.cost = cost;
@@ -38,10 +38,10 @@ export default class DistrictCard {
   }
 }
 
-type DistrictsMap = Map<string, { card: DistrictCard, count: number }>;
+type DistrictsMap = Map<DistrictId, { card: DistrictCard, count: number }>;
 
 // create districts Map from JSON
-export const ALL_DISTRICTS = Object.keys(districts).reduce(
+export const ALL_DISTRICTS = (Object.keys(districts) as DistrictId[]).reduce(
   (res: DistrictsMap, districtId) => {
     const data = {
       // default values

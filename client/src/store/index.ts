@@ -10,6 +10,7 @@ import {
   districts,
   PlayerId,
   RoomId,
+  DistrictId,
 } from 'citadels-common';
 import socket from '../socket';
 
@@ -19,7 +20,7 @@ export interface State {
   socket: Socket
   gameState: ClientGameState | undefined
   gameSetupData: GameSetupData
-  selectedCards: string[]
+  selectedCards: DistrictId[]
 }
 
 export const store = createStore<State>({
@@ -62,7 +63,7 @@ export const store = createStore<State>({
       return (playerId: PlayerId) => state.gameState?.players.get(playerId);
     },
     getDistrictFromId() {
-      return (districtId: string) => districts[districtId as keyof typeof districts];
+      return (districtId: DistrictId) => districts[districtId as keyof typeof districts];
     },
     charactersList(state) {
       return {
@@ -77,7 +78,7 @@ export const store = createStore<State>({
       return state.gameState !== undefined && state.gameState.self === getters.currentPlayerId;
     },
     getDistrictDestroyPrice(state, getters) {
-      return (playerId: PlayerId, districtId: string) => {
+      return (playerId: PlayerId, districtId: DistrictId) => {
         if (districtId === 'keep') return -1;
 
         if (state.gameState === undefined) return -1;

@@ -1,4 +1,4 @@
-import { PlayerBoard, PlayerScore } from 'citadels-common';
+import { DistrictId, PlayerBoard, PlayerScore } from 'citadels-common';
 import { CharacterType } from './CharacterManager';
 import DistrictCard, { ALL_DISTRICTS } from './DistrictCard';
 
@@ -6,13 +6,13 @@ export default class PlayerBoardState {
   // amount of gold coins
   stash: number;
   // district card ids
-  hand: string[];
-  city: string[];
-  tmpHand: string[];
+  hand: DistrictId[];
+  city: DistrictId[];
+  tmpHand: DistrictId[];
   score: PlayerScore;
   firstToCompleteCity: boolean;
 
-  constructor(initialStash: number, initialHand: string[], initialCity: string[] = []) {
+  constructor(initialStash: number, initialHand: DistrictId[], initialCity: DistrictId[] = []) {
     this.stash = initialStash;
     this.hand = initialHand;
     this.city = initialCity;
@@ -21,15 +21,15 @@ export default class PlayerBoardState {
     this.firstToCompleteCity = false;
   }
 
-  hasCardInCity(card: string): boolean {
+  hasCardInCity(card: DistrictId): boolean {
     return this.city.includes(card);
   }
 
-  addCardsToHand(cards: string[]) {
+  addCardsToHand(cards: DistrictId[]) {
     this.hand.push(...cards);
   }
 
-  takeCardFromHand(card: string) {
+  takeCardFromHand(card: DistrictId) {
     const index = this.hand.indexOf(card);
     if (index > -1) {
       return this.hand.splice(index, 1)[0];
@@ -37,7 +37,7 @@ export default class PlayerBoardState {
     return null;
   }
 
-  buildDistrict(card: string): boolean {
+  buildDistrict(card: DistrictId): boolean {
     if (!this.hand.includes(card)) {
       return false;
     }
@@ -69,12 +69,12 @@ export default class PlayerBoardState {
     return earnings + extraEarnings;
   }
 
-  computeDestroyCost(card: string): number {
+  computeDestroyCost(card: DistrictId): number {
     const discount = (this.hasCardInCity('great_wall') && card !== 'great_wall') ? 0 : 1;
     return (ALL_DISTRICTS.get(card)?.card.cost ?? discount) - discount;
   }
 
-  destroyDistrict(card: string) {
+  destroyDistrict(card: DistrictId) {
     const index = this.city.indexOf(card);
     if (index > -1) {
       this.city.splice(index, 1);

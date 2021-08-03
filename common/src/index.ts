@@ -4,6 +4,7 @@ export const districts = districtsJson;
 
 export type PlayerId = string;
 export type RoomId = string;
+export type DistrictId = keyof typeof districts;
 
 export enum GameProgress {
   IN_LOBBY = 1,
@@ -84,9 +85,9 @@ export interface PlayerScore {
 
 export type PlayerBoard = {
   stash: number
-  hand: (string | null)[]
-  tmpHand: (string | null)[]
-  city: string[]
+  hand: (DistrictId | null)[]
+  tmpHand: (DistrictId | null)[]
+  city: DistrictId[]
   score: PlayerScore
   characters: {
     id: CharacterType
@@ -134,7 +135,7 @@ export type ClientGameState = {
         id: CharacterType
       }[]
     }
-    graveyard: string | undefined
+    graveyard: DistrictId | undefined
   }
   settings: {
     completeCitySize: number

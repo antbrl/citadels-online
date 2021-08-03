@@ -8,6 +8,7 @@ import {
   CharacterChoosingStateType as CCST,
   PlayerPosition,
   PlayerId,
+  DistrictId,
 } from 'citadels-common';
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState from './BoardState';
@@ -688,10 +689,10 @@ export default class GameState implements Subject {
     }
 
     // discard cards
-    const cards: string[] = [];
+    const cards: DistrictId[] = [];
     move.data.forEach((card) => {
-      if (player.takeCardFromHand(`${card}`) !== null) {
-        cards.push(`${card}`);
+      if (player.takeCardFromHand(card) !== null) {
+        cards.push(card);
       }
     });
     this.board.districtsDeck.discardCards(cards);
@@ -748,7 +749,7 @@ export default class GameState implements Subject {
     if (move.type !== MoveType.WARLORD_DESTROY_DISTRICT) return false;
     const data = {
       player: move.data?.player as PlayerPosition,
-      card: move.data?.card as string,
+      card: move.data?.card as DistrictId,
     };
 
     if (!this.board) return false;

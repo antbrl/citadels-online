@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { districts } from 'citadels-common';
+import { districts, DistrictId } from 'citadels-common';
 import DistrictCard from './game/elements/DistrictCard.vue';
 
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
     DistrictCard,
   },
   computed: {
-    cards(): string[] {
+    cards(): DistrictId[] {
       return Object.keys(districts);
     },
   },

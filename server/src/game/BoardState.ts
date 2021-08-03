@@ -1,4 +1,6 @@
-import { GamePhase, PlayerId, PlayerPosition } from 'citadels-common';
+import {
+  DistrictId, GamePhase, PlayerId, PlayerPosition,
+} from 'citadels-common';
 import CharacterManager, { TurnState } from './CharacterManager';
 import DistrictsDeck from './DistrictsDeck';
 import PlayerBoardState from './PlayerBoardState';
@@ -20,7 +22,7 @@ export default class BoardState {
   districtsDeck: DistrictsDeck;
 
   // graveyard (1 card)
-  graveyard: string | undefined;
+  graveyard: DistrictId | undefined;
 
   constructor(players: PlayerId[]) {
     this.players = new Map();

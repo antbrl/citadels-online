@@ -44,7 +44,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import { Move, MoveType } from 'citadels-common';
+import { Move, MoveType, DistrictId } from 'citadels-common';
 import { store } from '../../../store';
 import CharactersList from './CharactersList.vue';
 import DistrictCard from './DistrictCard.vue';
@@ -92,12 +92,12 @@ export default defineComponent({
     },
   },
   methods: {
-    canDestroy(name: string): boolean {
+    canDestroy(name: DistrictId): boolean {
       if (!this.destroyMode) return false;
       const cost = store.getters.getDistrictDestroyPrice(this.playerId, name);
       return cost >= 0 && cost <= this.stash;
     },
-    async chooseCardDestroy(name: string) {
+    async chooseCardDestroy(name: DistrictId) {
       if (!this.canDestroy(name)) return;
 
       try {

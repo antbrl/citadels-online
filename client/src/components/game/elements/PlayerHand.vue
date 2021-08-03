@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Move, MoveType } from 'citadels-common';
+import { Move, MoveType, DistrictId } from 'citadels-common';
 import { store } from '../../../store';
 import DistrictCard from './DistrictCard.vue';
 
@@ -80,12 +80,12 @@ export default defineComponent({
     },
   },
   methods: {
-    canBuild(name: string): boolean {
+    canBuild(name: DistrictId): boolean {
       if (!this.buildMode) return false;
       return !this.board.city.includes(name)
         && store.getters.getDistrictFromId(name).cost <= this.board.stash;
     },
-    async chooseCard(name: string) {
+    async chooseCard(name: DistrictId) {
       try {
         const move: Move = { type: MoveType.DRAW_CARDS, data: name };
         await store.dispatch('sendMove', move);
@@ -93,7 +93,7 @@ export default defineComponent({
         console.log('error when sending move', error);
       }
     },
-    async chooseCardBuild(name: string) {
+    async chooseCardBuild(name: DistrictId) {
       if (!this.canBuild(name)) return;
 
       try {
@@ -103,7 +103,7 @@ export default defineComponent({
         console.log('error when sending move', error);
       }
     },
-    async chooseCardLaboratory(name: string) {
+    async chooseCardLaboratory(name: DistrictId) {
       try {
         const move: Move = { type: MoveType.LABORATORY_DISCARD_CARD, data: name };
         await store.dispatch('sendMove', move);
@@ -123,7 +123,7 @@ export default defineComponent({
     },
     selectedCards: {
       handler(val) {
-        const cards: string[] = [];
+        const cards: DistrictId[] = [];
         val.forEach((isSelected, index) => {
           if (isSelected) {
             const card = this.board.hand[index];

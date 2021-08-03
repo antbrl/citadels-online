@@ -1,7 +1,8 @@
+import { DistrictId } from 'citadels-common';
 import { ALL_DISTRICTS } from './DistrictCard';
 
 export default class DistrictsDeck {
-  cards: string[];
+  cards: DistrictId[];
 
   constructor() {
     // create an array with all district card ids
@@ -18,7 +19,7 @@ export default class DistrictsDeck {
   shuffleCards() {
     let i: number;
     let j: number;
-    let tmp: string;
+    let tmp: DistrictId;
 
     for (i = this.cards.length - 1; i > 0; i -= 1) {
       j = Math.floor(Math.random() * (i + 1));
@@ -32,7 +33,7 @@ export default class DistrictsDeck {
     return this.cards.splice(-n, n);
   }
 
-  discardCards(cards: string[]) {
+  discardCards(cards: DistrictId[]) {
     this.cards.unshift(...cards);
   }
 }

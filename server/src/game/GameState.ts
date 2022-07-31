@@ -589,7 +589,7 @@ export default class GameState implements Subject {
 
     if (!this.board) return false;
     const cm = this.board.characterManager;
-    const character = move.data as CharacterType;
+    const character = move.data - 1 as CharacterType;
 
     switch (character) {
       case CharacterType.THIEF:
@@ -614,7 +614,7 @@ export default class GameState implements Subject {
 
     if (!this.board) return false;
     const cm = this.board.characterManager;
-    const character = move.data as CharacterType;
+    const character = move.data - 1 as CharacterType;
 
     switch (character) {
       case CharacterType.MAGICIAN:

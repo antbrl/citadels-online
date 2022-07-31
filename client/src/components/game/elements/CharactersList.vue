@@ -18,7 +18,7 @@
       }"
       v-tooltip="$t(`characters.${character.id}.description`)"
       data-placement="left"
-      @click="selectCharacter(i)"
+      @click="selectCharacter(i, character.id)"
     >
       <!-- unknown character id -->
       <span
@@ -137,18 +137,21 @@ export default defineComponent({
           return 'light';
       }
     },
-    async selectCharacter(index: number) {
+    async selectCharacter(index: number, characterId: number) {
       if (!this.processedCharacters[index].selectable) return;
 
       let moveType = MoveType.CHOOSE_CHARACTER;
+      let moveData = index;
 
       if (this.killMode) {
+        moveData = characterId;
         moveType = MoveType.ASSASSIN_KILL;
       } else if (this.robMode) {
         moveType = MoveType.THIEF_ROB;
+        moveData = characterId;
       }
 
-      const move: Move = { type: moveType, data: index };
+      const move: Move = { type: moveType, data: moveData };
       await store.dispatch('sendMove', move);
     },
   },

@@ -10,12 +10,15 @@ import {
   PlayerId,
   DistrictId,
 } from 'citadels-common';
+import Debug from 'debug';
 import { Observer, Subject } from '../utils/observerPattern';
 import BoardState from './BoardState';
 import { CharacterPosition, CharacterType, TurnState } from './CharacterManager';
 
 import GameSetupData from './GameSetupData';
 import Player from './Player';
+
+const debug = Debug('citadels-server');
 
 export default class GameState implements Subject {
   progress: GameProgress;
@@ -107,6 +110,11 @@ export default class GameState implements Subject {
 
   // step through the FSM and return whether the action is valid
   step(move = { type: MoveType.AUTO } as Move): boolean {
+    debug('------- STEP -------');
+    debug('move', MoveType[move.type], move.data);
+    debug('progress', GameProgress[this.progress]);
+    debug('phase', this.board ? GamePhase[this.board.gamePhase] : undefined);
+
     switch (this.progress) {
       case GameProgress.IN_LOBBY:
         if (move.type === MoveType.AUTO) {
@@ -591,6 +599,8 @@ export default class GameState implements Subject {
     const cm = this.board.characterManager;
     const character = move.data - 1 as CharacterType;
 
+    debug('rob', move.data ? CharacterType[character] : undefined)
+
     switch (character) {
       case CharacterType.THIEF:
       case CharacterType.MAGICIAN:
@@ -615,6 +625,8 @@ export default class GameState implements Subject {
     if (!this.board) return false;
     const cm = this.board.characterManager;
     const character = move.data - 1 as CharacterType;
+
+    debug('rob', move.data ? CharacterType[character] : undefined)
 
     switch (character) {
       case CharacterType.MAGICIAN:
